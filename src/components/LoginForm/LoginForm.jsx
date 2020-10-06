@@ -28,15 +28,15 @@ function LoginForm (props) {
       if (response.status === 200) {
         setState(prevState => ({
           ...prevState,
-          successMessage: 'Login successful. Redirecting to home page..'
+          successMessage: '登录成功，正在前往主页..'
         }))
         localStorage.setItem(ACCESS_TOKEN_NAME, response.data.token)
         redirectToHome()
         props.showError(null)
       } else if (response.code === 204) {
-        props.showError('Username and password do not match')
+        props.showError('密码错误！')
       } else {
-        props.showError('Username does not exists')
+        props.showError('邮箱不存在！')
       }
     })
       .catch(function (error) {
@@ -55,24 +55,22 @@ function LoginForm (props) {
     <div className="card col-12 col-lg-4 login-card mt-2 hv-center">
       <form>
         <div className="form-group text-left">
-          <label htmlFor="exampleInputEmail1">Email address</label>
+          <label htmlFor="exampleInputEmail1">邮箱地址</label>
           <input type="email"
             className="form-control"
             id="email"
             aria-describedby="emailHelp"
-            placeholder="Enter email"
+            placeholder="请输入邮箱地址"
             value={state.email}
             onChange={handleChange}
           />
-          <small id="emailHelp" className="form-text text-muted">We'll never share your email with
-            anyone else.</small>
         </div>
         <div className="form-group text-left">
-          <label htmlFor="exampleInputPassword1">Password</label>
+          <label htmlFor="exampleInputPassword1">密码</label>
           <input type="password"
             className="form-control"
             id="password"
-            placeholder="Password"
+            placeholder="请输入密码"
             value={state.password}
             onChange={handleChange}
           />
@@ -83,7 +81,7 @@ function LoginForm (props) {
           type="submit"
           className="btn btn-primary"
           onClick={handleSubmitClick}
-        >Submit
+        >登录
         </button>
       </form>
       <div className="alert alert-success mt-2"
@@ -91,8 +89,8 @@ function LoginForm (props) {
         {state.successMessage}
       </div>
       <div className="registerMessage">
-        <span>Dont have an account? </span>
-        <span className="loginText" onClick={() => redirectToRegister()}>Register</span>
+        <span>没有账户？ </span>
+        <span className="loginText" onClick={() => redirectToRegister()}>注册</span>
       </div>
     </div>
   )

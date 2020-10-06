@@ -29,20 +29,20 @@ function RegistrationForm (props) {
         if (response.status === 200) {
           setState(prevState => ({
             ...prevState,
-            successMessage: 'Registration successful. Redirecting to home page..'
+            successMessage: '注册成功，正在前往主页..'
           }))
           localStorage.setItem(ACCESS_TOKEN_NAME, response.data.token)
           redirectToHome()
           props.showError(null)
         } else {
-          props.showError('Some error ocurred')
+          props.showError('网络连接失败！')
         }
       })
         .catch(function (error) {
           console.log(error)
         })
     } else {
-      props.showError('Please enter valid username and password')
+      props.showError('用户名或密码格式错误！')
     }
   }
   const redirectToHome = () => {
@@ -58,41 +58,39 @@ function RegistrationForm (props) {
     if (state.password === state.confirmPassword) {
       sendDetailsToServer()
     } else {
-      props.showError('Passwords do not match')
+      props.showError('两次输入密码不一致')
     }
   }
   return (
     <div className="card col-12 col-lg-4 login-card mt-2 hv-center">
       <form>
         <div className="form-group text-left">
-          <label htmlFor="exampleInputEmail1">Email address</label>
+          <label htmlFor="exampleInputEmail1">邮箱地址</label>
           <input type="email"
             className="form-control"
             id="email"
             aria-describedby="emailHelp"
-            placeholder="Enter email"
+            placeholder="请输入邮箱地址"
             value={state.email}
             onChange={handleChange}
           />
-          <small id="emailHelp" className="form-text text-muted">We'll never share your email with
-            anyone else.</small>
         </div>
         <div className="form-group text-left">
-          <label htmlFor="exampleInputPassword1">Password</label>
+          <label htmlFor="exampleInputPassword1">密码</label>
           <input type="password"
             className="form-control"
             id="password"
-            placeholder="Password"
+            placeholder="请输入密码"
             value={state.password}
             onChange={handleChange}
           />
         </div>
         <div className="form-group text-left">
-          <label htmlFor="exampleInputPassword1">Confirm Password</label>
+          <label htmlFor="exampleInputPassword1">确认密码</label>
           <input type="password"
             className="form-control"
             id="confirmPassword"
-            placeholder="Confirm Password"
+            placeholder="请再次输入密码"
             value={state.confirmPassword}
             onChange={handleChange}
           />
@@ -102,7 +100,7 @@ function RegistrationForm (props) {
           className="btn btn-primary"
           onClick={handleSubmitClick}
         >
-          Register
+          注册
         </button>
       </form>
       <div className="alert alert-success mt-2"
@@ -110,8 +108,8 @@ function RegistrationForm (props) {
         {state.successMessage}
       </div>
       <div className="mt-2">
-        <span>Already have an account? </span>
-        <span className="loginText" onClick={() => redirectToLogin()}>Login here</span>
+        <span>已有账号？ </span>
+        <span className="loginText" onClick={() => redirectToLogin()}>登录</span>
       </div>
 
     </div>
