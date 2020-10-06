@@ -62,5 +62,5 @@
     "jest-sonar-reporter": "^2.0.0",
     "react-router-dom": "^5.2.0"
   },
-  "proxy": "http://localhost:8000"
+  "proxy": "https://asset-management-GoodNight.app.secoder.net"
 }
