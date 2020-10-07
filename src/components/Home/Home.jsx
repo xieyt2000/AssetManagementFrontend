@@ -11,23 +11,31 @@ class Home extends React.Component {
     }
   }
 
-  componentDidUpdate (prevProps, prevState, snapshot) {
-    axios.get(API_BASE_URL + '/user/me',
+  async componentDidMount () {
+    // axios.get(API_BASE_URL + '/user/me',
+    //   { headers: { token: localStorage.getItem(ACCESS_TOKEN_NAME) } })
+    //   .then(function (response) {
+    //     console.log(response)
+    //     if (response.status !== 200) {
+    //       //redirectToLogin()
+    //     }
+    //     this.setState(prevState => ({
+    //       ...prevState,
+    //       email: response.data.data
+    //     }))
+    //   })
+    //   .catch(function (error) {
+    //     //redirectToLogin()
+    //     console.log(error)
+    //   })
+    let res = await axios.get(API_BASE_URL + '/user/me',
       { headers: { token: localStorage.getItem(ACCESS_TOKEN_NAME) } })
-      .then(function (response) {
-        if (response.status !== 200) {
-          //redirectToLogin()
-        }
-        this.setState(prevState => ({
-          ...prevState,
-          email: response.data.email
-        }))
-      })
-      .catch(function (error) {
-        //redirectToLogin()
-        console.log(error)
-      })
-
+    if (res.data.code === 200) {
+      this.setState(prevState => ({
+        ...prevState,
+        email: res.data.data
+      }))
+    }
   }
 
   redirectToLogin () {
@@ -38,7 +46,7 @@ class Home extends React.Component {
     return (
       <div className="mt-2">
         <h1>Home page content</h1>
-        <h2>{this.state.email}</h2>
+        <h2>user email:{this.state.email}</h2>
       </div>
     )
   }

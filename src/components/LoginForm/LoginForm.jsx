@@ -30,7 +30,7 @@ function LoginForm (props) {
           ...prevState,
           successMessage: '登录成功，正在前往主页..'
         }))
-        localStorage.setItem(ACCESS_TOKEN_NAME, response.data.token)
+        localStorage.setItem(ACCESS_TOKEN_NAME, response.data.data)
         redirectToHome()
         props.showError(null)
       } else if (response.data.code === 204) {
