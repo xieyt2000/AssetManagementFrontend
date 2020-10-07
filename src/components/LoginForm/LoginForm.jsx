@@ -25,7 +25,7 @@ function LoginForm (props) {
       password: state.password
     }
     login(payload).then(function (response) {
-      if (response.status === 200) {
+      if (response.data.code === 200) {
         setState(prevState => ({
           ...prevState,
           successMessage: '登录成功，正在前往主页..'
@@ -33,7 +33,7 @@ function LoginForm (props) {
         localStorage.setItem(ACCESS_TOKEN_NAME, response.data.token)
         redirectToHome()
         props.showError(null)
-      } else if (response.code === 204) {
+      } else if (response.data.code === 204) {
         props.showError('密码错误！')
       } else {
         props.showError('邮箱不存在！')

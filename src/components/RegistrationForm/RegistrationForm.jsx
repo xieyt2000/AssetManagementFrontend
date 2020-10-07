@@ -26,7 +26,7 @@ function RegistrationForm (props) {
         password: state.password
       }
       register(payload).then(function (response) {
-        if (response.status === 200) {
+        if (response.data.code === 200) {
           setState(prevState => ({
             ...prevState,
             successMessage: '注册成功，正在前往主页..'
