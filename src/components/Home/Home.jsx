@@ -11,31 +11,21 @@ class Home extends React.Component {
     }
   }
 
-  async componentDidMount () {
-    // axios.get(API_BASE_URL + '/user/me',
-    //   { headers: { token: localStorage.getItem(ACCESS_TOKEN_NAME) } })
-    //   .then(function (response) {
-    //     console.log(response)
-    //     if (response.status !== 200) {
-    //       //redirectToLogin()
-    //     }
-    //     this.setState(prevState => ({
-    //       ...prevState,
-    //       email: response.data.data
-    //     }))
-    //   })
-    //   .catch(function (error) {
-    //     //redirectToLogin()
-    //     console.log(error)
-    //   })
-    const res = await axios.get(API_BASE_URL + '/user/me',
+  componentDidMount () {
+    axios.get(API_BASE_URL + '/user/me',
       { headers: { token: localStorage.getItem(ACCESS_TOKEN_NAME) } })
-    if (res.data.code === 200) {
-      this.setState(prevState => ({
-        ...prevState,
-        email: res.data.data
-      }))
-    }
+      .then( (res) =>{
+          if (res.data.code === 200) {
+            this.setState(prevState => ({
+              ...prevState,
+              email: res.data.data
+            }));
+          }
+        }
+      )
+      .catch( () => {
+          this.redirectToLogin();
+      });
   }
 
   redirectToLogin () {
