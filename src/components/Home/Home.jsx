@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React from 'react'
 import { withRouter } from 'react-router-dom'
 import { ACCESS_TOKEN_NAME, API_BASE_URL } from '../../utils/api'
 import axios from 'axios'
@@ -28,7 +28,7 @@ class Home extends React.Component {
     //     //redirectToLogin()
     //     console.log(error)
     //   })
-    let res = await axios.get(API_BASE_URL + '/user/me',
+    const res = await axios.get(API_BASE_URL + '/user/me',
       { headers: { token: localStorage.getItem(ACCESS_TOKEN_NAME) } })
     if (res.data.code === 200) {
       this.setState(prevState => ({

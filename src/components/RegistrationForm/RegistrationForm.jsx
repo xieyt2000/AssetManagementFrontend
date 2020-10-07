@@ -29,10 +29,10 @@ function RegistrationForm (props) {
         if (response.data.code === 200) {
           setState(prevState => ({
             ...prevState,
-            successMessage: '注册成功，正在前往主页..'
+            successMessage: '注册成功'
           }))
-          localStorage.setItem(ACCESS_TOKEN_NAME, response.data.token)
-          redirectToHome()
+          //localStorage.setItem(ACCESS_TOKEN_NAME, response.data.data)
+          //redirectToHome()
           props.showError(null)
         } else {
           props.showError('网络连接失败！')
