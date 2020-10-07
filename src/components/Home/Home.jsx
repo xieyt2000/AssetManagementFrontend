@@ -9,7 +9,7 @@ function Home (props) {
       { headers: { token: localStorage.getItem(ACCESS_TOKEN_NAME) } })
       .then(function (response) {
         if (response.status !== 200) {
-          redirectToLogin()
+          //redirectToLogin()
         }
       })
       .catch(function (error) {

@@ -61,6 +61,5 @@
     "eslint-plugin-standard": "^4.0.0",
     "jest-sonar-reporter": "^2.0.0",
     "react-router-dom": "^5.2.0"
-  },
-  "proxy": "https://asset-management-GoodNight.app.secoder.net"
+  }
 }
