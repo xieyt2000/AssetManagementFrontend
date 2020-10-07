@@ -34,7 +34,11 @@ function RegistrationForm (props) {
           //localStorage.setItem(ACCESS_TOKEN_NAME, response.data.data)
           //redirectToHome()
           props.showError(null)
-        } else {
+        }
+        else if (response.data.code === 201) {
+            props.showError('该邮箱已被注册！')
+        } 
+        else {
           props.showError('网络连接失败！')
         }
       })
