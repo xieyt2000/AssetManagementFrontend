@@ -19,7 +19,7 @@ function RegistrationForm (props) {
     }))
   }
   const sendDetailsToServer = () => {
-    if (state.email.length && state.password.length) {
+    if (checkEmail(state.email) && state.password.length) {
       props.showError(null)
       const payload = {
         email: state.email,
@@ -48,6 +48,10 @@ function RegistrationForm (props) {
     } else {
       props.showError('用户名或密码格式错误！')
     }
+  }
+  const checkEmail = (email) => {
+    var reg = /^([a-zA-Z]|[0-9])(\w|\-)+@[a-zA-Z0-9]+\.([a-zA-Z]{2,4})$/;
+    return reg.test(email) && email.length;
   }
   const redirectToHome = () => {
     props.updateTitle('Home')
