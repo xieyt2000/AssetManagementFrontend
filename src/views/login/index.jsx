@@ -4,6 +4,7 @@ import { Form, Icon, Input, Button, message, Spin } from 'antd'
 import { connect } from 'react-redux'
 import DocumentTitle from 'react-document-title'
 import './index.less'
+import PropTypes from 'prop-types'
 import { login, getUserInfo } from '@/store/actions'
 
 const Login = (props) => {
@@ -122,6 +123,13 @@ const Login = (props) => {
       </div>
     </DocumentTitle>
   )
+}
+
+Login.propTypes = {
+  form: PropTypes.instanceOf(Form),
+  token: PropTypes.string,
+  login: PropTypes.func,
+  getUserInfo: PropTypes.func
 }
 
 const WrapLogin = Form.create()(Login)

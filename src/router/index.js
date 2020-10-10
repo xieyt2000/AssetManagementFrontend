@@ -4,6 +4,8 @@ import { connect } from 'react-redux'
 import { getUserInfo } from '../store/actions'
 // import Layout from '@/views/layout'
 import Login from '@/views/login'
+import PropTypes from 'prop-types'
+
 class Router extends React.Component {
   render () {
     const { token, role, getUserInfo } = this.props
@@ -30,5 +32,9 @@ class Router extends React.Component {
     )
   }
 }
-
+Router.propTypes = {
+  token: PropTypes.string,
+  role: PropTypes.string,
+  getUserInfo: PropTypes.func
+}
 export default connect((state) => state.user, { getUserInfo })(Router)

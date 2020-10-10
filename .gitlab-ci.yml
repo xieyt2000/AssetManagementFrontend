@@ -7,7 +7,7 @@ stages:
 
 build:
   stage: build
-  script: 
+  script:
     - export BUILD_IMAGE_NAME=$CI_REGISTRY_IMAGE
     - export BUILD_IMAGE_TAG=$CI_COMMIT_REF_SLUG
     - export BUILD_IMAGE_USERNAME=$CI_REGISTRY_USER
@@ -39,11 +39,11 @@ unit-test:
     - tar -xf "/tmp/sonar-$SUFFIX.tar.gz" -C /opt
     - /opt/sonar-scanner/bin/sonar-scanner
 
-# style-test:
-#   extends: .test
-#   # allow_failure: true
-#   script:
-#     - npm run lint
+ style-test:
+   extends: .test
+   # allow_failure: true
+   script:
+     - npm run lint
 
 deploy:
   stage: deploy
