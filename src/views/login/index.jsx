@@ -41,15 +41,15 @@ const Login = (props) => {
     event.preventDefault()
 
     // 对所有表单字段进行检验
-    // form.validateFields((err, values) => {
-    //   // 检验成功
-    //   if (!err) {
-    //     const { username, password } = values
-    //     handleLogin(username, password)
-    //   } else {
-    //     console.log('检验失败!')
-    //   }
-    // })
+    form.validateFields((err, values) => {
+      // 检验成功
+      if (!err) {
+        const { username, password } = values
+        handleLogin(username, password)
+      } else {
+        console.log('检验失败!')
+      }
+    })
   }
 
   if (token) {

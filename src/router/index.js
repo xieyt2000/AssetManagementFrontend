@@ -20,9 +20,9 @@ class Router extends React.Component {
                 return <Redirect to="/login" />
               } else {
                 if (role) {
-                  return <span/>
+                  return <h1>Hello World</h1>
                 } else {
-                  getUserInfo(token).then(() => <span/>)
+                  getUserInfo(token).then(() => <h1>Hello World</h1>)
                 }
               }
             }}
