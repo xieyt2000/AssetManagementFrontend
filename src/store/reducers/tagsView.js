@@ -5,6 +5,7 @@ const initState = {
 export default function app (state = initState, action) {
   switch (action.type) {
     case types.TAGSVIEW_ADD_TAG:
+      // eslint-disable-next-line no-case-declarations
       const tag = action.tag
       if (state.taglist.includes(tag)) {
         return state
