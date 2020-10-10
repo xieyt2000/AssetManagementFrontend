@@ -23,7 +23,7 @@ export const getUserInfo = (token) => (dispatch) => {
             id: 'admin',
             role: 'admin',
             name: 'yy',
-            avatar: 'https://s1.ax1x.com/2020/04/28/J5hUaT.jpg',
+            avator: 'https://s1.ax1x.com/2020/04/28/J5hUaT.jpg',
             description: 'admin'
           }
         }

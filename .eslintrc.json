@@ -14,6 +14,7 @@
         "Atomics": "readonly",
         "SharedArrayBuffer": "readonly"
     },
+    "parser": "babel-eslint",
     "parserOptions": {
         "sourceType": "module",
         "ecmaFeatures": {
@@ -26,10 +27,10 @@
     ],
     "rules": {
         "max-len": [
-          "warn",
-          {
-            "code": 100
-          }
+            "warn",
+            {
+                "code": 100
+            }
         ],
         "no-console": "off"
     },
