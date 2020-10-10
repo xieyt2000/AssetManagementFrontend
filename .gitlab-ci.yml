@@ -39,7 +39,8 @@ unit-test:
     - tar -xf "/tmp/sonar-$SUFFIX.tar.gz" -C /opt
     - /opt/sonar-scanner/bin/sonar-scanner
 
- style-test:
+
+style-test:
    extends: .test
    # allow_failure: true
    script:
