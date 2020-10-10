@@ -106,6 +106,7 @@ class SideMenu extends Component {
       addTag(menuItem)
     }
 
+    // eslint-disable-next-line react/no-deprecated
     componentWillMount () {
     // change from componentWillMount
       const menuTreeNode = this.getMenuNodes(menuList)
