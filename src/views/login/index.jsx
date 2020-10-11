@@ -53,7 +53,7 @@ const Login = (props) => {
     })
   }
 
-  if (role.length >= 1) {
+  if (role && role.length >= 1) {
     return <Redirect to="/dashboard"/>
   }
   return (
