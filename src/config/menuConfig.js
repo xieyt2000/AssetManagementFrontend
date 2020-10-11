@@ -1,9 +1,11 @@
+import PERMISSION from '../utils/permission'
+
 const menuList = [
   {
     title: '首页',
     path: '/dashboard',
     icon: 'home',
-    roles: ['admin', 'editor', 'guest']
+    roles: [PERMISSION.IT, PERMISSION.ASSET, PERMISSION.SYSTEM, PERMISSION.STAFF]
   },
   {
     title: '权限测试',
@@ -13,22 +15,22 @@ const menuList = [
       {
         title: '权限说明',
         path: '/permission/explanation',
-        roles: ['admin']
+        roles: [PERMISSION.IT, PERMISSION.ASSET, PERMISSION.SYSTEM, PERMISSION.STAFF]
       },
       {
         title: 'admin页面',
         path: '/permission/adminPage',
-        roles: ['admin']
+        roles: [PERMISSION.IT, PERMISSION.ASSET, PERMISSION.SYSTEM, PERMISSION.STAFF]
       },
       {
         title: 'guest页面',
         path: '/permission/guestPage',
-        roles: ['guest']
+        roles: [PERMISSION.IT, PERMISSION.ASSET, PERMISSION.SYSTEM, PERMISSION.STAFF]
       },
       {
         title: 'editor页面',
         path: '/permission/editorPage',
-        roles: ['editor']
+        roles: [PERMISSION.IT, PERMISSION.ASSET, PERMISSION.SYSTEM, PERMISSION.STAFF]
       }
     ]
   },
@@ -36,7 +38,7 @@ const menuList = [
     title: '路由嵌套',
     path: '/nested',
     icon: 'cluster',
-    roles: ['admin', 'editor'],
+    roles: [PERMISSION.IT, PERMISSION.ASSET, PERMISSION.SYSTEM, PERMISSION.STAFF],
     children: [
       {
         title: '菜单1',
@@ -45,7 +47,7 @@ const menuList = [
           {
             title: '菜单1-1',
             path: '/nested/menu1/menu11',
-            roles: ['admin', 'editor']
+            roles: [PERMISSION.IT, PERMISSION.ASSET, PERMISSION.SYSTEM, PERMISSION.STAFF]
           },
           {
             title: '菜单1-2',
@@ -54,7 +56,7 @@ const menuList = [
               {
                 title: '菜单1-2-1',
                 path: '/nested/menu1/menu12/menu121',
-                roles: ['admin', 'editor']
+                roles: [PERMISSION.IT, PERMISSION.ASSET, PERMISSION.SYSTEM, PERMISSION.STAFF]
               }
             ]
           }
@@ -66,13 +68,13 @@ const menuList = [
     title: '表格',
     path: '/table',
     icon: 'table',
-    roles: ['admin', 'editor']
+    roles: [PERMISSION.IT, PERMISSION.ASSET, PERMISSION.SYSTEM, PERMISSION.STAFF]
   },
   {
     title: '用户管理',
     path: '/user',
     icon: 'usergroup-add',
-    roles: ['admin']
+    roles: [PERMISSION.SYSTEM]
   }
 ]
 export default menuList

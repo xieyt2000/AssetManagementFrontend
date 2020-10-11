@@ -1,5 +1,6 @@
 import Loadable from 'react-loadable'
 import Loading from '@/components/Loading'
+import PERMISSION from '../utils/permission'
 // const Dashboard = Loadable({ loader: () => import(/* webpackChunkName:'Dashboard' */'@/views/dashboard'), loading: Loading })
 // const Explanation = Loadable({ loader: () => import(/* webpackChunkName:'Explanation' */'@/views/permission'), loading: Loading })
 // const AdminPage = Loadable({ loader: () => import(/* webpackChunkName:'AdminPage' */'@/views/permission/adminPage'), loading: Loading })
@@ -17,5 +18,5 @@ export default [
   // { path: '/permission/editorPage', component: EditorPage, roles: ['editor'] },
   // { path: '/nested/menu1/menu11', component: Menu11, roles: ['admin', 'editor'] },
   // { path: '/nested/menu1/menu12/menu121', component: Menu121, roles: ['admin', 'editor'] },
-  { path: '/user', component: User, roles: ['admin'] }
+  { path: '/user', component: User, roles: [PERMISSION.SYSTEM] }
 ]

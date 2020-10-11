@@ -12,14 +12,14 @@ class Router extends React.Component {
     return (
       <HashRouter>
         <Switch>
-          <Route exact path="/login" component={Login} />
+          <Route exact path="/login" component={Login}/>
           <Route
             path="/"
             render={() => {
               if (!token) {
-                return <Redirect to="/login" />
+                return <Redirect to="/login"/>
               } else {
-                if (role) {
+                if (role.length >= 1) {
                   return <Layout/>
                 } else {
                   getUserInfo(token).then(() => <Layout/>)
@@ -32,9 +32,10 @@ class Router extends React.Component {
     )
   }
 }
+
 Router.propTypes = {
   token: PropTypes.string,
-  role: PropTypes.string,
+  role: PropTypes.array,
   getUserInfo: PropTypes.func
 }
 export default connect((state) => state.user, { getUserInfo })(Router)
