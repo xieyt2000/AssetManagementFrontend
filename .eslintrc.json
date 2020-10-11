@@ -32,7 +32,8 @@
                 "code": 100
             }
         ],
-        "no-console": "off"
+        "no-console": "off",
+        "standard/no-callback-literal": 0
     },
     "settings": {
         "react": {
