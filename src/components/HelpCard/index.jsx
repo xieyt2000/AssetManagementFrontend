@@ -5,7 +5,7 @@ import { PropTypes } from 'prop-types'
 const HelpCard = (props) => {
   return (
     <Card bordered={false} className='card-item' title={props.title}>
-      <p dangerouslySetInnerHTML={{ __html: this.source }}/>
+      <p dangerouslySetInnerHTML={{ __html: props.source }}/>
     </Card>
   )
 }
