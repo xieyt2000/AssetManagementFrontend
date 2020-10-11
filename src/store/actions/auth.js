@@ -18,15 +18,7 @@ export const login = (username, password) => (dispatch) => {
       })
       .catch((error) => {
         // 绕过后端请求直接进入
-        const data = {
-          token: '123'
-        }
-        const token = data.token
-        dispatch(setUserToken(token))
-        setToken(token)
-        console.log(error)
-        resolve(data)
-        // reject(error)
+        reject(error)
       })
   })
 }

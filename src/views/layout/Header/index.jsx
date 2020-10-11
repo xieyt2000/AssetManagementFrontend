@@ -15,9 +15,14 @@ const LayoutHeader = (props) => {
     token,
     avatar,
     logout,
-    getUserInfo
+    getUserInfo,
+    role
   } = props
-  token && getUserInfo(token)
+  // ???
+  // token && getUserInfo(token)
+  if (role.length === 0) {
+    getUserInfo(token)
+  }
   const handleLogout = (token) => {
     Modal.confirm({
       title: '注销',
@@ -43,7 +48,7 @@ const LayoutHeader = (props) => {
       <Menu.Item key="dashboard">
         <Link to="/dashboard">首页</Link>
       </Menu.Item>
-      <Menu.Divider />
+      <Menu.Divider/>
       <Menu.Item key="logout">注销</Menu.Item>
     </Menu>
   )
@@ -52,7 +57,7 @@ const LayoutHeader = (props) => {
     <>
       {/* 这里是仿照antd pro的做法,如果固定header，
       则header的定位变为fixed，此时需要一个定位为relative的header把原来的header位置撑起来 */}
-      <Header />
+      <Header/>
       <Header
         style={{ width: 'calc(100% - 80px)' }}
         className={'fix-header'}
@@ -63,8 +68,8 @@ const LayoutHeader = (props) => {
           <div className="dropdown-wrap">
             <Dropdown overlay={menu}>
               <div>
-                <Avatar shape="square" size="medium" src={avatar} />
-                <Icon style={{ color: 'rgba(0,0,0,.3)' }} type="caret-down" />
+                <Avatar shape="square" size="medium" src={avatar}/>
+                <Icon style={{ color: 'rgba(0,0,0,.3)' }} type="caret-down"/>
               </div>
             </Dropdown>
           </div>
@@ -78,7 +83,8 @@ LayoutHeader.propTypes = {
   token: PropTypes.string,
   avatar: PropTypes.string,
   logout: PropTypes.func,
-  getUserInfo: PropTypes.func
+  getUserInfo: PropTypes.func,
+  role: PropTypes.array
 }
 
 const mapStateToProps = (state) => {
