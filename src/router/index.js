@@ -2,7 +2,7 @@ import React from 'react'
 import { HashRouter, Route, Switch, Redirect } from 'react-router-dom'
 import { connect } from 'react-redux'
 import { getUserInfo } from '../store/actions'
-// import Layout from '@/views/layout'
+import Layout from '@/views/layout'
 import Login from '@/views/login'
 import PropTypes from 'prop-types'
 
@@ -20,9 +20,9 @@ class Router extends React.Component {
                 return <Redirect to="/login" />
               } else {
                 if (role) {
-                  return <h1>Hello World</h1>
+                  return <Layout/>
                 } else {
-                  getUserInfo(token).then(() => <h1>Hello World</h1>)
+                  getUserInfo(token).then(() => <Layout/>)
                 }
               }
             }}

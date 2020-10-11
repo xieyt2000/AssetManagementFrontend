@@ -1,6 +1,7 @@
 import { login, logout } from './auth'
 import { getUserInfo, setUserToken, setUserInfo, resetUser } from './user'
 import { toggleSiderBar, toggleSettingPanel } from './app'
+import { addTag, emptyTaglist, deleteTag, closeOtherTags } from './tagsView'
 export {
   login,
   logout,
@@ -9,5 +10,9 @@ export {
   setUserInfo,
   resetUser,
   toggleSiderBar,
-  toggleSettingPanel
+  toggleSettingPanel,
+  addTag,
+  emptyTaglist,
+  deleteTag,
+  closeOtherTags
 }
