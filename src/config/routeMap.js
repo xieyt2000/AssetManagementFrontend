@@ -8,7 +8,10 @@ import PERMISSION from '../utils/permission'
 // const EditorPage = Loadable({ loader: () => import(/* webpackChunkName:'EditorPage' */'@/views/permission/editorPage'), loading: Loading })
 // const Menu11 = Loadable({ loader: () => import(/* webpackChunkName:'MenuAA' */'@/views/nested/menu1/menu1-1'), loading: Loading })
 // const Menu121 = Loadable({ loader: () => import(/* webpackChunkName:'MenuABA' */'@/views/nested/menu1/menu1-2/menu1-2-1'), loading: Loading })
-const User = Loadable({ loader: () => import(/* webpackChunkName:'User' */'@/views/user'), loading: Loading })
+const User = Loadable({
+  loader: () => import(/* webpackChunkName:'User' */'@/views/user-management'),
+  loading: Loading
+})
 
 export default [
   // { path: '/dashboard', component: Dashboard, roles: ['admin', 'editor', 'guest'] },
