@@ -1,10 +1,9 @@
 import request from '@/utils/request'
 
-export function reqUserInfo (data) {
+export function reqUserInfo () {
   return request({
-    url: '/userInfo',
-    method: 'post',
-    data
+    url: '/user/info',
+    method: 'post'
   })
 }
 
@@ -15,34 +14,34 @@ export function getUsers () {
   })
 }
 
-export function deleteUser (data) {
+export function deleteUser (user) {
   return request({
     url: '/user/delete',
     method: 'post',
-    data
+    data: user
   })
 }
 
-export function editUser (data) {
+export function editUser (user) {
   return request({
     url: '/user/edit',
     method: 'post',
-    data
+    data: user
   })
 }
 
-export function reqValidatUserID (data) {
+export function nameExist (name) {
   return request({
-    url: '/user/validatUserID',
+    url: '/user/exist',
     method: 'post',
-    data
+    data: { name: name }
   })
 }
 
-export function addUser (data) {
+export function addUser (user) {
   return request({
     url: '/user/add',
     method: 'post',
-    data
+    data: user
   })
 }
