@@ -8,6 +8,7 @@ import { getMenuItemInMenuListByProperty } from '@/utils'
 import routeList from '@/config/routeMap'
 import menuList from '@/config/menuConfig'
 import PropTypes from 'prop-types'
+import { checkPermission } from '@/utils/permission'
 
 const { Content } = Layout
 
@@ -25,7 +26,7 @@ const LayoutContent = (props) => {
   const { pathname } = location
   const handleFilter = (route) => {
     // 过滤没有权限的页面
-    return role === 'admin' || !route.roles || route.roles.includes(role)
+    return !route.roles || checkPermission(route.roles, role)
   }
   return (
     <DocumentTitle title={getPageTitle(menuList, pathname)}>
@@ -59,7 +60,7 @@ const LayoutContent = (props) => {
   )
 }
 LayoutContent.propTypes = {
-  role: PropTypes.string,
+  role: PropTypes.array,
   location: PropTypes.instanceOf(window.location),
   pathname: PropTypes.string
 }

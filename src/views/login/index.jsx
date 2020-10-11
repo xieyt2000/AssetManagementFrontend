@@ -8,7 +8,7 @@ import PropTypes from 'prop-types'
 import { login, getUserInfo } from '@/store/actions'
 
 const Login = (props) => {
-  const { form, token, login, getUserInfo } = props
+  const { form, login, getUserInfo, role } = props
   const { getFieldDecorator } = form
 
   const [loading, setLoading] = useState(false)
@@ -30,7 +30,8 @@ const Login = (props) => {
   // 获取用户信息
   const handleUserInfo = (token) => {
     getUserInfo(token)
-      .then((data) => {})
+      .then((data) => {
+      })
       .catch((error) => {
         message.error(error)
       })
@@ -52,8 +53,8 @@ const Login = (props) => {
     })
   }
 
-  if (token) {
-    return <Redirect to="/dashboard" />
+  if (role.length >= 1) {
+    return <Redirect to="/dashboard"/>
   }
   return (
     <DocumentTitle title={'用户登录'}>
@@ -76,7 +77,7 @@ const Login = (props) => {
               })(
                 <Input
                   prefix={
-                    <Icon type="user" style={{ color: 'rgba(0,0,0,.25)' }} />
+                    <Icon type="user" style={{ color: 'rgba(0,0,0,.25)' }}/>
                   }
                   placeholder="用户名"
                 />
@@ -95,7 +96,7 @@ const Login = (props) => {
               })(
                 <Input
                   prefix={
-                    <Icon type="lock" style={{ color: 'rgba(0,0,0,.25)' }} />
+                    <Icon type="lock" style={{ color: 'rgba(0,0,0,.25)' }}/>
                   }
                   type="password"
                   placeholder="密码"
@@ -113,9 +114,9 @@ const Login = (props) => {
             </Form.Item>
             <Form.Item>
               <span>账号 : admin 密码 : 随便填</span>
-              <br />
+              <br/>
               <span>账号 : editor 密码 : 随便填</span>
-              <br />
+              <br/>
               <span>账号 : guest 密码 : 随便填</span>
             </Form.Item>
           </Spin>
@@ -127,9 +128,9 @@ const Login = (props) => {
 
 Login.propTypes = {
   form: PropTypes.instanceOf(Form),
-  token: PropTypes.string,
   login: PropTypes.func,
-  getUserInfo: PropTypes.func
+  getUserInfo: PropTypes.func,
+  role: PropTypes.array
 }
 
 const WrapLogin = Form.create()(Login)

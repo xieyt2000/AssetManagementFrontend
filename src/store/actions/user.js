@@ -1,5 +1,6 @@
 import * as types from '../action-types'
 import { reqUserInfo } from '@/api/user'
+import PERMISSION from '../../utils/permission'
 
 export const getUserInfo = (token) => (dispatch) => {
   return new Promise((resolve, reject) => {
@@ -21,7 +22,7 @@ export const getUserInfo = (token) => (dispatch) => {
           status: 0,
           userInfo: {
             id: 'admin',
-            role: 'admin',
+            role: [PERMISSION.IT, PERMISSION.ASSET, PERMISSION.SYSTEM, PERMISSION.STAFF],
             name: 'yy',
             avatar: '',
             description: 'admin'
