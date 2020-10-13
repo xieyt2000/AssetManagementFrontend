@@ -66,7 +66,7 @@ AddUserForm.propTypes = {
   visible: PropTypes.bool,
   onCancel: PropTypes.func,
   onOk: PropTypes.func,
-  confirmLoading: PropTypes.boolean,
+  confirmLoading: PropTypes.bool,
   form: PropTypes.object
 }
 

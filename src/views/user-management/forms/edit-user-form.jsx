@@ -43,7 +43,7 @@ EditUserForm.propTypes = {
   onCancel: PropTypes.func,
   onOk: PropTypes.func,
   confirmLoading: PropTypes.func,
-  form: PropTypes.instanceOf(Form),
+  form: PropTypes.object,
   rowData: PropTypes.object // refer to `rowData` in ../index.js
 }
 
