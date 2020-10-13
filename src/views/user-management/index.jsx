@@ -114,12 +114,19 @@ class UserManagement extends Component {
     })
   }
 
+  fixEmptyRole = (values) => {
+    if (values.role === undefined) {
+      values.role = ['STAFF']
+    }
+  }
+
   handleOkEdit = (ignore) => {
     const form = this.editFormRef.props.form
     form.validateFields((err, values) => {
       if (err) {
         return
       }
+      this.fixEmptyRole(values)
       this.setState({ editModalLod: true })
       editUser(values).then(() => {
         form.resetFields()
@@ -138,6 +145,7 @@ class UserManagement extends Component {
       if (err) {
         return
       }
+      this.fixEmptyRole(values)
       this.setState({ addModalLod: true })
       addUser(values).then(() => {
         form.resetFields()
