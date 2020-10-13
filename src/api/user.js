@@ -2,21 +2,21 @@ import request from '@/utils/request'
 
 export function reqUserInfo () {
   return request({
-    url: '/user/info',
+    url: '/api/user/info',
     method: 'post'
   })
 }
 
 export function getUsers () {
   return request({
-    url: '/user/list',
+    url: '/api/user/list',
     method: 'get'
   })
 }
 
 export function deleteUser (user) {
   return request({
-    url: '/user/delete',
+    url: '/api/user/delete',
     method: 'post',
     data: user
   })
@@ -24,7 +24,7 @@ export function deleteUser (user) {
 
 export function editUser (user) {
   return request({
-    url: '/user/edit',
+    url: '/api/user/edit',
     method: 'post',
     data: user
   })
@@ -32,7 +32,7 @@ export function editUser (user) {
 
 export function nameExist (name) {
   return request({
-    url: '/user/exist',
+    url: '/api/user/exist',
     method: 'post',
     data: { name: name }
   })
@@ -40,7 +40,7 @@ export function nameExist (name) {
 
 export function addUser (user) {
   return request({
-    url: '/user/add',
+    url: '/api/user/add',
     method: 'post',
     data: user
   })

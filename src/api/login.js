@@ -2,7 +2,7 @@ import request from '@/utils/request'
 
 export function reqLogin (data) {
   return request({
-    url: '/user/login',
+    url: '/api/user/login',
     method: 'post',
     data
   })
@@ -10,7 +10,7 @@ export function reqLogin (data) {
 
 export function reqLogout (data) {
   return request({
-    url: '/user/logout',
+    url: '/api/user/logout',
     method: 'post',
     data
   })
