@@ -127,7 +127,7 @@ const Login = (props) => {
 }
 
 Login.propTypes = {
-  form: PropTypes.instanceOf(Form),
+  form: PropTypes.object,
   login: PropTypes.func,
   getUserInfo: PropTypes.func,
   role: PropTypes.array

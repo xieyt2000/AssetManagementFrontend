@@ -1,8 +1,10 @@
 # Meeting Board
 
-Manage meetings.
+Asset management frontend.
 
 The frontend was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+
+Reference: https://gitlab.secoder.net/example/reactjs-example
 
 ## Usage
 

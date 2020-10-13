@@ -4,7 +4,7 @@ import { Icon, Menu, Dropdown, Modal, Layout, Avatar } from 'antd'
 import { Link } from 'react-router-dom'
 import { logout, getUserInfo } from '@/store/actions'
 // import Hamburger from '@/components/Hamburger'
-// import BreadCrumb from '@/components/BreadCrumb'
+import BreadCrumb from '@/components/BreadCrumb'
 import './index.less'
 import PropTypes from 'prop-types'
 
@@ -63,7 +63,7 @@ const LayoutHeader = (props) => {
         className={'fix-header'}
       >
         {/* <Hamburger /> */}
-        {/* <BreadCrumb /> */}
+        <BreadCrumb />
         <div className="right-menu">
           <div className="dropdown-wrap">
             <Dropdown overlay={menu}>

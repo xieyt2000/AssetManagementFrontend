@@ -66,8 +66,8 @@ AddUserForm.propTypes = {
   visible: PropTypes.bool,
   onCancel: PropTypes.func,
   onOk: PropTypes.func,
-  confirmLoading: PropTypes.func,
-  form: PropTypes.instanceOf(Form)
+  confirmLoading: PropTypes.boolean,
+  form: PropTypes.object
 }
 
 export default Form.create()(AddUserForm)

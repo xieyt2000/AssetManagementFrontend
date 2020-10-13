@@ -46,18 +46,23 @@ export default {
     }
   },
   userInfo: (config) => {
-    const token = config.body
-    const userInfo = users[token]
-    if (!userInfo) {
-      return {
-        status: 1,
-        message: '获取用户信息失败'
-      }
-    }
+    const userInfo = users['admin-token']
     return {
       status: 0,
       userInfo
     }
+    // const token = config.body
+    // const userInfo = users[token]
+    // if (!userInfo) {
+    //   return {
+    //     status: 1,
+    //     message: '获取用户信息失败'
+    //   }
+    // }
+    // return {
+    //   status: 0,
+    //   userInfo
+    // }
   },
   getUsers: () => {
     return {
