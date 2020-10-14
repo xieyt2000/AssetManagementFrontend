@@ -12,7 +12,7 @@ const columns = [
   {
     title: '名称',
     dataIndex: 'name',
-    key: 'oname',
+    key: 'name',
     width: 200
   },
   {
@@ -42,13 +42,13 @@ class AssetTable extends Component {
 
   state = {
     list: [{
-      key: '@increment',
+      key: '1',
       no: '1',
       name: '计算机',
       price: '1000',
       tag: 'working'
     }, {
-      key: '@increment',
+      key: '2',
       no: '2',
       name: '显示器',
       price: '500',

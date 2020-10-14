@@ -44,7 +44,7 @@ class BoxCard extends Component {
             />
           }
         >
-          <Descriptions title="用户信息">
+          <Descriptions title="用户信息" layout="vertical">
             <Descriptions.Item label="用户名">{name}</Descriptions.Item>
             <Descriptions.Item label="权限">{this.convertRoleToString(role)}</Descriptions.Item>
           </Descriptions>
