@@ -1,9 +1,9 @@
 import React, { Component } from 'react'
-import { Card } from 'antd'
+import { Descriptions, Card } from 'antd'
 import { connect } from 'react-redux'
 import './index.less'
 import PropTypes from 'prop-types'
-import PERMISSION from '../../../../utils/permission'
+import PERMISSION from '@/utils/permission'
 
 class BoxCard extends Component {
   state = {}
@@ -40,18 +40,14 @@ class BoxCard extends Component {
             <img
               alt="example"
               src="https://wpimg.wallstcn.com/e7d23d71-cf19-4b90-a1cc-f56af8c0903d.png"
-              style={{ height: '480px' }}
+              style={{ height: '300px' }}
             />
           }
         >
-          <div style={{ position: 'relative' }}>
-            <div style={{ paddingTop: '35px' }} className="progress-item">
-              <span>用户：{name}</span>
-            </div>
-            <div className="progress-item">
-              <span>权限：{this.convertRoleToString(role)}</span>
-            </div>
-          </div>
+          <Descriptions title="用户信息">
+            <Descriptions.Item label="用户名">{name}</Descriptions.Item>
+            <Descriptions.Item label="权限">{this.convertRoleToString(role)}</Descriptions.Item>
+          </Descriptions>,
         </Card>
       </div>
     )
