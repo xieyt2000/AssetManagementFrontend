@@ -13,24 +13,24 @@ const menuList = [
     icon: 'lock',
     children: [
       {
-        title: '权限说明',
-        path: '/permission/explanation',
-        roles: [PERMISSION.IT, PERMISSION.ASSET, PERMISSION.SYSTEM, PERMISSION.STAFF]
+        title: '系统管理员页面',
+        path: '/permission/SystemPage',
+        roles: [PERMISSION.SYSTEM]
       },
       {
-        title: 'admin页面',
-        path: '/permission/adminPage',
-        roles: [PERMISSION.IT, PERMISSION.ASSET, PERMISSION.SYSTEM, PERMISSION.STAFF]
+        title: '资产管理员页面页面',
+        path: '/permission/AssetPage',
+        roles: [PERMISSION.ASSET]
       },
       {
-        title: 'guest页面',
-        path: '/permission/guestPage',
-        roles: [PERMISSION.IT, PERMISSION.ASSET, PERMISSION.SYSTEM, PERMISSION.STAFF]
+        title: 'IT管理员页面',
+        path: '/permission/ITPage',
+        roles: [PERMISSION.IT]
       },
       {
-        title: 'editor页面',
-        path: '/permission/editorPage',
-        roles: [PERMISSION.IT, PERMISSION.ASSET, PERMISSION.SYSTEM, PERMISSION.STAFF]
+        title: '员工页面',
+        path: '/permission/StaffPage',
+        roles: [PERMISSION.STAFF]
       }
     ]
   },
