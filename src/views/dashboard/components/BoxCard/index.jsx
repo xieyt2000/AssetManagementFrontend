@@ -3,7 +3,7 @@ import { Descriptions, Card } from 'antd'
 import { connect } from 'react-redux'
 import './index.less'
 import PropTypes from 'prop-types'
-import PERMISSION from '@/utils/permission'
+import PERMISSION from '../../../../utils/permission'
 
 class BoxCard extends Component {
   state = {}
@@ -47,7 +47,7 @@ class BoxCard extends Component {
           <Descriptions title="用户信息">
             <Descriptions.Item label="用户名">{name}</Descriptions.Item>
             <Descriptions.Item label="权限">{this.convertRoleToString(role)}</Descriptions.Item>
-          </Descriptions>,
+          </Descriptions>
         </Card>
       </div>
     )
