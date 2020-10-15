@@ -3,7 +3,7 @@ import { Descriptions, Card } from 'antd'
 import { connect } from 'react-redux'
 import './index.less'
 import PropTypes from 'prop-types'
-import PERMISSION from '../../../../utils/permission'
+import PERMISSION from '@/utils/permission'
 
 class BoxCard extends Component {
   state = {}

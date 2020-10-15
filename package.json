@@ -60,7 +60,10 @@
     "coverageReporters": [
       "text",
       "lcov"
-    ]
+    ],
+    "moduleNameMapper": {
+      "^@/(.*)": "<rootDir>/src/$1"
+    }
   },
   "jestSonar": {
     "reportPath": "coverage",
