@@ -31,7 +31,7 @@ build:
 unit-test:
   extends: .test
   script:
-    # - npm test
+    - npm test
     - exit 0
   after_script:
     - SUFFIX=$RANDOM
