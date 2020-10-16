@@ -18,7 +18,7 @@ const menuList = [
         roles: [PERMISSION.SYSTEM]
       },
       {
-        title: '资产管理员页面页面',
+        title: '资产管理员页面',
         path: '/permission/AssetPage',
         roles: [PERMISSION.ASSET]
       },
