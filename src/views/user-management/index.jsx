@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { deleteUser, getUsers, addUser, editUser } from '@/api/user'
+import { deleteUser, getUsers, addUser, editUser, lockUser } from '@/api/user'
 import { Button, Card, Table, message, Divider } from 'antd'
 import HelpCard from '../../components/HelpCard'
 import EditUserForm from './forms/edit-user-form'
@@ -34,19 +34,24 @@ class UserManagement extends Component {
         <HelpCard title='用户管理' source={description}/>
         <Card title={cardTitle}>
           <Table
-            bordered rowKey="id"
+            bordered rowKey="name"
             dataSource={users}
             pagination={false}>
             <Column title="用户名" dataIndex="name" key="name" align="center"/>
             <Column title="用户权限" dataIndex="roleStr" key="roleStr" align="center"/>
             <Column title="用户部门" dataIndex="department" key="department" align="center"/>
-            <Column title="操作" key="action" width={150} align="center" render={(row) => (<span>
-              <Button type="primary" shape="circle" icon="edit" title="编辑"
-                onClick={this.handleClickEdit.bind(this, row)}/>
-              <Divider type="vertical"/>
-              <Button type="primary" shape="circle" icon="delete" title="删除"
-                onClick={this.handleClickDelete.bind(this, row)}/>
-            </span>)}/>
+            <Column title="操作" key="action" width={200} align="center" render={(row) => (
+              <span>
+                <Button type="primary" shape="circle" icon={row.is_active ? 'unlock' : 'lock'}
+                  title="锁定" style={row.is_active ? {} : { backgroundColor: '#666666' }}
+                  onClick={this.handleClickLock.bind(this, row)}/>
+                <Divider type="vertical"/>
+                <Button type="primary" shape="circle" icon="edit" title="编辑"
+                  onClick={this.handleClickEdit.bind(this, row)}/>
+                <Divider type="vertical"/>
+                <Button type="primary" shape="circle" icon="delete" title="删除"
+                  onClick={this.handleClickDelete.bind(this, row)}/>
+              </span>)}/>
           </Table>
         </Card>
         <EditUserForm
@@ -111,6 +116,24 @@ class UserManagement extends Component {
       }
     ).catch((ignored) => {
       message.error('删除失败，请检查网络连接后重试！')
+    })
+  }
+
+  handleClickLock = (row) => {
+    const name = row.name
+    const active = row.is_active
+    const oprStr = active ? '锁定' : '解锁'
+    lockUser({ username: name, active: active ? 0 : 1 }).then(
+      (res) => {
+        if (res.data.code === 200) {
+          message.success(oprStr + '成功')
+        } else {
+          message.error(oprStr + '失败')
+        }
+        this.localGetUsers()
+      }
+    ).catch((ignored) => {
+      message.error(oprStr + '失败，请检查网络连接后重试！')
     })
   }
 
