@@ -22,6 +22,14 @@ export function deleteUser (user) {
   })
 }
 
+export function lockUser (user) {
+  return request({
+    url: '/api/user/lock',
+    method: 'post',
+    data: user
+  })
+}
+
 export function editUser (user) {
   return request({
     url: '/api/user/edit',
