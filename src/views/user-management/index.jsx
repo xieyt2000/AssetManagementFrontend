@@ -101,11 +101,17 @@ class UserManagement extends Component {
   handleClickDelete = (row) => {
     const name = row.name
     deleteUser({ name: name }).then(
-      () => {
-        message.success('删除成功')
+      (res) => {
+        if (res.data.code === 200) {
+          message.success('删除成功')
+        } else {
+          message.error('删除失败')
+        }
         this.localGetUsers()
       }
-    )
+    ).catch((ignored) => {
+      message.error('删除失败，请检查网络连接后重试！')
+    })
   }
 
   handleClickAdd = () => {
@@ -131,10 +137,10 @@ class UserManagement extends Component {
       editUser(values).then(() => {
         form.resetFields()
         this.setState({ editModalVis: false, editModalLod: false })
-        message.success('编辑用户成功！')
+        message.success('编辑成功！')
         this.localGetUsers()
       }).catch((ignored) => {
-        message.error('编辑用户失败，请检查网络连接后重试！')
+        message.error('编辑失败，请检查网络连接后重试！')
       })
     })
   }
@@ -150,10 +156,10 @@ class UserManagement extends Component {
       addUser(values).then(() => {
         form.resetFields()
         this.setState({ addModalVis: false, addModalLod: false })
-        message.success('添加用户成功！')
+        message.success('添加成功！')
         this.localGetUsers()
       }).catch((ignored) => {
-        message.success('添加用户失败，请检查网络连接后重试！')
+        message.success('添加失败，请检查网络连接后重试！')
       })
     })
   }
