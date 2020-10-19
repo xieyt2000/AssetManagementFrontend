@@ -24,8 +24,6 @@ class BoxCard extends Component {
         case PERMISSION.STAFF:
           roleString += '员工'
           break
-        default:
-          break
       }
     }
     return roleString
