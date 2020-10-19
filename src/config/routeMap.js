@@ -16,6 +16,10 @@ const User = Loadable({
   loader: () => import(/* webpackChunkName:'User' */'@/views/user-management'),
   loading: Loading
 })
+const Log = Loadable({
+  loader: () => import(/* webpackChunkName:'User' */'@/views/log'),
+  loading: Loading
+})
 
 export default [
   {
@@ -23,7 +27,16 @@ export default [
     component: Dashboard,
     roles: [PERMISSION.IT, PERMISSION.ASSET, PERMISSION.SYSTEM, PERMISSION.STAFF]
   },
-  { path: '/user', component: User, roles: [PERMISSION.SYSTEM] }
+  {
+    path: '/user',
+    component: User,
+    roles: [PERMISSION.SYSTEM]
+  },
+  {
+    path: '/log',
+    component: Log,
+    roles: [PERMISSION.SYSTEM]
+  }
   // { path: '/permission/explanation', component: Explanation, roles: ['admin'] },
   // { path: '/permission/adminPage', component: AdminPage, roles: ['admin'] },
   // { path: '/permission/guestPage', component: GuestPage, roles: ['guest'] },

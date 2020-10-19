@@ -75,6 +75,13 @@ const menuList = [
     path: '/user',
     icon: 'usergroup-add',
     roles: [PERMISSION.SYSTEM]
+  },
+  {
+    title: '操作日志',
+    path: '/log',
+    icon: 'database',
+    roles: [PERMISSION.SYSTEM]
   }
+
 ]
 export default menuList
