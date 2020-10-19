@@ -59,7 +59,7 @@ const BreadCrumb = (props) => {
   )
 }
 BreadCrumb.propTypes = {
-  location: PropTypes.instanceOf(window.location),
+  location: PropTypes.object,
   pathname: PropTypes.string
 }
 export default withRouter(BreadCrumb)
