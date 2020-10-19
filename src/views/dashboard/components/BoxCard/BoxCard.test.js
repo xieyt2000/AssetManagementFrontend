@@ -1,30 +1,20 @@
 import React from 'react'
 import { Provider } from 'react-redux'
 import renderer from 'react-test-renderer'
-import configureStore from 'redux-mock-store'
 import BoxCard from './index'
-import PERMISSION from '@/utils/permission'
-const mockStore = configureStore([])
-describe('My Connected React-Redux Component', () => {
-  let store
+import { store } from '@/utils/mockStore'
+
+describe('BoxCard test', () => {
   let component
   beforeEach(() => {
-    store = mockStore({
-      user: {
-        name: 'admin',
-        role: [PERMISSION.SYSTEM, PERMISSION.STAFF, PERMISSION.IT, PERMISSION.ASSET]
-      }
-    })
     component = renderer.create(
       <Provider store={store}>
-        <BoxCard />
+        <BoxCard/>
       </Provider>
     )
   })
-  it('should render with given state from Redux store', () => {
-    component.root.findByProps({ title: '用户信息' })
-    // console.log(component.root.findByType('img').props)
-  })
-  it('should dispatch an action on button click', () => {
+  it('render BoxCard', () => {
+    // expect(component.toJSON()).toMatchSnapshot()
+    expect(component.root.findByProps({ alt: 'example' }).props.style.height).toBe('300px')
   })
 })
