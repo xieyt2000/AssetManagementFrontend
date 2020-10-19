@@ -33,6 +33,7 @@
     "react-redux": "^7.2.0",
     "react-router-dom": "^5.1.2",
     "react-scripts": "3.4.1",
+    "react-test-renderer": "^16.14.0",
     "react-transition-group": "^4.4.1",
     "redux": "^4.0.5",
     "redux-thunk": "^2.3.0",
@@ -83,6 +84,10 @@
     ]
   },
   "devDependencies": {
+    "babel-plugin-import": "^1.13.0",
+    "commitizen": "^4.0.3",
+    "customize-cra": "^0.9.1",
+    "cz-conventional-changelog": "^3.0.2",
     "eslint": "^6.6.0",
     "eslint-config-standard": "^13.0.1",
     "eslint-plugin-import": "^2.18.2",
@@ -92,13 +97,10 @@
     "eslint-plugin-react": "^7.14.3",
     "eslint-plugin-standard": "^4.0.0",
     "jest-sonar-reporter": "^2.0.0",
-    "user-agent": "^1.0.4",
-    "babel-plugin-import": "^1.13.0",
-    "commitizen": "^4.0.3",
-    "customize-cra": "^0.9.1",
-    "cz-conventional-changelog": "^3.0.2",
     "mockjs": "^1.1.0",
-    "react-app-rewired": "^2.1.5"
+    "react-app-rewired": "^2.1.5",
+    "redux-mock-store": "^1.5.4",
+    "user-agent": "^1.0.4"
   },
   "proxy": "http://127.0.0.1:8000"
 }
