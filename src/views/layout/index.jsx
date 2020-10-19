@@ -1,5 +1,4 @@
 import React from 'react'
-import { connect } from 'react-redux'
 import Content from './Content'
 import Header from './Header'
 // import RightPanel from './RightPanel'
@@ -18,4 +17,4 @@ const Main = (props) => {
     </Layout>
   )
 }
-export default connect((state) => state.settings)(Main)
+export default (Main)

@@ -169,7 +169,7 @@ class SideMenu extends Component {
 SideMenu.propTypes = {
   role: PropTypes.array,
   addTag: PropTypes.func,
-  location: PropTypes.instanceOf(window.location)
+  location: PropTypes.object
 }
 
 export default connect((state) => state.user, { addTag })(withRouter(SideMenu))

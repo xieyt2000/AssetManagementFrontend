@@ -61,7 +61,7 @@ const LayoutContent = (props) => {
 }
 LayoutContent.propTypes = {
   role: PropTypes.array,
-  location: PropTypes.instanceOf(window.location),
+  location: PropTypes.object,
   pathname: PropTypes.string
 }
 
