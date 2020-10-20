@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import { Button, Card, Table, Divider } from 'antd'
 import HelpCard from '../../components/HelpCard'
-
+import UploadAsset from './upload'
 const Column = Table.Column
 
 class AssetManagement extends Component {
@@ -21,11 +21,12 @@ class AssetManagement extends Component {
     const assetList = this.state.assetList
     const cardTitle = (
       <span>
+        <Button type='primary' onClick={this.handleAdd}>批量导出</Button>
+        <Divider type='vertical'/>
         <Button type='primary' onClick={this.handleAdd}>导入资产</Button>
         <Divider type='vertical'/>
-        <Button type='primary' onClick={this.handleAdd}>批量导入</Button>
-        <Divider type='vertical'/>
-        <Button type='primary' onClick={this.handleAdd}>批量导出</Button>
+        <UploadAsset/>
+
       </span>
     )
     const description = '作为资产管理员，你可以进行资产管理和批量导入、导出'
@@ -40,6 +41,10 @@ class AssetManagement extends Component {
             <Column title="资产名称" dataIndex="name" key="name" align="center"/>
             <Column title="挂账人" dataIndex="owner" key="owner" align="center"/>
             <Column title="所属部门" dataIndex="department" key="department" align="center"/>
+            <Column title="资产类型" dataIndex="is_quantity" key="is_quantity" align="center" render={(row) => (
+              <span> {row.is_quantity ? '数量型' : '条目型'} </span>
+            )}/>
+            <Column title="资产价值" dataIndex="value" key="value" align="center"/>
             <Column title="操作" key="action" width={200} align="center" render={(row) => (
               <span>
                 <Button type="primary" shape="circle" icon="search" title="查看详情"/>
