@@ -45,7 +45,7 @@
     "start": "react-app-rewired start",
     "build": "react-app-rewired --max-old-space-size=4096 build",
     "test": "react-app-rewired test src --coverage --testResultsProcessor=jest-sonar-reporter --silent --watchAll=false",
-    "lint": "eslint src/**/*.{js,jsx}",
+    "lint": "eslint src/**/*.{test.js,js,jsx}",
     "eject": "react-scripts eject"
   },
   "eslintConfig": {

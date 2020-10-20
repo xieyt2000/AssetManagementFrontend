@@ -15,6 +15,10 @@ describe('BreadCrumb test', () => {
       </Provider>
     )
   })
+  afterEach(() => {
+    component.unmount()
+  })
   it('render BreadCrumb', () => {
+
   })
 })

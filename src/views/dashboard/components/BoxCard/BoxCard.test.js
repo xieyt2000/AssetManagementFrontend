@@ -13,6 +13,9 @@ describe('BoxCard test', () => {
       </Provider>
     )
   })
+  afterEach(() => {
+    component.unmount()
+  })
   it('render BoxCard', () => {
     // expect(component.toJSON()).toMatchSnapshot()
     expect(component.root.findByProps({ alt: 'example' }).props.style.height).toBe('300px')

@@ -15,6 +15,9 @@ describe('LayoutHeader test', () => {
       </Provider>
     )
   })
+  afterEach(() => {
+    component.unmount()
+  })
   it('render', () => {
   })
 })

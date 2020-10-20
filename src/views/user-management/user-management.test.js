@@ -12,6 +12,9 @@ describe('user management test', () => {
       </Provider>
     )
   })
+  afterEach(() => {
+    component.unmount()
+  })
   it('render', () => {
   })
 })
