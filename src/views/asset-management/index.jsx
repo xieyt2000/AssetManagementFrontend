@@ -17,7 +17,7 @@ class AssetManagement extends Component {
     this.state = {
       assetList: [
         {
-          isQuantity: true,
+          is_quantity: true,
           quantity: 1,
           value: 1,
           name: 'name',
@@ -69,9 +69,9 @@ class AssetManagement extends Component {
             <Column title="资产名称" dataIndex="name" key="name" align="center"/>
             <Column title="挂账人" dataIndex="owner" key="owner" align="center"/>
             <Column title="所属部门" dataIndex="department" key="department" align="center"/>
-            <Column title="资产类型" dataIndex="isQuantity" key="isQuantity" align="center"
+            <Column title="资产类型" dataIndex="is_quantity" key="is_quantity" align="center"
               render={(row) => (
-                <span> {row.isQuantity ? '数量型' : '条目型'} </span>
+                <span> {row.is_quantity ? '数量型' : '条目型'} </span>
               )}/>
             <Column title="资产价值" dataIndex="value" key="value" align="center"/>
             <Column title="操作" key="action" width={200} align="center" render={(row) => (
@@ -114,7 +114,7 @@ class AssetManagement extends Component {
     }
     addAsset(results).then(() => {
       message.success('添加成功')
-      this.localGetUsers()
+      this.getAsset()
     }).catch((ignored) => {
       message.error('添加失败，请检查网络连接后重试！')
     })
@@ -153,7 +153,7 @@ class AssetManagement extends Component {
         form.resetFields()
         this.setState({ editModalVis: false, editModalLod: false })
         message.success('编辑成功！')
-        this.localGetUsers()
+        this.getAsset()
       }).catch((ignored) => {
         message.error('编辑失败，请检查网络连接后重试！')
       })
@@ -173,9 +173,12 @@ class AssetManagement extends Component {
   getAsset = async () => {
     const res = await assetList()
     const { data: assets, code } = res.data
+    // for (let i = 0; i < assets.length; i++) {
+    //   assets[i]['is_quantity'] = assets[i]['is_quantity']
+    // }
     if (code === 200) {
       this.setState({
-        users: assets
+        assetList: assets
       })
     }
   }
@@ -184,6 +187,7 @@ class AssetManagement extends Component {
     this.getAsset()
   }
 }
+
 AssetManagement.propTypes = {
   name: PropTypes.string
 }
