@@ -10,6 +10,8 @@ class Log extends Component {
     super(props)
     this.state = {
       logs: []
+      // pageNumber: 1,
+      // pageSize: 20
     }
   }
 
@@ -22,14 +24,34 @@ class Log extends Component {
         <br/>
         <Table
           bordered rowKey="name"
-          dataSource={logs}>
+          dataSource={logs}
+          pagination={false}>
           <Column title="时间" dataIndex="time" key="time" align="center"/>
-          <Column title="信息" dataIndex="message" key="message" align="center"/>
+          <Column title="返回信息" dataIndex="message" key="message" align="center"/>
           <Column title="使用API" dataIndex="path" key="path" align="center"/>
+          <Column title="用户" dataIndex="username" key="username" align="center"/>
         </Table>
+        {/* <Pagination */}
+        {/*  total={this.state.total} */}
+        {/*  pageSizeOptions={['10', '20', '40']} */}
+        {/*  showTotal={(total) => `共${total}条数据`} */}
+        {/*  onChange={this.changePage} */}
+        {/*  current={this.state.pageNumber} */}
+        {/*  showSizeChanger */}
+        {/*  showQuickJumper */}
+        {/*  hideOnSinglePage={true} */}
+        {/* /> */}
       </div>
     )
   }
+
+  // changePage = () => {
+  //
+  // }
+  //
+  // changePageSize = () => {
+  //
+  // }
 
   // avoid naming conflict with api.getUsers
   localGetLog = async () => {
