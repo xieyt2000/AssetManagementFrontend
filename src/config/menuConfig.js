@@ -37,7 +37,7 @@ const menuList = [
   {
     title: '资产管理',
     path: '/asset',
-    icon: 'lock',
+    icon: 'account-book',
     children: [
       {
         title: '资产列表',
