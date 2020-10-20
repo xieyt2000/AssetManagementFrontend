@@ -47,7 +47,7 @@ class AssetManagement extends Component {
         <Button type='primary' onClick={this.handleAdd}>导入资产</Button>
         <Divider type='vertical'/>
         <UploadAsset/>
-
+        <Divider type='vertical'/>
       </span>
     )
     const description = '作为资产管理员，你可以进行资产管理和批量导入、导出'
@@ -58,7 +58,8 @@ class AssetManagement extends Component {
           <Table
             bordered rowKey="name"
             dataSource={assetList}
-            pagination={true}>
+            expandIconColumnIndex={-1}
+            pagination={false}>
             <Column title="资产名称" dataIndex="name" key="name" align="center"/>
             <Column title="挂账人" dataIndex="owner" key="owner" align="center"/>
             <Column title="所属部门" dataIndex="department" key="department" align="center"/>
