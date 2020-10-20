@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import { Checkbox, Form, Input, Modal } from 'antd'
 import { PropTypes } from 'prop-types'
 import { nameExist } from '@/api/user'
-import { getRoleArr, formLayout } from './form-shared'
+import { getRoleArr, formLayout, validatePassWord } from './form-shared'
 
 class AddUserForm extends Component {
   validateNewName = async (rule, name, callback) => {
@@ -21,17 +21,6 @@ class AddUserForm extends Component {
     callback()
   }
 
-  validatePassWord = (rule, password, callback) => {
-    if (password) {
-      if (!/^[a-zA-Z0-9]{4,20}$/.test(password)) {
-        callback('密码必须为4-20位数字或字母组合')
-      }
-    } else {
-      callback('请输入密码')
-    }
-    callback()
-  }
-
   render () {
     const { visible, onCancel, onOk, form, confirmLoading } = this.props
     const rolesArr = getRoleArr()
@@ -46,7 +35,7 @@ class AddUserForm extends Component {
           </Form.Item>
           <Form.Item label={'密码'}>
             {form.getFieldDecorator('password', {
-              rules: [{ required: true, validator: this.validatePassWord }]
+              rules: [{ required: true, validator: validatePassWord }]
             })(<Input.Password placeholder="密码"/>)}
           </Form.Item>
           <Form.Item label={'权限'}>
@@ -54,7 +43,9 @@ class AddUserForm extends Component {
           </Form.Item>
           <Form.Item label={'部门'}>
             {/* TODO 部门选择方式、验证 */}
-            {form.getFieldDecorator('department')(<Input placeholder="部门"/>)}
+            {form.getFieldDecorator('department', {
+              rules: [{ required: true, message: '部门不能为空' }]
+            })(<Input placeholder="部门"/>)}
           </Form.Item>
         </Form>
       </Modal>
