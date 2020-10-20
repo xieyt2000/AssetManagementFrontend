@@ -5,7 +5,7 @@ import 'antd/dist/antd.less'
 import './index.less'
 import * as serviceWorker from './serviceWorker'
 // 使用mock
-import './mock'
+// import './mock'
 ReactDOM.render(
   <App/>,
   document.getElementById('root')
