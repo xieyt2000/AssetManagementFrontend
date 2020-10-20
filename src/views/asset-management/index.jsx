@@ -63,15 +63,18 @@ class AssetManagement extends Component {
             <Column title="资产名称" dataIndex="name" key="name" align="center"/>
             <Column title="挂账人" dataIndex="owner" key="owner" align="center"/>
             <Column title="所属部门" dataIndex="department" key="department" align="center"/>
-            <Column title="资产类型" dataIndex="isQuantity" key="isQuantity" align="center" render={(row) => (
-              <span> {row.isQuantity ? '数量型' : '条目型'} </span>
-            )}/>
+            <Column title="资产类型" dataIndex="isQuantity" key="isQuantity" align="center"
+              render={(row) => (
+                <span> {row.isQuantity ? '数量型' : '条目型'} </span>
+              )}/>
             <Column title="资产价值" dataIndex="value" key="value" align="center"/>
             <Column title="操作" key="action" width={200} align="center" render={(row) => (
               <span>
-                <Button type="primary" shape="circle" icon="search" title="查看详情" onClick={this.handleAssetInfoClick.bind(this, row)}/>
+                <Button type="primary" shape="circle" icon="search" title="查看详情"
+                  onClick={this.handleAssetInfoClick.bind(this, row)}/>
                 <Divider type="vertical"/>
-                <Button type="primary" shape="circle" icon="edit" title="编辑" onClick={this.handleEditAssetFormClick.bind(this, row)}/>
+                <Button type="primary" shape="circle" icon="edit" title="编辑"
+                  onClick={this.handleEditAssetFormClick.bind(this, row)}/>
               </span>)}/>
           </Table>
         </Card>
@@ -82,7 +85,7 @@ class AssetManagement extends Component {
           }}
           visible={this.state.assetInfoModelVis}
           conirmLoading={this.state.assetInfoModelLod}
-          onExit = {this.handleAssetInfoExit}
+          onExit={this.handleAssetInfoExit}
         />
         <EditAssetForm
           rowData={this.state.rowData}
