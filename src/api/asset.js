@@ -2,22 +2,22 @@ import request from '@/utils/request'
 
 export function assetList () {
   return request({
-    url: '/asset/list',
+    url: '/api/asset/list',
     method: 'get'
   })
 }
 
 export function addAsset (assetArr) {
   return request({
-    url: '/asset/add',
+    url: '/api/asset/add',
     method: 'post',
-    data: assetArr
+    data: { data: assetArr }
   })
 }
 
 export function editAsset (asset) {
   return request({
-    uri: '/asset/edit',
+    url: '/api/asset/edit',
     method: 'post',
     data: asset
   })
