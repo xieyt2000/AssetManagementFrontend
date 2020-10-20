@@ -9,7 +9,7 @@ const tokens = {
 const users = {
   'admin-token': {
     id: 'admin',
-    role: [PERMISSION.SYSTEM, PERMISSION.STAFF],
+    role: [PERMISSION.SYSTEM, PERMISSION.STAFF, PERMISSION.ASSET, PERMISSION.IT],
     name: 'yy',
     avatar: 'https://s1.ax1x.com/2020/04/28/J5hUaT.jpg',
     description: '拥有系统内所有菜单和路由权限'

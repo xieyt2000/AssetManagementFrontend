@@ -10,6 +10,10 @@ const User = Loadable({
   loader: () => import(/* webpackChunkName:'User' */'@/views/user-management'),
   loading: Loading
 })
+const AssetManageMent = Loadable({
+  loader: () => import(/* webpackChunkName:'AssetManagement' */'@/views/asset-management'),
+  loading: Loading
+})
 const Log = Loadable({
   loader: () => import(/* webpackChunkName:'User' */'@/views/log'),
   loading: Loading
@@ -30,6 +34,11 @@ export default [
     path: '/log',
     component: Log,
     roles: [PERMISSION.SYSTEM]
+  },
+  {
+    path: '/asset/management',
+    component: AssetManageMent,
+    roles: [PERMISSION.ASSET]
   }
   // { path: '/permission/explanation', component: Explanation, roles: ['admin'] },
   // { path: '/permission/adminPage', component: AdminPage, roles: ['admin'] },

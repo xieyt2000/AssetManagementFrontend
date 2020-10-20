@@ -34,6 +34,18 @@ const menuList = [
       }
     ]
   },
+  {
+    title: '资产管理',
+    path: '/asset',
+    icon: 'lock',
+    children: [
+      {
+        title: '资产列表',
+        path: '/asset/management',
+        roles: [PERMISSION.ASSET]
+      }
+    ]
+  },
   // {
   //   title: '路由嵌套',
   //   path: '/nested',
