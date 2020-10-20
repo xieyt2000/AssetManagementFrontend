@@ -49,7 +49,7 @@ class AssetManagement extends Component {
         <Divider type='vertical'/>
         <Button type='primary' onClick={this.handleAdd}>导入资产</Button>
         <Divider type='vertical'/>
-        <UploadAsset/>
+        <UploadAsset uploadSuccess={this.handleExcelUpload}/>
         <Divider type='vertical'/>
       </span>
     )
@@ -101,6 +101,10 @@ class AssetManagement extends Component {
           onOk={this.handleOkEdit}/>
       </div>
     )
+  }
+
+  handleExcelUpload = (results) => {
+    addAsset(results)
   }
 
   handleAssetInfoClick = (row) => {
