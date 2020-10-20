@@ -5,5 +5,9 @@ export const store = mockStore({
   user: {
     name: 'yy',
     role: [PERMISSION.SYSTEM, PERMISSION.STAFF, PERMISSION.IT, PERMISSION.ASSET]
+  },
+  app: {
+    sidebarCollapsed: false,
+    settingPanelVisible: false
   }
 })

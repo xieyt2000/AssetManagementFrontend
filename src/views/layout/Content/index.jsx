@@ -31,30 +31,30 @@ const LayoutContent = (props) => {
   return (
     <DocumentTitle title={getPageTitle(menuList, pathname)}>
       <Content style={{ height: 'calc(100% - 100px)' }}>
-        <TransitionGroup>
-          <CSSTransition
-            key={location.pathname}
-            timeout={500}
-            classNames="fade"
-            exit={false}
-          >
-            <Switch location={location}>
-              <Redirect exact from="/" to="/dashboard"/>
-              {routeList.map((route) => {
-                return (
-                  handleFilter(route) && (
-                    <Route
-                      component={route.component}
-                      key={route.path}
-                      path={route.path}
-                    />
-                  )
-                )
-              })}
-              <Redirect to="/error/404"/>
-            </Switch>
-          </CSSTransition>
-        </TransitionGroup>
+        {/* <TransitionGroup> */}
+        {/*  <CSSTransition */}
+        {/*    key={location.pathname} */}
+        {/*    timeout={500} */}
+        {/*    classNames="fade" */}
+        {/*    exit={false} */}
+        {/*  > */}
+        <Switch location={location}>
+          <Redirect exact from="/" to="/dashboard"/>
+          {routeList.map((route) => {
+            return (
+              handleFilter(route) && (
+                <Route
+                  component={route.component}
+                  key={route.path}
+                  path={route.path}
+                />
+              )
+            )
+          })}
+          <Redirect to="/error/404"/>
+        </Switch>
+        {/* </CSSTransition> */}
+        {/* </TransitionGroup> */}
       </Content>
     </DocumentTitle>
   )
