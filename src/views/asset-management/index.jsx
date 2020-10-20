@@ -1,9 +1,10 @@
 import React, { Component } from 'react'
-import { Button, Card, Table, Divider } from 'antd'
+import { Button, Card, Table, Divider, message } from 'antd'
 import HelpCard from '../../components/HelpCard'
 import UploadAsset from './upload'
 import AssetInfo from './components/AssetInfo'
 import EditAssetForm from './components/EditAssetForm'
+import { addAsset, assetList, editAsset } from '../../api/asset'
 
 const Column = Table.Column
 
@@ -17,7 +18,7 @@ class AssetManagement extends Component {
           quantity: 1,
           value: 1,
           name: 'name',
-          histroy: [],
+          history: [],
           description: 'description',
           parent: 'parent',
           children: ['children'],
@@ -128,16 +129,14 @@ class AssetManagement extends Component {
       }
       this.fixEmptyRole(values)
       this.setState({ editModalLod: true })
-      console.log(values)
-      this.setState({ editModalVis: false, editModalLod: false })
-      // editUser(values).then(() => {
-      //   form.resetFields()
-      //   this.setState({ editModalVis: false, editModalLod: false })
-      //   message.success('编辑成功！')
-      //   this.localGetUsers()
-      // }).catch((ignored) => {
-      //   message.error('编辑失败，请检查网络连接后重试！')
-      // })
+      editAsset(values).then(() => {
+        form.resetFields()
+        this.setState({ editModalVis: false, editModalLod: false })
+        message.success('编辑成功！')
+        this.localGetUsers()
+      }).catch((ignored) => {
+        message.error('编辑失败，请检查网络连接后重试！')
+      })
     })
   }
 
@@ -148,14 +147,21 @@ class AssetManagement extends Component {
   }
 
   handleAdd () {
-
+    addAsset()
   }
 
-  localGetAsset () {
+  getAsset = async () => {
+    const res = await assetList()
+    const { data: assets, code } = res.data
+    if (code === 200) {
+      this.setState({
+        users: assets
+      })
+    }
   }
 
   componentDidMount () {
-    this.localGetAsset()
+    this.getAsset()
   }
 }
 
