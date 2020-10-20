@@ -2,18 +2,52 @@ import React, { Component } from 'react'
 import { Button, Card, Table, Divider } from 'antd'
 import HelpCard from '../../components/HelpCard'
 import UploadAsset from './upload'
+import AssetInfo from './components/asset-info'
+
 const Column = Table.Column
 
 class AssetManagement extends Component {
   constructor (props) {
     super(props)
     this.state = {
-      assetList: [],
+      assetList: [
+        {
+          isQuantity: true,
+          quantity: 1,
+          value: 1,
+          name: 'name',
+          histroy: [],
+          description: 'description',
+          parent: 'parent',
+          children: ['children'],
+          owner: 'yy',
+          department: 'department',
+          status: 'working',
+          startTime: '2020-10-20',
+          prop: 'prop'
+        }
+      ],
       editModalVis: false, // vis for visible
       editModalLod: false, // loa for loading
-      rowData: {},
+      rowData: {
+        isQuantity: true,
+        quantity: 1,
+        value: 1,
+        name: 'name',
+        histroy: [],
+        description: 'description',
+        parent: 'parent',
+        children: ['children'],
+        owner: 'yy',
+        department: 'department',
+        status: 'working',
+        startTime: '2020-10-20',
+        prop: 'prop'
+      },
       addModalVis: false,
-      addModalLod: false
+      addModalLod: false,
+      assetInfoModelVis: false,
+      assetInfoModelLod: false
     }
   }
 
@@ -47,14 +81,36 @@ class AssetManagement extends Component {
             <Column title="资产价值" dataIndex="value" key="value" align="center"/>
             <Column title="操作" key="action" width={200} align="center" render={(row) => (
               <span>
-                <Button type="primary" shape="circle" icon="search" title="查看详情"/>
+                <Button type="primary" shape="circle" icon="search" title="查看详情" onClick={this.handleAssetInfoClick.bind(this, row)}/>
                 <Divider type="vertical"/>
                 <Button type="primary" shape="circle" icon="edit" title="编辑"/>
               </span>)}/>
           </Table>
         </Card>
+        <AssetInfo
+          rowData={this.state.rowData}
+          wrappedComponentRef={(formRef) => {
+            this.assetInfoRef = formRef
+          }}
+          visible={this.state.assetInfoModelVis}
+          conirmLoading={this.state.assetInfoModelLod}
+          onExit = {this.handleAssetInfoExit}
+        />
       </div>
     )
+  }
+
+  handleAssetInfoClick = (row) => {
+    this.setState({
+      rowData: Object.assign({}, row),
+      assetInfoModelVis: true
+    })
+  }
+
+  handleAssetInfoExit = () => {
+    this.setState({
+      assetInfoModelVis: false
+    })
   }
 
   handleAdd () {
