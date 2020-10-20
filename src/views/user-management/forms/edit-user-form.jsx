@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { getRoleArr, formLayout } from './form-shared'
+import { getRoleArr, formLayout, validatePassWord } from './form-shared'
 import { Checkbox, Form, Input, Modal } from 'antd'
 import { PropTypes } from 'prop-types'
 
@@ -19,7 +19,7 @@ class EditUserForm extends Component {
           </Form.Item>
           <Form.Item label={'密码'}>
             {form.getFieldDecorator('password', {
-              rules: [{ required: true, validator: this.validatePassWord }]
+              rules: [{ required: true, validator: validatePassWord }]
             })(<Input.Password placeholder="密码"/>)}
           </Form.Item>
           <Form.Item label={'权限'}>
@@ -29,7 +29,7 @@ class EditUserForm extends Component {
           <Form.Item label={'部门'}>
             {/* TODO 部门选择方式、验证 */}
             {form.getFieldDecorator('department', {
-              initialValue: department
+              initialValue: department, required: true, message: '部门不能为空'
             })(<Input placeholder="部门"/>)}
           </Form.Item>
         </Form>

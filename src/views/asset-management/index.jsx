@@ -1,9 +1,10 @@
 import React, { Component } from 'react'
-import { Button, Card, Table, Divider } from 'antd'
+import { Button, Card, Table, Divider, message } from 'antd'
 import HelpCard from '../../components/HelpCard'
 import UploadAsset from './upload'
 import AssetInfo from './components/AssetInfo'
 import EditAssetForm from './components/EditAssetForm'
+import { addAsset, assetList, editAsset } from '../../api/asset'
 import STATUS from '../../utils/assetStatus'
 
 const Column = Table.Column
@@ -18,7 +19,7 @@ class AssetManagement extends Component {
           quantity: 1,
           value: 1,
           name: 'name',
-          histroy: [],
+          history: [],
           description: 'description',
           parent: 'parent',
           children: ['children'],
@@ -65,15 +66,18 @@ class AssetManagement extends Component {
             <Column title="资产名称" dataIndex="name" key="name" align="center"/>
             <Column title="挂账人" dataIndex="owner" key="owner" align="center"/>
             <Column title="所属部门" dataIndex="department" key="department" align="center"/>
-            <Column title="资产类型" dataIndex="isQuantity" key="isQuantity" align="center" render={(row) => (
-              <span> {row.isQuantity ? '数量型' : '条目型'} </span>
-            )}/>
+            <Column title="资产类型" dataIndex="isQuantity" key="isQuantity" align="center"
+              render={(row) => (
+                <span> {row.isQuantity ? '数量型' : '条目型'} </span>
+              )}/>
             <Column title="资产价值" dataIndex="value" key="value" align="center"/>
             <Column title="操作" key="action" width={200} align="center" render={(row) => (
               <span>
-                <Button type="primary" shape="circle" icon="search" title="查看详情" onClick={this.handleAssetInfoClick.bind(this, row)}/>
+                <Button type="primary" shape="circle" icon="search" title="查看详情"
+                  onClick={this.handleAssetInfoClick.bind(this, row)}/>
                 <Divider type="vertical"/>
-                <Button type="primary" shape="circle" icon="edit" title="编辑" onClick={this.handleEditAssetFormClick.bind(this, row)}/>
+                <Button type="primary" shape="circle" icon="edit" title="编辑"
+                  onClick={this.handleEditAssetFormClick.bind(this, row)}/>
               </span>)}/>
           </Table>
         </Card>
@@ -84,7 +88,7 @@ class AssetManagement extends Component {
           }}
           visible={this.state.assetInfoModelVis}
           conirmLoading={this.state.assetInfoModelLod}
-          onExit = {this.handleAssetInfoExit}
+          onExit={this.handleAssetInfoExit}
         />
         <EditAssetForm
           rowData={this.state.rowData}
@@ -128,15 +132,14 @@ class AssetManagement extends Component {
       this.setState({ editModalLod: true })
       values.nid = this.state.rowData.nid
       console.log(values)
-      this.setState({ editModalVis: false, editModalLod: false })
-      // editUser(values).then(() => {
-      //   form.resetFields()
-      //   this.setState({ editModalVis: false, editModalLod: false })
-      //   message.success('编辑成功！')
-      //   this.localGetUsers()
-      // }).catch((ignored) => {
-      //   message.error('编辑失败，请检查网络连接后重试！')
-      // })
+      editAsset(values).then(() => {
+        form.resetFields()
+        this.setState({ editModalVis: false, editModalLod: false })
+        message.success('编辑成功！')
+        this.localGetUsers()
+      }).catch((ignored) => {
+        message.error('编辑失败，请检查网络连接后重试！')
+      })
     })
   }
 
@@ -146,15 +149,22 @@ class AssetManagement extends Component {
     })
   }
 
-  handleAdd () {
-
+  handleAdd = (assets) => {
+    addAsset()
   }
 
-  localGetAsset () {
+  getAsset = async () => {
+    const res = await assetList()
+    const { data: assets, code } = res.data
+    if (code === 200) {
+      this.setState({
+        users: assets
+      })
+    }
   }
 
   componentDidMount () {
-    this.localGetAsset()
+    this.getAsset()
   }
 }
 
