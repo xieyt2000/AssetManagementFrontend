@@ -1,0 +1,8 @@
+const STATUS = {
+  IDLE: 'IDLE',
+  IN_USE: 'IN_USE',
+  IN_MAINTAIN: 'IN_MAINTAIN',
+  RETIRED: 'RETIRED',
+  DELETED: 'DELETED'
+}
+export default STATUS

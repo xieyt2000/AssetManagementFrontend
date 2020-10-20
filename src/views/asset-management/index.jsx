@@ -4,6 +4,7 @@ import HelpCard from '../../components/HelpCard'
 import UploadAsset from './upload'
 import AssetInfo from './components/AssetInfo'
 import EditAssetForm from './components/EditAssetForm'
+import STATUS from '../../utils/assetStatus'
 
 const Column = Table.Column
 
@@ -23,9 +24,10 @@ class AssetManagement extends Component {
           children: ['children'],
           owner: 'yy',
           department: 'department',
-          status: 'working',
+          status: STATUS.IN_USE,
           startTime: '2020-10-20',
-          prop: 'prop'
+          prop: 'prop',
+          nid: 1
         }
       ],
       editModalVis: false, // vis for visible
@@ -123,8 +125,8 @@ class AssetManagement extends Component {
       if (err) {
         return
       }
-      this.fixEmptyRole(values)
       this.setState({ editModalLod: true })
+      values.nid = this.state.rowData.nid
       console.log(values)
       this.setState({ editModalVis: false, editModalLod: false })
       // editUser(values).then(() => {
