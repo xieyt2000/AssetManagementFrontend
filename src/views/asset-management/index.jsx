@@ -5,7 +5,9 @@ import UploadAsset from './upload'
 import AssetInfo from './components/AssetInfo'
 import EditAssetForm from './components/EditAssetForm'
 import { addAsset, assetList, editAsset } from '../../api/asset'
-import STATUS from '../../utils/assetStatus'
+import STATUS from '../../utils/asset'
+import { connect } from 'react-redux'
+import PropTypes from 'prop-types'
 
 const Column = Table.Column
 
@@ -43,6 +45,7 @@ class AssetManagement extends Component {
 
   render () {
     const assetList = this.state.assetList
+
     const cardTitle = (
       <span>
         <Button type='primary' onClick={this.handleAdd}>批量导出</Button>
@@ -104,7 +107,17 @@ class AssetManagement extends Component {
   }
 
   handleExcelUpload = (results) => {
-    addAsset(results)
+    for (let i = 0; i < results.length; i++) {
+      if (results[i].owner === undefined || results[i].owner === '') {
+        results[i].owner = this.props.name
+      }
+    }
+    addAsset(results).then(() => {
+      message.success('添加成功')
+      this.localGetUsers()
+    }).catch((ignored) => {
+      message.error('添加失败，请检查网络连接后重试！')
+    })
   }
 
   handleAssetInfoClick = (row) => {
@@ -171,5 +184,8 @@ class AssetManagement extends Component {
     this.getAsset()
   }
 }
+AssetManagement.propTypes = {
+  name: PropTypes.string
+}
 
-export default AssetManagement
+export default connect((state) => state.user)(AssetManagement)
