@@ -1,7 +1,6 @@
 import React, { Component } from 'react'
-import { Form, Input, Modal } from 'antd'
+import { Form, Input, Modal, Radio } from 'antd'
 import { PropTypes } from 'prop-types'
-import RadioGroup from 'antd/es/radio/group'
 import { getStatusArr } from './form-shared'
 
 class EditAssetForm extends Component {
@@ -42,7 +41,7 @@ class EditAssetForm extends Component {
           <Form.Item label={'状态'}>
             {form.getFieldDecorator('status', {
               initialValue: status
-            })(<RadioGroup options={statusArr}/>)}
+            })(<Radio.Group options={statusArr}/>)}
           </Form.Item>
           <Form.Item label={'数量'}>
             {form.getFieldDecorator('quantity', {
