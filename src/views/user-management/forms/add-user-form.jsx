@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import { Checkbox, Form, Input, Modal } from 'antd'
 import { PropTypes } from 'prop-types'
 import { nameExist } from '@/api/user'
-import { getRoleArr, formLayout, validatePassWord } from './form-shared'
+import { getRoleArr, formLayout } from './form-shared'
 
 class AddUserForm extends Component {
   validateNewName = async (rule, name, callback) => {
@@ -32,11 +32,6 @@ class AddUserForm extends Component {
             {form.getFieldDecorator('name', {
               rules: [{ required: true, validator: this.validateNewName }]
             })(<Input placeholder="用户名"/>)}
-          </Form.Item>
-          <Form.Item label={'密码'}>
-            {form.getFieldDecorator('password', {
-              rules: [{ required: true, validator: validatePassWord }]
-            })(<Input.Password placeholder="密码"/>)}
           </Form.Item>
           <Form.Item label={'权限'}>
             {form.getFieldDecorator('role')(<Checkbox.Group options={rolesArr}/>)}
