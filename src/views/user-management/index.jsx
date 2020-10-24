@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import { deleteUser, getUsers, addUser, editUser, lockUser } from '@/api/user'
-import { Button, Card, Table, message, Divider } from 'antd'
+import { Button, Card, Table, message, Divider, Modal } from 'antd'
 import HelpCard from '../../components/HelpCard'
 import EditUserForm from './forms/edit-user-form'
 import AddUserForm from './forms/add-user-form'
@@ -104,18 +104,26 @@ class UserManagement extends Component {
   }
 
   handleClickDelete = (row) => {
-    const name = row.name
-    deleteUser({ name: name }).then(
-      (res) => {
-        if (res.data.code === 200) {
-          message.success('删除成功')
-        } else {
-          message.error('删除失败')
-        }
-        this.localGetUsers()
+    Modal.confirm({
+      title: '删除',
+      content: '确定要删除' + row.name + '吗',
+      okText: '确定',
+      cancelText: '取消',
+      onOk: () => {
+        const name = row.name
+        deleteUser({ name: name }).then(
+          (res) => {
+            if (res.data.code === 200) {
+              message.success('删除成功')
+            } else {
+              message.error('删除失败')
+            }
+            this.localGetUsers()
+          }
+        ).catch((ignored) => {
+          message.error('删除失败，请检查网络连接后重试！')
+        })
       }
-    ).catch((ignored) => {
-      message.error('删除失败，请检查网络连接后重试！')
     })
   }
 
