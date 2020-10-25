@@ -37,7 +37,6 @@ class AddUserForm extends Component {
             {form.getFieldDecorator('role')(<Checkbox.Group options={rolesArr}/>)}
           </Form.Item>
           <Form.Item label={'部门'}>
-            {/* TODO 部门选择方式、验证 */}
             {form.getFieldDecorator('department', {
               rules: [{ required: true, message: '部门不能为空' }]
             })(<TreeSelect
