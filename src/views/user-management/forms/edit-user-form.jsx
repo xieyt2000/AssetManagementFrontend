@@ -1,9 +1,18 @@
 import React, { Component } from 'react'
-import { getRoleArr, formLayout, validatePassWord } from './form-shared'
-import { Checkbox, Form, Input, Modal, TreeSelect } from 'antd'
+import { getRoleArr, formLayout } from './form-shared'
+import { Checkbox, Collapse, Form, Input, Modal, TreeSelect } from 'antd'
 import { PropTypes } from 'prop-types'
 
+const Panel = Collapse.Panel
+
 class EditUserForm extends Component {
+  validatePassWord = (rule, password, callback) => {
+    if (password && !/^[a-zA-Z0-9]{4,20}$/.test(password)) {
+      callback('密码必须为4-20位数字或字母组合（如果不修改密码请清空该输入框）')
+    }
+    callback()
+  }
+
   render () {
     const { visible, onCancel, onOk, form, confirmLoading, rowData, departments } = this.props
     const { name, role } = rowData
@@ -17,11 +26,6 @@ class EditUserForm extends Component {
               initialValue: name
             })(<Input disabled/>)}
           </Form.Item>
-          <Form.Item label={'密码'}>
-            {form.getFieldDecorator('password', {
-              rules: [{ required: true, validator: validatePassWord }]
-            })(<Input.Password placeholder="密码"/>)}
-          </Form.Item>
           <Form.Item label={'权限'}>
             {form.getFieldDecorator('role', { initialValue: role })(<Checkbox.Group
               options={rolesArr}/>)}
@@ -34,6 +38,19 @@ class EditUserForm extends Component {
               treeData={departments}
             />)}
           </Form.Item>
+          <center>
+            <Collapse style={{
+              width: '65%'
+            }}>
+              <Panel key={1} header={'修改密码（仅在修改密码时设置）'}>
+                <Form.Item label={''}>
+                  {form.getFieldDecorator('password', {
+                    rules: [{ validator: this.validatePassWord }]
+                  })(<Input.Password placeholder="密码"/>)}
+                </Form.Item>
+              </Panel>
+            </Collapse>
+          </center>
         </Form>
       </Modal>
     )

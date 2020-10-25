@@ -1,12 +1,13 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { connect } from 'react-redux'
-import { Icon, Menu, Dropdown, Modal, Layout, Avatar } from 'antd'
+import { Icon, Menu, Dropdown, Modal, Layout, Avatar, message } from 'antd'
 import { Link } from 'react-router-dom'
 import { logout, getUserInfo } from '@/store/actions'
-// import Hamburger from '@/components/Hamburger'
+import { changePassword } from '@/api/user'
 import BreadCrumb from '@/components/BreadCrumb'
 import './index.less'
 import PropTypes from 'prop-types'
+import ChangePasswordForm from './change-password-form'
 
 const { Header } = Layout
 
@@ -18,6 +19,8 @@ const LayoutHeader = (props) => {
     getUserInfo,
     role
   } = props
+  const [changePasswordVis, setChangePasswordVis] = useState(false)
+  const [changePasswordLoad, setChangePasswordLoad] = useState(false)
   // ???
   // token && getUserInfo(token)
   if (role.length === 0) {
@@ -34,10 +37,36 @@ const LayoutHeader = (props) => {
       }
     })
   }
+
+  let changePasswordFormRef
+  const handleChangePassword = () => {
+    const form = changePasswordFormRef.props.form
+    form.validateFields((err, values) => {
+      if (err) {
+        return
+      }
+      setChangePasswordLoad(true)
+      changePassword(values).then((res) => {
+        form.resetFields()
+        setChangePasswordLoad(false)
+        setChangePasswordVis(false)
+        if (res.data.code === 200) {
+          message.success('修改密码成功！')
+        } else if (res.data.code === 202) {
+          message.error('当前密码输入错误！')
+        }
+      }).catch(() => {
+        message.error('修改密码失败，请检查网络连接后重试')
+      })
+    })
+  }
   const onClick = ({ key }) => {
     switch (key) {
       case 'logout':
         handleLogout(token)
+        break
+      case 'changePassword':
+        setChangePasswordVis(true)
         break
       default:
         break
@@ -50,11 +79,24 @@ const LayoutHeader = (props) => {
       </Menu.Item>
       <Menu.Divider/>
       <Menu.Item key="logout">注销</Menu.Item>
+      <Menu.Divider/>
+      <Menu.Item key="changePassword">更改密码</Menu.Item>
     </Menu>
   )
 
   return (
     <>
+      <ChangePasswordForm
+        wrappedComponentRef={(formRef) => {
+          changePasswordFormRef = formRef
+        }}
+        visible={changePasswordVis}
+        onCancel={() => {
+          setChangePasswordVis(false)
+        }}
+        onOk={handleChangePassword}
+        confirmLoading={changePasswordLoad}
+      />
       {/* 这里是仿照antd pro的做法,如果固定header，
       则header的定位变为fixed，此时需要一个定位为relative的header把原来的header位置撑起来 */}
       <Header/>
@@ -63,7 +105,7 @@ const LayoutHeader = (props) => {
         className={'fix-header'}
       >
         {/* <Hamburger /> */}
-        <BreadCrumb />
+        <BreadCrumb/>
         <div className="right-menu">
           <div className="dropdown-wrap">
             <Dropdown overlay={menu}>
