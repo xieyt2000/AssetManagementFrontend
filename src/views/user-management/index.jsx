@@ -74,7 +74,7 @@ class UserManagement extends Component {
           conirmLoading={this.state.editModalLod}
           onCancel={this.handleCancel}
           onOk={this.handleOkEdit}
-          departments = {departmentList}
+          departments={departmentList}
         />
         <AddUserForm
           wrappedComponentRef={(formRef) => {
@@ -84,7 +84,7 @@ class UserManagement extends Component {
           confirmLoading={this.state.addModalLod}
           onCancel={this.handleCancel}
           onOk={this.handleOkAdd}
-          departments = {departmentList}
+          departments={departmentList}
         />
       </div>
     )
@@ -176,7 +176,9 @@ class UserManagement extends Component {
       if (err) {
         return
       }
-
+      if (values.password === undefined) {
+        values.password = ''
+      }
       this.fixEmptyRole(values)
       this.setState({ editModalLod: true })
       editUser(values).then(() => {
