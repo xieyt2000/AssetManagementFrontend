@@ -1,6 +1,7 @@
 import { Tree, Input } from 'antd'
 import React from 'react'
 import { departmentList } from '@/api/department'
+import HelpCard from '../../components/HelpCard'
 const { TreeNode } = Tree
 const { Search } = Input
 
@@ -109,10 +110,14 @@ class DepartmentManagement extends React.Component {
         }
         return <TreeNode key={item.id} title={title}/>
       })
+    const description = '作为系统管理员，你可以浏览企业的部门组织结构，' +
+      '通过左键点击部门名称来添加、修改、删除部门，下方的搜索框可以帮助你更快地定位部门'
     return (
       <div className='app-container'>
+        <HelpCard title='部门管理' source={description}/>
+        <br/>
         <div>
-          <Search style={{ marginBottom: 8 }} placeholder="Search" onChange={this.onChange}/>
+          <Search style={{ marginBottom: 8 }} placeholder="搜索" onChange={this.onChange}/>
           <Tree
             onExpand={this.onExpand}
             expandedKeys={expandedKeys}
