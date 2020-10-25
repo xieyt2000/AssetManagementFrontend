@@ -5,8 +5,17 @@ import HelpCard from '../../components/HelpCard'
 import EditUserForm from './forms/edit-user-form'
 import AddUserForm from './forms/add-user-form'
 import { CHINESE_PERMISSION } from '@/utils/permission'
+import { departmentList } from '../../api/department'
 
 const Column = Table.Column
+
+const adaptDepartmentList = (departmentList) => {
+  departmentList.forEach(item => {
+    item.value = item.id
+    item.label = item.name
+    adaptDepartmentList(item.children)
+  })
+}
 
 class UserManagement extends Component {
   constructor (props) {
@@ -17,12 +26,14 @@ class UserManagement extends Component {
       editModalLod: false, // loa for loading
       rowData: {},
       addModalVis: false,
-      addModalLod: false
+      addModalLod: false,
+      departmentList: []
     }
   }
 
   render () {
     const users = this.state.users
+    const departmentList = this.state.departmentList
     const cardTitle = (
       <span>
         <Button type='primary' onClick={this.handleClickAdd}>添加用户</Button>
@@ -72,6 +83,7 @@ class UserManagement extends Component {
           confirmLoading={this.state.addModalLod}
           onCancel={this.handleCancel}
           onOk={this.handleOkAdd}
+          departments = {departmentList}
         />
       </div>
     )
@@ -202,8 +214,21 @@ class UserManagement extends Component {
     })
   }
 
+  getDepartments = async () => {
+    const res = await departmentList()
+    const { data: departments, code } = res.data
+    const newDepartments = [departments]
+    adaptDepartmentList(newDepartments)
+    if (code === 200) {
+      this.setState({
+        departmentList: newDepartments
+      })
+    }
+  }
+
   componentDidMount () {
     this.localGetUsers()
+    this.getDepartments()
   }
 }
 
