@@ -1,12 +1,12 @@
 import React, { Component } from 'react'
-import { getRoleArr, formLayout, validatePassWord } from './form-shared'
-import { Checkbox, Form, Input, Modal } from 'antd'
+import { getRoleArr, formLayout, validatePassWord, displayRender } from './form-shared'
+import { Cascader, Checkbox, Form, Input, Modal } from 'antd'
 import { PropTypes } from 'prop-types'
 
 class EditUserForm extends Component {
   render () {
-    const { visible, onCancel, onOk, form, confirmLoading, rowData } = this.props
-    const { name, department, role } = rowData
+    const { visible, onCancel, onOk, form, confirmLoading, rowData, departments } = this.props
+    const { name, role } = rowData
     const rolesArr = getRoleArr()
     return (
       <Modal title="编辑用户" visible={visible} onCancel={onCancel}
@@ -29,8 +29,12 @@ class EditUserForm extends Component {
           <Form.Item label={'部门'}>
             {/* TODO 部门选择方式、验证 */}
             {form.getFieldDecorator('department', {
-              initialValue: department, required: true, message: '部门不能为空'
-            })(<Input placeholder="部门"/>)}
+              required: true, message: '部门不能为空'
+            })(<Cascader
+              options={departments}
+              expandTrigger="hover"
+              displayRender={displayRender}
+            />)}
           </Form.Item>
         </Form>
       </Modal>
@@ -44,7 +48,8 @@ EditUserForm.propTypes = {
   onOk: PropTypes.func,
   confirmLoading: PropTypes.func,
   form: PropTypes.object,
-  rowData: PropTypes.object // refer to `rowData` in ../index.js
+  rowData: PropTypes.object, // refer to `rowData` in ../index.js
+  departments: PropTypes.array
 }
 
 export default Form.create()(EditUserForm)

@@ -1,8 +1,8 @@
 import React, { Component } from 'react'
-import { Checkbox, Form, Input, Modal } from 'antd'
+import { Checkbox, Form, Input, Modal, Cascader } from 'antd'
 import { PropTypes } from 'prop-types'
 import { nameExist } from '@/api/user'
-import { getRoleArr, formLayout, validatePassWord } from './form-shared'
+import { getRoleArr, formLayout, validatePassWord, displayRender } from './form-shared'
 
 class AddUserForm extends Component {
   validateNewName = async (rule, name, callback) => {
@@ -22,7 +22,7 @@ class AddUserForm extends Component {
   }
 
   render () {
-    const { visible, onCancel, onOk, form, confirmLoading } = this.props
+    const { visible, onCancel, onOk, form, confirmLoading, departments } = this.props
     const rolesArr = getRoleArr()
     return (
       <Modal title="添加用户" visible={visible} onCancel={onCancel}
@@ -45,7 +45,11 @@ class AddUserForm extends Component {
             {/* TODO 部门选择方式、验证 */}
             {form.getFieldDecorator('department', {
               rules: [{ required: true, message: '部门不能为空' }]
-            })(<Input placeholder="部门"/>)}
+            })(<Cascader
+              options={departments}
+              expandTrigger="hover"
+              displayRender={displayRender}
+            />)}
           </Form.Item>
         </Form>
       </Modal>
@@ -58,7 +62,8 @@ AddUserForm.propTypes = {
   onCancel: PropTypes.func,
   onOk: PropTypes.func,
   confirmLoading: PropTypes.bool,
-  form: PropTypes.object
+  form: PropTypes.object,
+  departments: PropTypes.array
 }
 
 export default Form.create()(AddUserForm)
