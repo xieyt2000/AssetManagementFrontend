@@ -170,12 +170,6 @@ class UserManagement extends Component {
     }
   }
 
-  fixDepartment = (values) => {
-    if (values.department) {
-      values.department = values.department[values.department.length - 1]
-    }
-  }
-
   handleOkEdit = (ignore) => {
     const form = this.editFormRef.props.form
     form.validateFields((err, values) => {
@@ -183,7 +177,6 @@ class UserManagement extends Component {
         return
       }
       this.fixEmptyRole(values)
-      this.fixDepartment(values)
       this.setState({ editModalLod: true })
       editUser(values).then(() => {
         form.resetFields()
@@ -203,7 +196,6 @@ class UserManagement extends Component {
         return
       }
       this.fixEmptyRole(values)
-      this.fixDepartment(values)
       this.setState({ addModalLod: true })
       addUser(values).then(() => {
         form.resetFields()

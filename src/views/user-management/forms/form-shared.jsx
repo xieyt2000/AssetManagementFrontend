@@ -26,6 +26,3 @@ export const validatePassWord = (rule, password, callback) => {
   }
   callback()
 }
-export const displayRender = (label) => {
-  return label[label.length - 1]
-}

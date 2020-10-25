@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
-import { getRoleArr, formLayout, validatePassWord, displayRender } from './form-shared'
-import { Cascader, Checkbox, Form, Input, Modal } from 'antd'
+import { getRoleArr, formLayout, validatePassWord } from './form-shared'
+import { Checkbox, Form, Input, Modal, TreeSelect } from 'antd'
 import { PropTypes } from 'prop-types'
 
 class EditUserForm extends Component {
@@ -30,10 +30,8 @@ class EditUserForm extends Component {
             {/* TODO 部门选择方式、验证 */}
             {form.getFieldDecorator('department', {
               required: true, message: '部门不能为空'
-            })(<Cascader
-              options={departments}
-              expandTrigger="hover"
-              displayRender={displayRender}
+            })(<TreeSelect
+              treeData={departments}
             />)}
           </Form.Item>
         </Form>

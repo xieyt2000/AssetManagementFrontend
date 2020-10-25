@@ -1,8 +1,8 @@
 import React, { Component } from 'react'
-import { Checkbox, Form, Input, Modal, Cascader } from 'antd'
+import { Checkbox, Form, Input, Modal, TreeSelect } from 'antd'
 import { PropTypes } from 'prop-types'
 import { nameExist } from '@/api/user'
-import { getRoleArr, formLayout, validatePassWord, displayRender } from './form-shared'
+import { getRoleArr, formLayout, validatePassWord } from './form-shared'
 
 class AddUserForm extends Component {
   validateNewName = async (rule, name, callback) => {
@@ -45,10 +45,8 @@ class AddUserForm extends Component {
             {/* TODO 部门选择方式、验证 */}
             {form.getFieldDecorator('department', {
               rules: [{ required: true, message: '部门不能为空' }]
-            })(<Cascader
-              options={departments}
-              expandTrigger="hover"
-              displayRender={displayRender}
+            })(<TreeSelect
+              treeData={departments}
             />)}
           </Form.Item>
         </Form>
