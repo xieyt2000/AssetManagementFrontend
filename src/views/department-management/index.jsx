@@ -75,29 +75,77 @@ class DepartmentManagement extends React.Component {
 
   getChangeDepartmentData () {
     const form = this.changeFormRef.props.form
+    let ret = false
     form.validateFields((err, values) => {
       if (err) {
-        return false
+        return
       }
       const name = values.name
       const id = this.state.selectedDepartment.id
       form.resetFields()
-      return {
+      ret = {
         name: name,
         id: id
       }
     })
+    return ret
   }
 
-  handleOkAdd () {
+  handleOkAdd = async () => {
+    const addPara = await this.getChangeDepartmentData()
+    if (!addPara) {
+      return
+    }
+    this.setState({ changeModalLod: true })
+    addDepartment({ name: addPara.name, parent_id: addPara.id }).then((res) => {
+      this.setState({ changeModalLod: true, changeModalVis: false })
+      if (res.data.code === 200) {
+        message.success('添加部门成功！')
+        this.getDepartment()
+      } else {
+        message.error('添加部门失败，请查看日志！')
+      }
+    }).catch(() => {
+      message.error('添加部门失败，请检查网络连接')
+    })
   }
 
-  handleOkEdit () {
-
+  handleOkEdit = () => {
+    const editPara = this.getChangeDepartmentData()
+    if (!editPara) {
+      return
+    }
+    this.setState({ changeModalLod: true })
+    editDepartment(editPara).then((res) => {
+      this.setState({ changeModalLod: true, changeModalVis: false })
+      if (res.data.code === 200) {
+        message.success('编辑部门成功！')
+        this.getDepartment()
+      } else {
+        message.error('编辑部门失败，请查看日志！')
+      }
+    }).catch(() => {
+      message.error('编辑部门失败，请检查网络连接')
+    })
   }
 
-  handleOkDelete () {
-
+  handleOkDelete = () => {
+    const deletePara = this.getChangeDepartmentData()
+    if (!deletePara) {
+      return
+    }
+    this.setState({ changeModalLod: true })
+    deleteDepartment(deletePara).then((res) => {
+      this.setState({ changeModalLod: true, changeModalVis: false })
+      if (res.data.code === 200) {
+        message.success('删除部门成功！')
+        this.getDepartment()
+      } else {
+        message.error('删除部门失败，请查看日志！')
+      }
+    }).catch(() => {
+      message.error('删除部门失败，请检查网络连接')
+    })
   }
 
   componentDidMount () {
@@ -169,6 +217,7 @@ class DepartmentManagement extends React.Component {
                 }
               })
             }}
+            style={{ fontSize: '20px' }}
           >
             {loop(departments)}
           </Tree>
