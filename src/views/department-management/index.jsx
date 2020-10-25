@@ -1,7 +1,9 @@
-import { Tree, Input } from 'antd'
+import { Tree, Input, message } from 'antd'
 import React from 'react'
-import { departmentList } from '@/api/department'
+import { departmentList, editDepartment, addDepartment, deleteDepartment } from '@/api/department'
 import HelpCard from '../../components/HelpCard'
+import ChangeDepartmentForm from './change-department-form'
+
 const { TreeNode } = Tree
 const { Search } = Input
 
@@ -36,7 +38,13 @@ class DepartmentManagement extends React.Component {
     searchValue: '',
     autoExpandParent: true,
     departments: [], // 有child的
-    departmentList: [] // 展开的
+    departmentList: [], // 展开的
+    changeModalVis: false,
+    changeModalLod: false,
+    selectedDepartment: {
+      id: '',
+      name: ''
+    }
   }
 
   onExpand = expandedKeys => {
@@ -63,6 +71,33 @@ class DepartmentManagement extends React.Component {
       autoExpandParent: true
     })
     console.log(expandedKeys)
+  }
+
+  getChangeDepartmentData () {
+    const form = this.changeFormRef.props.form
+    form.validateFields((err, values) => {
+      if (err) {
+        return false
+      }
+      const name = values.name
+      const id = this.state.selectedDepartment.id
+      form.resetFields()
+      return {
+        name: name,
+        id: id
+      }
+    })
+  }
+
+  handleOkAdd () {
+  }
+
+  handleOkEdit () {
+
+  }
+
+  handleOkDelete () {
+
   }
 
   componentDidMount () {
@@ -103,7 +138,9 @@ class DepartmentManagement extends React.Component {
           )
         if (item.children) {
           return (
-            <TreeNode key={item.id} title={title}>
+            <TreeNode key={item.id} title={title}
+              name={item.name}
+            >
               {loop(item.children)}
             </TreeNode>
           )
@@ -122,10 +159,37 @@ class DepartmentManagement extends React.Component {
             onExpand={this.onExpand}
             expandedKeys={expandedKeys}
             autoExpandParent={autoExpandParent}
+            onSelect={(selectedKeys, e) => {
+              const selectedProps = e.node.props
+              this.setState({
+                changeModalVis: true,
+                selectedDepartment: {
+                  id: selectedProps.eventKey,
+                  name: selectedProps.name
+                }
+              })
+            }}
           >
             {loop(departments)}
           </Tree>
         </div>
+        <ChangeDepartmentForm
+          wrappedComponentRef={(formRef) => {
+            this.changeFormRef = formRef
+          }}
+          visible={this.state.changeModalVis}
+          confirmLoading={this.state.changeModalLod}
+          onCancel={() => {
+            this.setState({
+              changeModalVis: false
+            })
+          }}
+          onEdit={this.handleOkEdit}
+          onAdd={this.handleOkAdd}
+          onDelete={this.handleOkDelete}
+          department={this.state.selectedDepartment}
+        >
+        </ChangeDepartmentForm>
       </div>
     )
   }
