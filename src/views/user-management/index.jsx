@@ -176,6 +176,7 @@ class UserManagement extends Component {
       if (err) {
         return
       }
+
       this.fixEmptyRole(values)
       this.setState({ editModalLod: true })
       editUser(values).then(() => {
