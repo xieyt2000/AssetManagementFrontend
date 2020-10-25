@@ -8,6 +8,7 @@ class ChangeDepartmentForm extends Component {
       onEdit, form, confirmLoading, department } = this.props
     return (
       <Modal title="修改密码" visible={visible} confirmLoading={confirmLoading}
+        onCancel={onCancel}
         footer={[
           <Button key='cancel' onClick={onCancel}>取消</Button>,
           <Button key='delete' type='danger' onClick={onDelete}>删除部门</Button>,
