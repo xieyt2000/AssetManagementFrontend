@@ -49,7 +49,7 @@ class UserManagement extends Component {
             dataSource={users}
             pagination={false}>
             <Column title="用户名" dataIndex="name" key="name" align="center"/>
-            <Column title="用户权限" dataIndex="roleStr" key="roleStr" align="center"/>
+            <Column title="用户角色" dataIndex="roleStr" key="roleStr" align="center"/>
             <Column title="用户部门" dataIndex="department" key="department" align="center"/>
             <Column title="操作" key="action" width={200} align="center" render={(row) => (
               <span>

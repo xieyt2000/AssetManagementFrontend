@@ -141,7 +141,7 @@ class DepartmentManagement extends React.Component {
         message.success('删除部门成功！')
         this.getDepartment()
       } else {
-        message.error('删除部门失败，请查看日志！')
+        message.error(res.data.message)
       }
     }).catch(() => {
       message.error('删除部门失败，请检查网络连接')

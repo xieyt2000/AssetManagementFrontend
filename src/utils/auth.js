@@ -11,5 +11,10 @@ export function setToken (token) {
 }
 
 export function removeToken () {
-  return Cookies.remove(TokenKey)
+  const exp = new Date()
+  exp.setTime(exp.getTime() - 1)
+  const val = getToken()
+  if (val != null) {
+    document.cookie = 'Token' + '=' + val + ';expires=' + exp.toGMTString()
+  }
 }
