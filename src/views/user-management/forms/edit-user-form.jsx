@@ -20,7 +20,7 @@ class EditUserForm extends Component {
     return (
       <Modal title="编辑用户" visible={visible} onCancel={onCancel}
         onOk={onOk} confirmLoading={confirmLoading}>
-        <Form {...formLayout} style={{ textAlign: 'center' }}>
+        <Form {...formLayout}>
           <Form.Item label={'用户名'}>
             {form.getFieldDecorator('name', {
               initialValue: name
@@ -38,9 +38,7 @@ class EditUserForm extends Component {
           </Form.Item>
           <center>
             <Collapse style={{
-              width: '65%',
-              textAlign: 'center',
-              alignmentBaseline: 'central'
+              width: '65%'
             }}>
               <Panel key={1} header={'修改密码（仅在修改密码时设置）'}>
                 <Form.Item label={''}>
