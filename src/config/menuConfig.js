@@ -89,6 +89,12 @@ const menuList = [
     roles: [PERMISSION.SYSTEM]
   },
   {
+    title: '部门管理',
+    path: '/department',
+    icon: 'profile',
+    roles: [PERMISSION.SYSTEM]
+  },
+  {
     title: '操作日志',
     path: '/log',
     icon: 'database',

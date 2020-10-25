@@ -18,6 +18,10 @@ const Log = Loadable({
   loader: () => import(/* webpackChunkName:'User' */'@/views/log'),
   loading: Loading
 })
+const DepartmentManagement = Loadable({
+  loader: () => import(/* webpackChunkName:'User' */'@/views/department-management'),
+  loading: Loading
+})
 
 export default [
   {
@@ -38,6 +42,11 @@ export default [
   {
     path: '/asset/management',
     component: AssetManageMent,
+    roles: [PERMISSION.ASSET]
+  },
+  {
+    path: '/department',
+    component: DepartmentManagement,
     roles: [PERMISSION.ASSET]
   }
   // { path: '/permission/explanation', component: Explanation, roles: ['admin'] },
