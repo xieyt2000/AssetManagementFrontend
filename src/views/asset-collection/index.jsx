@@ -2,16 +2,23 @@ import React from 'react'
 import { connect } from 'react-redux'
 import { assetList } from '../../api/asset'
 import HelpCard from '../../components/HelpCard'
-import { Button, Table } from 'antd'
+import { Button, Modal, Table } from 'antd'
+import { CHINESE_STATUS } from '../../utils/asset'
 
 const Column = Table.Column
+
+const changeStatusToChinese = (status) => {
+  return CHINESE_STATUS[status]
+}
 
 class AssetCollection extends React.Component {
   constructor (props) {
     super(props)
     this.state = {
       assetList: [],
-      rowData: {}
+      rowData: {},
+      collectModalVis: false,
+      collectModalLod: false
     }
   }
 
@@ -29,9 +36,29 @@ class AssetCollection extends React.Component {
     this.getAsset()
   }
 
+  handleClickCollect = (row) => {
+    console.log(row)
+    this.setState({
+      rowData: Object.assign({}, row),
+      collectModalVis: true
+    })
+  }
+
+  handleOk = (ignore) => {
+    this.setState({
+      collectModalVis: false
+    })
+  }
+
+  handleCancel = (ignore) => {
+    this.setState({
+      collectModalVis: false
+    })
+  }
+
   render () {
     const assetList = this.state.assetList
-    const description = '作为资产管理员，你可以进行资产管理和批量导入、导出'
+    const description = '你可以进行资产的领用'
     return (
       <div className='app-container'>
         <HelpCard title='资产管理' source={description}/>
@@ -47,12 +74,25 @@ class AssetCollection extends React.Component {
             render={(row) => (
               <span> {row.is_quantity ? '数量型' : '条目型'} </span>
             )}/>
-          <Column title="资产状态" dataIndex="status" key="status" align="center"/>
+          <Column title="资产状态" dataIndex="status" key="status" align="center"
+            render={(row) => (
+              <span> {changeStatusToChinese(row)} </span>
+            )}/>
           <Column title="操作" key="action" width={200} align="center" render={(row) => (
             <span>
-              <Button type="primary" shape="circle" icon="import" title="领用资产"/>
+              <Button type="primary" shape="circle" icon="import" title="领用资产"
+                onClick={this.handleClickCollect.bind(this, row)}/>
             </span>)}/>
         </Table>
+        <Modal
+          title="资产领用"
+          visible={this.state.collectModalVis}
+          confirmLoading={this.state.collectModalLod}
+          onOk={this.handleOk}
+          onCancel={this.handleCancel}
+        >
+          <p>是否领用资产 {this.state.rowData.name} ?</p>
+        </Modal>
       </div>
     )
   }
