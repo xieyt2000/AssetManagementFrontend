@@ -3,34 +3,9 @@ import React from 'react'
 import { departmentList, editDepartment, addDepartment, deleteDepartment } from '@/api/department'
 import HelpCard from '../../components/HelpCard'
 import ChangeDepartmentForm from './change-department-form'
+import { getParentKey, expandTree, loop } from '../../utils/cascader'
 
-const { TreeNode } = Tree
 const { Search } = Input
-
-const getParentKey = (key, tree) => {
-  let parentKey
-  for (let i = 0; i < tree.length; i++) {
-    const node = tree[i]
-    if (node.children) {
-      if (node.children.some(item => item.id === key)) {
-        parentKey = node.id
-      } else if (getParentKey(key, node.children)) {
-        parentKey = getParentKey(key, node.children)
-      }
-    }
-  }
-  console.log(parentKey)
-  return parentKey
-}
-
-const expandDepartment = (departments, tmpDepartmentList) => {
-  for (let i = 0; i < departments.length; i++) {
-    tmpDepartmentList.push({ id: departments[i].id, name: departments[i].name })
-    if (departments[i].children) {
-      expandDepartment(departments[i].children, tmpDepartmentList)
-    }
-  }
-}
 
 class DepartmentManagement extends React.Component {
   state = {
@@ -160,7 +135,7 @@ class DepartmentManagement extends React.Component {
         departments: [departments]
       })
       const tmpDepartmentList = []
-      expandDepartment([departments], tmpDepartmentList)
+      expandTree([departments], tmpDepartmentList)
       this.setState({
         departmentList: tmpDepartmentList
       })
@@ -169,32 +144,6 @@ class DepartmentManagement extends React.Component {
 
   render () {
     const { searchValue, expandedKeys, autoExpandParent, departments } = this.state
-    const loop = data =>
-      data.map(item => {
-        const index = item.name.indexOf(searchValue)
-        const beforeStr = item.name.substr(0, index)
-        const afterStr = item.name.substr(index + searchValue.length)
-        const title =
-          index > -1 ? (
-            <span>
-              {beforeStr}
-              <span style={{ color: '#f50' }}>{searchValue}</span>
-              {afterStr}
-            </span>
-          ) : (
-            <span>{item.name}</span>
-          )
-        if (item.children) {
-          return (
-            <TreeNode key={item.id} title={title}
-              name={item.name}
-            >
-              {loop(item.children)}
-            </TreeNode>
-          )
-        }
-        return <TreeNode key={item.id} title={title}/>
-      })
     const description = '作为系统管理员，你可以浏览企业的部门组织结构，' +
       '通过左键点击部门名称来添加、修改、删除部门，下方的搜索框可以帮助你更快地定位部门'
     return (
@@ -219,7 +168,7 @@ class DepartmentManagement extends React.Component {
             }}
             style={{ fontSize: '20px' }}
           >
-            {loop(departments)}
+            {loop(searchValue, departments)}
           </Tree>
         </div>
         <ChangeDepartmentForm
