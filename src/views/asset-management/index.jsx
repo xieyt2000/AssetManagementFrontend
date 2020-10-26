@@ -112,8 +112,12 @@ class AssetManagement extends Component {
         results[i].owner = this.props.name
       }
     }
-    addAsset(results).then(() => {
-      message.success('添加成功')
+    addAsset(results).then((res) => {
+      if (res.data.code === 200) {
+        message.success('添加成功')
+      } else {
+        message.error('编辑失败，' + res.data.message)
+      }
       this.getAsset()
     }).catch((ignored) => {
       message.error('添加失败，请检查网络连接后重试！')
@@ -149,10 +153,14 @@ class AssetManagement extends Component {
       this.setState({ editModalLod: true })
       values.nid = this.state.rowData.nid
       console.log(values)
-      editAsset(values).then(() => {
+      editAsset(values).then((res) => {
         form.resetFields()
         this.setState({ editModalVis: false, editModalLod: false })
-        message.success('编辑成功！')
+        if (res.data.code === 200) {
+          message.success('编辑成功！')
+        } else {
+          message.error('编辑失败，' + res.data.message)
+        }
         this.getAsset()
       }).catch((ignored) => {
         message.error('编辑失败，请检查网络连接后重试！')

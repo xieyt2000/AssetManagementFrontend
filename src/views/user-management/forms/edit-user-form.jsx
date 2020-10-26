@@ -31,9 +31,8 @@ class EditUserForm extends Component {
               options={rolesArr}/>)}
           </Form.Item>
           <Form.Item label={'部门'}>
-            {/* TODO 部门选择方式、验证 */}
             {form.getFieldDecorator('department', {
-              required: true, message: '部门不能为空'
+              rules: [{ required: true, message: '部门不能为空' }]
             })(<TreeSelect
               treeData={departments}
             />)}

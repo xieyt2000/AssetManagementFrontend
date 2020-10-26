@@ -5,6 +5,7 @@ import { getUserInfo } from '../store/actions'
 import Layout from '@/views/layout'
 import Login from '@/views/login'
 import PropTypes from 'prop-types'
+import { removeToken } from '../utils/auth'
 
 class Router extends React.Component {
   render () {
@@ -22,7 +23,12 @@ class Router extends React.Component {
                 if (role.length >= 1) {
                   return <Layout/>
                 } else {
-                  getUserInfo(token).then(() => <Layout/>)
+                  getUserInfo(token)
+                    .then(() => <Layout/>)
+                    .catch(() => {
+                      removeToken()
+                      return <Redirect to="/login"/>
+                    })
                 }
               }
             }}

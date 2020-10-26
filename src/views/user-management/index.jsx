@@ -49,7 +49,7 @@ class UserManagement extends Component {
             dataSource={users}
             pagination={false}>
             <Column title="用户名" dataIndex="name" key="name" align="center"/>
-            <Column title="用户权限" dataIndex="roleStr" key="roleStr" align="center"/>
+            <Column title="用户角色" dataIndex="roleStr" key="roleStr" align="center"/>
             <Column title="用户部门" dataIndex="department" key="department" align="center"/>
             <Column title="操作" key="action" width={200} align="center" render={(row) => (
               <span>
@@ -74,7 +74,7 @@ class UserManagement extends Component {
           conirmLoading={this.state.editModalLod}
           onCancel={this.handleCancel}
           onOk={this.handleOkEdit}
-          departments = {departmentList}
+          departments={departmentList}
         />
         <AddUserForm
           wrappedComponentRef={(formRef) => {
@@ -84,7 +84,7 @@ class UserManagement extends Component {
           confirmLoading={this.state.addModalLod}
           onCancel={this.handleCancel}
           onOk={this.handleOkAdd}
-          departments = {departmentList}
+          departments={departmentList}
         />
       </div>
     )
@@ -129,7 +129,7 @@ class UserManagement extends Component {
             if (res.data.code === 200) {
               message.success('删除成功')
             } else {
-              message.error('删除失败')
+              message.error('删除失败，' + res.data.message)
             }
             this.localGetUsers()
           }
@@ -149,7 +149,7 @@ class UserManagement extends Component {
         if (res.data.code === 200) {
           message.success(oprStr + '成功')
         } else {
-          message.error(oprStr + '失败')
+          message.error(oprStr + '失败，' + res.data.message)
         }
         this.localGetUsers()
       }
@@ -176,13 +176,19 @@ class UserManagement extends Component {
       if (err) {
         return
       }
-
+      if (values.password === undefined) {
+        values.password = ''
+      }
       this.fixEmptyRole(values)
       this.setState({ editModalLod: true })
-      editUser(values).then(() => {
+      editUser(values).then((res) => {
         form.resetFields()
         this.setState({ editModalVis: false, editModalLod: false })
-        message.success('编辑成功！')
+        if (res.data.code === 200) {
+          message.success('编辑成功！')
+        } else {
+          message.error('编辑失败，' + res.data.message)
+        }
         this.localGetUsers()
       }).catch((ignored) => {
         message.error('编辑失败，请检查网络连接后重试！')
@@ -198,10 +204,14 @@ class UserManagement extends Component {
       }
       this.fixEmptyRole(values)
       this.setState({ addModalLod: true })
-      addUser(values).then(() => {
+      addUser(values).then((res) => {
         form.resetFields()
         this.setState({ addModalVis: false, addModalLod: false })
-        message.success('添加成功！')
+        if (res.data.code === 200) {
+          message.success('添加成功！')
+        } else {
+          message.error('添加失败，' + res.data.message)
+        }
         this.localGetUsers()
       }).catch((ignored) => {
         message.success('添加失败，请检查网络连接后重试！')
