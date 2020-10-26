@@ -103,7 +103,7 @@ class DepartmentManagement extends React.Component {
         message.success('添加部门成功！')
         this.getDepartment()
       } else {
-        message.error('添加部门失败，请查看日志！')
+        message.error('添加部门失败，' + res.data.message)
       }
     }).catch(() => {
       message.error('添加部门失败，请检查网络连接')
@@ -122,7 +122,7 @@ class DepartmentManagement extends React.Component {
         message.success('编辑部门成功！')
         this.getDepartment()
       } else {
-        message.error('编辑部门失败，请查看日志！')
+        message.error('编辑部门失败，' + res.data.message)
       }
     }).catch(() => {
       message.error('编辑部门失败，请检查网络连接')
@@ -141,7 +141,7 @@ class DepartmentManagement extends React.Component {
         message.success('删除部门成功！')
         this.getDepartment()
       } else {
-        message.error('删除部门失败，请查看日志！')
+        message.error('删除部门失败，' + res.data.message)
       }
     }).catch(() => {
       message.error('删除部门失败，请检查网络连接')
