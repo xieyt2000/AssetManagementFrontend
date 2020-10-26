@@ -2,7 +2,7 @@ import { Tree, Input } from 'antd'
 import React from 'react'
 import { assetCategoryList } from '@/api/asset'
 import HelpCard from '../../components/HelpCard'
-// import ChangeDepartmentForm from './change-department-form'
+import ChangeCategoryForm from './change-category-form'
 import { getParentKey, expandTree, loop } from '../../utils/cascader'
 
 const { Search } = Input
@@ -16,7 +16,7 @@ class AssetClassification extends React.Component {
     assetCategoriesList: [], // 展开的
     changeModalVis: false,
     changeModalLod: false,
-    selectedDepartment: {
+    selectedCategory: {
       id: '',
       name: ''
     }
@@ -69,11 +69,11 @@ class AssetClassification extends React.Component {
 
   render () {
     const { searchValue, expandedKeys, autoExpandParent, assetCategories } = this.state
-    const description = '作为系统管理员，你可以浏览企业的部门组织结构，' +
-        '通过左键点击部门名称来添加、修改、删除部门，下方的搜索框可以帮助你更快地定位部门'
+    const description = '作为IT管理员，你可以管理资产的层级分类树，' +
+        '通过左键点击分类来添加、修改、删除分类，下方的搜索框可以帮助你更快地定位分类'
     return (
       <div className='app-container'>
-        <HelpCard title='部门管理' source={description}/>
+        <HelpCard title='资产分类' source={description}/>
         <br/>
         <div>
           <Search style={{ marginBottom: 8 }} placeholder="搜索" onChange={this.onChange}/>
@@ -81,21 +81,38 @@ class AssetClassification extends React.Component {
             onExpand={this.onExpand}
             expandedKeys={expandedKeys}
             autoExpandParent={autoExpandParent}
-            // onSelect={(selectedKeys, e) => {
-            //   const selectedProps = e.node.props
-            //   this.setState({
-            //     changeModalVis: true,
-            //     selectedDepartment: {
-            //       id: selectedProps.eventKey,
-            //       name: selectedProps.name
-            //     }
-            //   })
-            // }}
-            style={{ fontSize: '20px' }}
+            onSelect={(selectedKeys, e) => {
+              const selectedProps = e.node.props
+              this.setState({
+                changeModalVis: true,
+                selectedCategory: {
+                  id: selectedProps.eventKey,
+                  name: selectedProps.name
+                }
+              })
+            }}
+            style={{ fontSize: '20px', cursor: 'pointer' }}
           >
             {loop(searchValue, assetCategories)}
           </Tree>
         </div>
+        <ChangeCategoryForm
+          wrappedComponentRef={(formRef) => {
+            this.changeFormRef = formRef
+          }}
+          visible={this.state.changeModalVis}
+          confirmLoading={this.state.changeModalLod}
+          onCancel={() => {
+            this.setState({
+              changeModalVis: false
+            })
+          }}
+          onEdit={this.handleOkEdit}
+          onAdd={this.handleOkAdd}
+          onDelete={this.handleOkDelete}
+          category={this.state.selectedCategory}
+        >
+        </ChangeCategoryForm>
       </div>
     )
   }
