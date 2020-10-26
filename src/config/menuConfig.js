@@ -99,6 +99,12 @@ const menuList = [
     path: '/log',
     icon: 'database',
     roles: [PERMISSION.SYSTEM]
+  },
+  {
+    title: '资产领用',
+    path: '/asset/collection',
+    icon: 'down-square',
+    roles: [PERMISSION.IT, PERMISSION.ASSET, PERMISSION.SYSTEM, PERMISSION.STAFF]
   }
 
 ]
