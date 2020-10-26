@@ -144,7 +144,7 @@ class DepartmentManagement extends React.Component {
 
   render () {
     const { searchValue, expandedKeys, autoExpandParent, departments } = this.state
-    const description = '作为系统管理员，你可以浏览企业的部门组织结构，' +
+    const description = '作为IT管理员，你可以浏览企业的部门组织结构，' +
       '通过左键点击部门名称来添加、修改、删除部门，下方的搜索框可以帮助你更快地定位部门'
     return (
       <div className='app-container'>
