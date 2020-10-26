@@ -2,7 +2,7 @@ import { Tree, Input } from 'antd'
 import React from 'react'
 import { assetCategoryList } from '@/api/asset'
 import HelpCard from '../../components/HelpCard'
-// import ChangeDepartmentForm from './change-department-form'
+import ChangeCategoryForm from './change-category-form'
 import { getParentKey, expandTree, loop } from '../../utils/cascader'
 
 const { Search } = Input
@@ -16,7 +16,7 @@ class AssetClassification extends React.Component {
     assetCategoriesList: [], // 展开的
     changeModalVis: false,
     changeModalLod: false,
-    selectedDepartment: {
+    selectedCategory: {
       id: '',
       name: ''
     }
@@ -81,21 +81,38 @@ class AssetClassification extends React.Component {
             onExpand={this.onExpand}
             expandedKeys={expandedKeys}
             autoExpandParent={autoExpandParent}
-            // onSelect={(selectedKeys, e) => {
-            //   const selectedProps = e.node.props
-            //   this.setState({
-            //     changeModalVis: true,
-            //     selectedDepartment: {
-            //       id: selectedProps.eventKey,
-            //       name: selectedProps.name
-            //     }
-            //   })
-            // }}
-            style={{ fontSize: '20px' }}
+            onSelect={(selectedKeys, e) => {
+              const selectedProps = e.node.props
+              this.setState({
+                changeModalVis: true,
+                selectedCategory: {
+                  id: selectedProps.eventKey,
+                  name: selectedProps.name
+                }
+              })
+            }}
+            style={{ fontSize: '20px', cursor: 'pointer' }}
           >
             {loop(searchValue, assetCategories)}
           </Tree>
         </div>
+        <ChangeCategoryForm
+          wrappedComponentRef={(formRef) => {
+            this.changeFormRef = formRef
+          }}
+          visible={this.state.changeModalVis}
+          confirmLoading={this.state.changeModalLod}
+          onCancel={() => {
+            this.setState({
+              changeModalVis: false
+            })
+          }}
+          onEdit={this.handleOkEdit}
+          onAdd={this.handleOkAdd}
+          onDelete={this.handleOkDelete}
+          category={this.state.selectedCategory}
+        >
+        </ChangeCategoryForm>
       </div>
     )
   }
