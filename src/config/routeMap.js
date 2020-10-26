@@ -14,6 +14,10 @@ const AssetManageMent = Loadable({
   loader: () => import(/* webpackChunkName:'AssetManagement' */'@/views/asset-management'),
   loading: Loading
 })
+const AssetClassification = Loadable({
+  loader: () => import(/* webpackChunkName:'AssetManagement' */'@/views/asset-classification'),
+  loading: Loading
+})
 const Log = Loadable({
   loader: () => import(/* webpackChunkName:'User' */'@/views/log'),
   loading: Loading
@@ -42,6 +46,11 @@ export default [
   {
     path: '/asset/management',
     component: AssetManageMent,
+    roles: [PERMISSION.ASSET]
+  },
+  {
+    path: '/asset/classification',
+    component: AssetClassification,
     roles: [PERMISSION.ASSET]
   },
   {
