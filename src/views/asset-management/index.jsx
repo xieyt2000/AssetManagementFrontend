@@ -8,6 +8,7 @@ import { addAsset, assetList, editAsset, assetCategoryList } from '../../api/ass
 import STATUS from '../../utils/asset'
 import { connect } from 'react-redux'
 import PropTypes from 'prop-types'
+import AddAssetForm from './components/AddAssetForm'
 
 const Column = Table.Column
 
@@ -57,9 +58,9 @@ class AssetManagement extends Component {
 
     const cardTitle = (
       <span>
-        <Button type='primary' onClick={this.handleAdd}>批量导出</Button>
+        <Button type='primary' onClick={this.handleClickAdd}>批量导出</Button>
         <Divider type='vertical'/>
-        <Button type='primary' onClick={this.handleAdd}>导入资产</Button>
+        <Button type='primary' onClick={this.handleClickAdd}>导入资产</Button>
         <Divider type='vertical'/>
         <UploadAsset uploadSuccess={this.handleExcelUpload}/>
         <Divider type='vertical'/>
@@ -78,11 +79,19 @@ class AssetManagement extends Component {
             <Column title="资产名称" dataIndex="name" key="name" align="center"/>
             <Column title="挂账人" dataIndex="owner" key="owner" align="center"/>
             <Column title="所属部门" dataIndex="department" key="department" align="center"/>
-            <Column title="资产类型" dataIndex="type_name" key="type_name" align="center"
+            <Column title="资产类型" key="type_name" align="center"
               render={(row) => (
-                <span> {row.type_name === 'ITEM' ? '数量型' : '条目型'} </span>
+                <span> {((row) => {
+                  if (row.type_name === 'AMOUNT') {
+                    const str = '数量型'
+                    const quantity = '数量：' + row.quantity
+                    return (<span>{str}<br/>{quantity}</span>)
+                  } else {
+                    return '条目型'
+                  }
+                })(row)} </span>
               )}/>
-            <Column title="资产价值" dataIndex="value" key="value" align="center"/>
+            <Column title="资产分类" dataIndex="category" key="category" align="center"/>
             <Column title="操作" key="action" width={200} align="center" render={(row) => (
               <span>
                 <Button type="primary" shape="circle" icon="search" title="查看详情"
@@ -111,6 +120,16 @@ class AssetManagement extends Component {
           conirmLoading={this.state.editModalLod}
           onCancel={this.handleCancel}
           onOk={this.handleOkEdit}/>
+        <AddAssetForm
+          wrappedComponentRef={(formRef) => {
+            this.addFormRef = formRef
+          }}
+          visible={this.state.addModalVis}
+          confirmLoading={this.state.addModalLod}
+          onCancel={this.handleCancel}
+          onOk={this.handleOkAdd}
+          assetCategories = {this.state.assetCategoryList}
+        />
       </div>
     )
   }
@@ -171,12 +190,35 @@ class AssetManagement extends Component {
 
   handleCancel = (ignore) => {
     this.setState({
-      editModalVis: false
+      editModalVis: false,
+      addModalVis: false
     })
   }
 
-  handleAdd = (assets) => {
-    addAsset()
+  handleClickAdd = (assets) => {
+    this.setState({
+      addModalVis: true
+    })
+  }
+
+  handleOkAdd = (ignore) => {
+    const form = this.addFormRef.props.form
+    form.validateFields((err, values) => {
+      if (err) {
+        return
+      }
+      this.setState({ addModalLod: true })
+      console.log(values)
+      addAsset([values]).then(() => {
+        form.resetFields()
+        this.setState({ addModalVis: false, addModalLod: false })
+        message.success('添加成功！')
+        this.getAsset()
+        this.getAssetCategories()
+      }).catch((ignored) => {
+        message.error('添加失败，请检查网络连接后重试！')
+      })
+    })
   }
 
   getAsset = async () => {

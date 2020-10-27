@@ -28,7 +28,8 @@ class AssetInfo extends React.Component {
             <br/><br/>
             <Descriptions.Item label='状态'>{status}</Descriptions.Item>
             <br/><br/>
-            <Descriptions.Item label='类型'>{isQuantity ? '数量型' : '条目型'}</Descriptions.Item>
+            <Descriptions.Item label='类型'>{isQuantity === 'AMOUNT' ? '数量型' : '条目型'}
+            </Descriptions.Item>
             <Descriptions.Item label='数量'>{quantity}</Descriptions.Item>
             <Descriptions.Item label='价值'>{value}</Descriptions.Item>
             <Descriptions.Item label='历史'>{history}</Descriptions.Item>
