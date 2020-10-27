@@ -58,6 +58,11 @@ class AddAssetForm extends Component {
               treeData={assetCategories}
             />)}
           </Form.Item>
+          <Form.Item label={'使用年限'}>
+            {form.getFieldDecorator('service_life', {
+              rules: [{ required: true, message: '使用年限不能为空' }]
+            })(<Input placeholder="使用年限"/>)}
+          </Form.Item>
         </Form>
       </Modal>
     )
