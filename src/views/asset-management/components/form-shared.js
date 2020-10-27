@@ -6,3 +6,7 @@ export function getStatusArr () {
   }
   return statusArr
 }
+export const formLayout = {
+  labelCol: { sm: { span: 4 } },
+  wrapperCol: { sm: { span: 16 } }
+}
