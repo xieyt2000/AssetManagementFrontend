@@ -4,12 +4,20 @@ import HelpCard from '../../components/HelpCard'
 import UploadAsset from './upload'
 import AssetInfo from './components/AssetInfo'
 import EditAssetForm from './components/EditAssetForm'
-import { addAsset, assetList, editAsset } from '../../api/asset'
+import { addAsset, assetList, editAsset, assetCategoryList } from '../../api/asset'
 import STATUS from '../../utils/asset'
 import { connect } from 'react-redux'
 import PropTypes from 'prop-types'
 
 const Column = Table.Column
+
+const adaptAssetCategorytList = (assetCategorytList) => {
+  assetCategorytList.forEach(item => {
+    item.value = item.name
+    item.label = item.name
+    adaptAssetCategorytList(item.children)
+  })
+}
 
 class AssetManagement extends Component {
   constructor (props) {
@@ -39,7 +47,8 @@ class AssetManagement extends Component {
       addModalVis: false,
       addModalLod: false,
       assetInfoModelVis: false,
-      assetInfoModelLod: false
+      assetInfoModelLod: false,
+      assetCategoryList: []
     }
   }
 
@@ -183,8 +192,21 @@ class AssetManagement extends Component {
     }
   }
 
+  getAssetCategories = async () => {
+    const res = await assetCategoryList()
+    const { data: assetCategories, code } = res.data
+    const newAssetCategories = [assetCategories]
+    adaptAssetCategorytList(newAssetCategories)
+    if (code === 200) {
+      this.setState({
+        assetCategoryList: newAssetCategories
+      })
+    }
+  }
+
   componentDidMount () {
     this.getAsset()
+    this.getAssetCategories()
   }
 }
 
