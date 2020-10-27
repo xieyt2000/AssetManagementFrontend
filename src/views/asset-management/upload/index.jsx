@@ -77,10 +77,10 @@ class UploadAsset extends Component {
       engRes.push(Object.keys(results[i]).reduce((newObj, key) => {
         const newKey = CHINESE_KEY_TO_ENGLISH[key]
         if (newKey !== undefined) {
-          newObj[newKey] = results[i][key]
-        } else {
           if (newKey === 'type_name') {
             newObj[newKey] = CHINESE_TYPE_TO_ENGLISH[results[i][key]]
+          } else {
+            newObj[newKey] = results[i][key]
           }
         }
         return newObj

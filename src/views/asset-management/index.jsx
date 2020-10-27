@@ -12,11 +12,11 @@ import AddAssetForm from './components/AddAssetForm'
 
 const Column = Table.Column
 
-const adaptAssetCategorytList = (assetCategorytList) => {
-  assetCategorytList.forEach(item => {
+const adaptAssetCategoryList = (assetCategoryList) => {
+  assetCategoryList.forEach(item => {
     item.value = item.name
     item.label = item.name
-    adaptAssetCategorytList(item.children)
+    adaptAssetCategoryList(item.children)
   })
 }
 
@@ -134,22 +134,24 @@ class AssetManagement extends Component {
     )
   }
 
-  handleExcelUpload = (results) => {
-    for (let i = 0; i < results.length; i++) {
-      if (results[i].owner === undefined || results[i].owner === '') {
-        results[i].owner = this.props.name
-      }
-    }
-    addAsset(results).then((res) => {
+  localAddAsset (assetArr) {
+    addAsset(assetArr).then((res) => {
       if (res.data.code === 200) {
         message.success('添加成功')
       } else {
-        message.error('编辑失败，' + res.data.message)
+        message.error('添加失败，' + res.data.message)
       }
       this.getAsset()
+      this.getAssetCategories()
     }).catch((ignored) => {
       message.error('添加失败，请检查网络连接后重试！')
+    }).finally(() => {
+      this.setState({ addModalVis: false, addModalLod: false })
     })
+  }
+
+  handleExcelUpload = (results) => {
+    this.localAddAsset(results)
   }
 
   handleAssetInfoClick = (row) => {
@@ -217,15 +219,8 @@ class AssetManagement extends Component {
       }
       this.setState({ addModalLod: true })
       console.log(values)
-      addAsset([values]).then(() => {
-        form.resetFields()
-        this.setState({ addModalVis: false, addModalLod: false })
-        message.success('添加成功！')
-        this.getAsset()
-        this.getAssetCategories()
-      }).catch((ignored) => {
-        message.error('添加失败，请检查网络连接后重试！')
-      })
+      form.resetFields()
+      this.localAddAsset([values])
     })
   }
 
@@ -246,7 +241,7 @@ class AssetManagement extends Component {
     const res = await assetCategoryList()
     const { data: assetCategories, code } = res.data
     const newAssetCategories = [assetCategories]
-    adaptAssetCategorytList(newAssetCategories)
+    adaptAssetCategoryList(newAssetCategories)
     if (code === 200) {
       this.setState({
         assetCategoryList: newAssetCategories
