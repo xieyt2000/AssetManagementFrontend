@@ -4,10 +4,12 @@ import HelpCard from '../../components/HelpCard'
 import UploadAsset from './upload'
 import AssetInfo from './components/AssetInfo'
 import EditAssetForm from './components/EditAssetForm'
-import { addAsset, assetList, editAsset, assetCategoryList } from '../../api/asset'
+import { addAsset, assetList, editAsset, assetCategoryList, getAssetHistory } from '../../api/asset'
 import { connect } from 'react-redux'
 import PropTypes from 'prop-types'
 import AddAssetForm from './components/AddAssetForm'
+import HistoryTable from './components/HistoryTable'
+import { handleResponse } from '../../utils/response'
 
 const Column = Table.Column
 
@@ -23,8 +25,7 @@ class AssetManagement extends Component {
   constructor (props) {
     super(props)
     this.state = {
-      assetList: [
-      ],
+      assetList: [],
       editModalVis: false, // vis for visible
       editModalLod: false, // loa for loading
       rowData: {},
@@ -32,7 +33,10 @@ class AssetManagement extends Component {
       addModalLod: false,
       assetInfoModelVis: false,
       assetInfoModelLod: false,
-      assetCategoryList: []
+      assetCategoryList: [],
+      historyModalVis: false,
+      historyModalLod: false,
+      curAssetHistoryList: []
     }
   }
 
@@ -82,6 +86,9 @@ class AssetManagement extends Component {
                 <Divider type="vertical"/>
                 <Button type="primary" shape="circle" icon="edit" title="编辑"
                   onClick={this.handleEditAssetFormClick.bind(this, row)}/>
+                <Divider type="vertical"/>
+                <Button type="primary" shape="circle" icon="history" title="历史"
+                  onClick={this.handleHistoryClick.bind(this, row)}/>
               </span>)}/>
           </Table>
         </Card>
@@ -103,6 +110,12 @@ class AssetManagement extends Component {
           conirmLoading={this.state.editModalLod}
           onCancel={this.handleCancel}
           onOk={this.handleOkEdit}/>
+        <HistoryTable
+          visible={this.state.historyModalVis}
+          loading={this.state.historyModalLod}
+          onCancel={this.handleCancel}
+          history={this.state.curAssetHistoryList}
+        />
         <AddAssetForm
           wrappedComponentRef={(formRef) => {
             this.addFormRef = formRef
@@ -111,8 +124,9 @@ class AssetManagement extends Component {
           confirmLoading={this.state.addModalLod}
           onCancel={this.handleCancel}
           onOk={this.handleOkAdd}
-          assetCategories = {this.state.assetCategoryList}
+          assetCategories={this.state.assetCategoryList}
         />
+
       </div>
     )
   }
@@ -157,6 +171,17 @@ class AssetManagement extends Component {
     })
   }
 
+  handleHistoryClick = (row) => {
+    this.setState({
+      historyModalVis: true,
+      historyModalLod: true
+    })
+    handleResponse(getAssetHistory(row), '获取历史', 'curAssetHistoryList', this)
+    this.setState({
+      historyModalLod: false
+    })
+  }
+
   handleOkEdit = (ignore) => {
     const form = this.editFormRef.props.form
     form.validateFields((err, values) => {
@@ -184,7 +209,8 @@ class AssetManagement extends Component {
   handleCancel = (ignore) => {
     this.setState({
       editModalVis: false,
-      addModalVis: false
+      addModalVis: false,
+      historyModalVis: false
     })
   }
 
