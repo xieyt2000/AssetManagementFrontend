@@ -29,8 +29,8 @@ class AssetClassification extends React.Component {
     })
   }
 
-  onChange = e => {
-    const { value } = e.target
+  onChange = (e) => {
+    const value = e.target.value
     const { assetCategories, assetCategoriesList } = this.state
     const expandedKeys = assetCategoriesList
       .map(item => {
@@ -41,11 +41,10 @@ class AssetClassification extends React.Component {
       })
       .filter((item, i, self) => item && self.indexOf(item) === i)
     this.setState({
-      expandedKeys,
+      autoExpandParent: true,
       searchValue: value,
-      autoExpandParent: true
+      expandedKeys
     })
-    console.log(expandedKeys)
   }
 
   componentDidMount () {

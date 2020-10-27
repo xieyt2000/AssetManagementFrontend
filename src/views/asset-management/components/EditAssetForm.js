@@ -1,15 +1,11 @@
 import React, { Component } from 'react'
-import { Form, Input, Modal, Radio } from 'antd'
+import { Form, Input, Modal } from 'antd'
 import { PropTypes } from 'prop-types'
-import { getStatusArr } from './form-shared'
 
 class EditAssetForm extends Component {
   render () {
     const { visible, onCancel, onOk, form, confirmLoading, rowData } = this.props
-    const { quantity, value, name, description,
-      owner, department, status } = rowData
-    // const { name, description } = rowData
-    const statusArr = getStatusArr()
+    const { name, description } = rowData
     const formLayout = {
       labelCol: { sm: { span: 4 } },
       wrapperCol: { sm: { span: 16 } }
@@ -27,31 +23,6 @@ class EditAssetForm extends Component {
             {form.getFieldDecorator('description', {
               initialValue: description
             })(<Input placeholder="资产描述"/>)}
-          </Form.Item>
-          <Form.Item label={'挂账人'}>
-            {form.getFieldDecorator('owner', {
-              initialValue: owner
-            })(<Input placeholder="挂账人"/>)}
-          </Form.Item>
-          <Form.Item label={'部门'}>
-            {form.getFieldDecorator('department', {
-              initialValue: department
-            })(<Input placeholder="部门"/>)}
-          </Form.Item>
-          <Form.Item label={'状态'}>
-            {form.getFieldDecorator('status', {
-              initialValue: status
-            })(<Radio.Group options={statusArr}/>)}
-          </Form.Item>
-          <Form.Item label={'数量'}>
-            {form.getFieldDecorator('quantity', {
-              initialValue: quantity
-            })(<Input placeholder="数量"/>)}
-          </Form.Item>
-          <Form.Item label={'价值'}>
-            {form.getFieldDecorator('value', {
-              initialValue: value
-            })(<Input placeholder="价值"/>)}
           </Form.Item>
         </Form>
       </Modal>
