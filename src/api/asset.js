@@ -28,3 +28,11 @@ export function assetCategoryList () {
     method: 'get'
   })
 }
+
+export function getAssetHistory (asset) {
+  return request({
+    url: '/api/asset/history',
+    method: 'post',
+    data: asset
+  })
+}

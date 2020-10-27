@@ -4,19 +4,20 @@ import HelpCard from '../../components/HelpCard'
 import UploadAsset from './upload'
 import AssetInfo from './components/AssetInfo'
 import EditAssetForm from './components/EditAssetForm'
-import { addAsset, assetList, editAsset, assetCategoryList } from '../../api/asset'
-import STATUS from '../../utils/asset'
+import { addAsset, assetList, editAsset, assetCategoryList, getAssetHistory } from '../../api/asset'
 import { connect } from 'react-redux'
 import PropTypes from 'prop-types'
 import AddAssetForm from './components/AddAssetForm'
+import HistoryTable from './components/HistoryTable'
+import { handleResponse } from '../../utils/response'
 
 const Column = Table.Column
 
-const adaptAssetCategorytList = (assetCategorytList) => {
-  assetCategorytList.forEach(item => {
+const adaptAssetCategoryList = (assetCategoryList) => {
+  assetCategoryList.forEach(item => {
     item.value = item.name
     item.label = item.name
-    adaptAssetCategorytList(item.children)
+    adaptAssetCategoryList(item.children)
   })
 }
 
@@ -24,24 +25,7 @@ class AssetManagement extends Component {
   constructor (props) {
     super(props)
     this.state = {
-      assetList: [
-        {
-          type_name: 'ITEM',
-          quantity: 1,
-          value: 1,
-          name: 'name',
-          history: [],
-          description: 'description',
-          parent: 'parent',
-          children: ['children'],
-          owner: 'yy',
-          department: 'department',
-          status: STATUS.IN_USE,
-          startTime: '2020-10-20',
-          prop: 'prop',
-          nid: 1
-        }
-      ],
+      assetList: [],
       editModalVis: false, // vis for visible
       editModalLod: false, // loa for loading
       rowData: {},
@@ -49,7 +33,10 @@ class AssetManagement extends Component {
       addModalLod: false,
       assetInfoModelVis: false,
       assetInfoModelLod: false,
-      assetCategoryList: []
+      assetCategoryList: [],
+      historyModalVis: false,
+      historyModalLod: false,
+      curAssetHistoryList: []
     }
   }
 
@@ -99,6 +86,9 @@ class AssetManagement extends Component {
                 <Divider type="vertical"/>
                 <Button type="primary" shape="circle" icon="edit" title="编辑"
                   onClick={this.handleEditAssetFormClick.bind(this, row)}/>
+                <Divider type="vertical"/>
+                <Button type="primary" shape="circle" icon="history" title="历史"
+                  onClick={this.handleHistoryClick.bind(this, row)}/>
               </span>)}/>
           </Table>
         </Card>
@@ -120,6 +110,12 @@ class AssetManagement extends Component {
           conirmLoading={this.state.editModalLod}
           onCancel={this.handleCancel}
           onOk={this.handleOkEdit}/>
+        <HistoryTable
+          visible={this.state.historyModalVis}
+          loading={this.state.historyModalLod}
+          onCancel={this.handleCancel}
+          history={this.state.curAssetHistoryList}
+        />
         <AddAssetForm
           wrappedComponentRef={(formRef) => {
             this.addFormRef = formRef
@@ -128,28 +124,31 @@ class AssetManagement extends Component {
           confirmLoading={this.state.addModalLod}
           onCancel={this.handleCancel}
           onOk={this.handleOkAdd}
-          assetCategories = {this.state.assetCategoryList}
+          assetCategories={this.state.assetCategoryList}
         />
+
       </div>
     )
   }
 
-  handleExcelUpload = (results) => {
-    for (let i = 0; i < results.length; i++) {
-      if (results[i].owner === undefined || results[i].owner === '') {
-        results[i].owner = this.props.name
-      }
-    }
-    addAsset(results).then((res) => {
+  localAddAsset (assetArr) {
+    addAsset(assetArr).then((res) => {
       if (res.data.code === 200) {
         message.success('添加成功')
       } else {
-        message.error('编辑失败，' + res.data.message)
+        message.error('添加失败，' + res.data.message)
       }
       this.getAsset()
+      this.getAssetCategories()
     }).catch((ignored) => {
       message.error('添加失败，请检查网络连接后重试！')
+    }).finally(() => {
+      this.setState({ addModalVis: false, addModalLod: false })
     })
+  }
+
+  handleExcelUpload = (results) => {
+    this.localAddAsset(results)
   }
 
   handleAssetInfoClick = (row) => {
@@ -169,6 +168,17 @@ class AssetManagement extends Component {
     this.setState({
       rowData: Object.assign({}, row),
       editModalVis: true
+    })
+  }
+
+  handleHistoryClick = (row) => {
+    this.setState({
+      historyModalVis: true,
+      historyModalLod: true
+    })
+    handleResponse(getAssetHistory(row), '获取历史', 'curAssetHistoryList', this)
+    this.setState({
+      historyModalLod: false
     })
   }
 
@@ -199,11 +209,12 @@ class AssetManagement extends Component {
   handleCancel = (ignore) => {
     this.setState({
       editModalVis: false,
-      addModalVis: false
+      addModalVis: false,
+      historyModalVis: false
     })
   }
 
-  handleClickAdd = (assets) => {
+  handleClickAdd = () => {
     this.setState({
       addModalVis: true
     })
@@ -217,15 +228,8 @@ class AssetManagement extends Component {
       }
       this.setState({ addModalLod: true })
       console.log(values)
-      addAsset([values]).then(() => {
-        form.resetFields()
-        this.setState({ addModalVis: false, addModalLod: false })
-        message.success('添加成功！')
-        this.getAsset()
-        this.getAssetCategories()
-      }).catch((ignored) => {
-        message.error('添加失败，请检查网络连接后重试！')
-      })
+      form.resetFields()
+      this.localAddAsset([values])
     })
   }
 
@@ -246,7 +250,7 @@ class AssetManagement extends Component {
     const res = await assetCategoryList()
     const { data: assetCategories, code } = res.data
     const newAssetCategories = [assetCategories]
-    adaptAssetCategorytList(newAssetCategories)
+    adaptAssetCategoryList(newAssetCategories)
     if (code === 200) {
       this.setState({
         assetCategoryList: newAssetCategories
