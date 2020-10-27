@@ -4,42 +4,39 @@ import HelpCard from '../../components/HelpCard'
 import UploadAsset from './upload'
 import AssetInfo from './components/AssetInfo'
 import EditAssetForm from './components/EditAssetForm'
-import { addAsset, assetList, editAsset } from '../../api/asset'
-import STATUS from '../../utils/asset'
+import { addAsset, assetList, editAsset, assetCategoryList, getAssetHistory } from '../../api/asset'
 import { connect } from 'react-redux'
 import PropTypes from 'prop-types'
+import AddAssetForm from './components/AddAssetForm'
+import HistoryTable from './components/HistoryTable'
+import { handleResponse } from '../../utils/response'
 
 const Column = Table.Column
+
+const adaptAssetCategoryList = (assetCategoryList) => {
+  assetCategoryList.forEach(item => {
+    item.value = item.name
+    item.label = item.name
+    adaptAssetCategoryList(item.children)
+  })
+}
 
 class AssetManagement extends Component {
   constructor (props) {
     super(props)
     this.state = {
-      assetList: [
-        {
-          is_quantity: true,
-          quantity: 1,
-          value: 1,
-          name: 'name',
-          history: [],
-          description: 'description',
-          parent: 'parent',
-          children: ['children'],
-          owner: 'yy',
-          department: 'department',
-          status: STATUS.IN_USE,
-          startTime: '2020-10-20',
-          prop: 'prop',
-          nid: 1
-        }
-      ],
+      assetList: [],
       editModalVis: false, // vis for visible
       editModalLod: false, // loa for loading
       rowData: {},
       addModalVis: false,
       addModalLod: false,
       assetInfoModelVis: false,
-      assetInfoModelLod: false
+      assetInfoModelLod: false,
+      assetCategoryList: [],
+      historyModalVis: false,
+      historyModalLod: false,
+      curAssetHistoryList: []
     }
   }
 
@@ -48,9 +45,9 @@ class AssetManagement extends Component {
 
     const cardTitle = (
       <span>
-        <Button type='primary' onClick={this.handleAdd}>批量导出</Button>
+        <Button type='primary' onClick={this.handleClickAdd}>批量导出</Button>
         <Divider type='vertical'/>
-        <Button type='primary' onClick={this.handleAdd}>导入资产</Button>
+        <Button type='primary' onClick={this.handleClickAdd}>导入资产</Button>
         <Divider type='vertical'/>
         <UploadAsset uploadSuccess={this.handleExcelUpload}/>
         <Divider type='vertical'/>
@@ -69,11 +66,19 @@ class AssetManagement extends Component {
             <Column title="资产名称" dataIndex="name" key="name" align="center"/>
             <Column title="挂账人" dataIndex="owner" key="owner" align="center"/>
             <Column title="所属部门" dataIndex="department" key="department" align="center"/>
-            <Column title="资产类型" dataIndex="is_quantity" key="is_quantity" align="center"
+            <Column title="资产类型" key="type_name" align="center"
               render={(row) => (
-                <span> {row.is_quantity ? '数量型' : '条目型'} </span>
+                <span> {((row) => {
+                  if (row.type_name === 'AMOUNT') {
+                    const str = '数量型'
+                    const quantity = '数量：' + row.quantity
+                    return (<span>{str}<br/>{quantity}</span>)
+                  } else {
+                    return '条目型'
+                  }
+                })(row)} </span>
               )}/>
-            <Column title="资产价值" dataIndex="value" key="value" align="center"/>
+            <Column title="资产分类" dataIndex="category" key="category" align="center"/>
             <Column title="操作" key="action" width={200} align="center" render={(row) => (
               <span>
                 <Button type="primary" shape="circle" icon="search" title="查看详情"
@@ -81,6 +86,9 @@ class AssetManagement extends Component {
                 <Divider type="vertical"/>
                 <Button type="primary" shape="circle" icon="edit" title="编辑"
                   onClick={this.handleEditAssetFormClick.bind(this, row)}/>
+                <Divider type="vertical"/>
+                <Button type="primary" shape="circle" icon="history" title="历史"
+                  onClick={this.handleHistoryClick.bind(this, row)}/>
               </span>)}/>
           </Table>
         </Card>
@@ -102,22 +110,45 @@ class AssetManagement extends Component {
           conirmLoading={this.state.editModalLod}
           onCancel={this.handleCancel}
           onOk={this.handleOkEdit}/>
+        <HistoryTable
+          visible={this.state.historyModalVis}
+          loading={this.state.historyModalLod}
+          onCancel={this.handleCancel}
+          history={this.state.curAssetHistoryList}
+        />
+        <AddAssetForm
+          wrappedComponentRef={(formRef) => {
+            this.addFormRef = formRef
+          }}
+          visible={this.state.addModalVis}
+          confirmLoading={this.state.addModalLod}
+          onCancel={this.handleCancel}
+          onOk={this.handleOkAdd}
+          assetCategories={this.state.assetCategoryList}
+        />
+
       </div>
     )
   }
 
-  handleExcelUpload = (results) => {
-    for (let i = 0; i < results.length; i++) {
-      if (results[i].owner === undefined || results[i].owner === '') {
-        results[i].owner = this.props.name
+  localAddAsset (assetArr) {
+    addAsset(assetArr).then((res) => {
+      if (res.data.code === 200) {
+        message.success('添加成功')
+      } else {
+        message.error('添加失败，' + res.data.message)
       }
-    }
-    addAsset(results).then(() => {
-      message.success('添加成功')
       this.getAsset()
+      this.getAssetCategories()
     }).catch((ignored) => {
       message.error('添加失败，请检查网络连接后重试！')
+    }).finally(() => {
+      this.setState({ addModalVis: false, addModalLod: false })
     })
+  }
+
+  handleExcelUpload = (results) => {
+    this.localAddAsset(results)
   }
 
   handleAssetInfoClick = (row) => {
@@ -140,6 +171,17 @@ class AssetManagement extends Component {
     })
   }
 
+  handleHistoryClick = (row) => {
+    this.setState({
+      historyModalVis: true,
+      historyModalLod: true
+    })
+    handleResponse(getAssetHistory(row), '获取历史', 'curAssetHistoryList', this)
+    this.setState({
+      historyModalLod: false
+    })
+  }
+
   handleOkEdit = (ignore) => {
     const form = this.editFormRef.props.form
     form.validateFields((err, values) => {
@@ -149,10 +191,14 @@ class AssetManagement extends Component {
       this.setState({ editModalLod: true })
       values.nid = this.state.rowData.nid
       console.log(values)
-      editAsset(values).then(() => {
+      editAsset(values).then((res) => {
         form.resetFields()
         this.setState({ editModalVis: false, editModalLod: false })
-        message.success('编辑成功！')
+        if (res.data.code === 200) {
+          message.success('编辑成功！')
+        } else {
+          message.error('编辑失败，' + res.data.message)
+        }
         this.getAsset()
       }).catch((ignored) => {
         message.error('编辑失败，请检查网络连接后重试！')
@@ -162,19 +208,36 @@ class AssetManagement extends Component {
 
   handleCancel = (ignore) => {
     this.setState({
-      editModalVis: false
+      editModalVis: false,
+      addModalVis: false,
+      historyModalVis: false
     })
   }
 
-  handleAdd = (assets) => {
-    addAsset()
+  handleClickAdd = () => {
+    this.setState({
+      addModalVis: true
+    })
+  }
+
+  handleOkAdd = (ignore) => {
+    const form = this.addFormRef.props.form
+    form.validateFields((err, values) => {
+      if (err) {
+        return
+      }
+      this.setState({ addModalLod: true })
+      console.log(values)
+      form.resetFields()
+      this.localAddAsset([values])
+    })
   }
 
   getAsset = async () => {
     const res = await assetList()
     const { data: assets, code } = res.data
     // for (let i = 0; i < assets.length; i++) {
-    //   assets[i]['is_quantity'] = assets[i]['is_quantity']
+    //   assets[i]['type_name'] = assets[i]['type_name']
     // }
     if (code === 200) {
       this.setState({
@@ -183,8 +246,21 @@ class AssetManagement extends Component {
     }
   }
 
+  getAssetCategories = async () => {
+    const res = await assetCategoryList()
+    const { data: assetCategories, code } = res.data
+    const newAssetCategories = [assetCategories]
+    adaptAssetCategoryList(newAssetCategories)
+    if (code === 200) {
+      this.setState({
+        assetCategoryList: newAssetCategories
+      })
+    }
+  }
+
   componentDidMount () {
     this.getAsset()
+    this.getAssetCategories()
   }
 }
 

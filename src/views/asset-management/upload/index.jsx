@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import { Upload, message, Button, Icon } from 'antd'
 import XLSX from 'xlsx'
 import { PropTypes } from 'prop-types'
-import { CHINESE_KEY_TO_ENGLISH } from '../../../utils/asset'
+import { CHINESE_KEY_TO_ENGLISH, CHINESE_TYPE_TO_ENGLISH } from '../../../utils/asset'
 
 const isExcel = (file) => {
   return /\.(xlsx|xls|csv)$/.test(file.name)
@@ -77,10 +77,10 @@ class UploadAsset extends Component {
       engRes.push(Object.keys(results[i]).reduce((newObj, key) => {
         const newKey = CHINESE_KEY_TO_ENGLISH[key]
         if (newKey !== undefined) {
-          newObj[newKey] = results[i][key]
-        } else {
-          if (key === '资产类型') {
-            newObj['is_quantity'] = (results[i][key] === '数量型')
+          if (newKey === 'type_name') {
+            newObj[newKey] = CHINESE_TYPE_TO_ENGLISH[results[i][key]]
+          } else {
+            newObj[newKey] = results[i][key]
           }
         }
         return newObj

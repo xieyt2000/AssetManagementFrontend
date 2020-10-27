@@ -5,8 +5,8 @@ import { PropTypes } from 'prop-types'
 class AssetInfo extends React.Component {
   render () {
     const { visible, onExit, confirmLoading, rowData } = this.props
-    const { is_quantity: isQuantity, quantity, value, name, history, description, parent, children,
-      owner, department, status, startTime, prop } = rowData
+    const { type_name: isQuantity, quantity, value, name, history, description, parent, children,
+      owner, department, status, start_time: startTime, prop } = rowData
     return (
       <div>
         <Modal title = "资产详情" visible={visible}
@@ -28,7 +28,8 @@ class AssetInfo extends React.Component {
             <br/><br/>
             <Descriptions.Item label='状态'>{status}</Descriptions.Item>
             <br/><br/>
-            <Descriptions.Item label='类型'>{isQuantity ? '数量型' : '条目型'}</Descriptions.Item>
+            <Descriptions.Item label='类型'>{isQuantity === 'AMOUNT' ? '数量型' : '条目型'}
+            </Descriptions.Item>
             <Descriptions.Item label='数量'>{quantity}</Descriptions.Item>
             <Descriptions.Item label='价值'>{value}</Descriptions.Item>
             <Descriptions.Item label='历史'>{history}</Descriptions.Item>

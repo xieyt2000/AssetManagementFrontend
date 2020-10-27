@@ -22,3 +22,17 @@ export function editAsset (asset) {
     data: asset
   })
 }
+export function assetCategoryList () {
+  return request({
+    url: '/api/asset/category',
+    method: 'get'
+  })
+}
+
+export function getAssetHistory (asset) {
+  return request({
+    url: '/api/asset/history',
+    method: 'post',
+    data: asset
+  })
+}
