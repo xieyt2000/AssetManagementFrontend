@@ -5,7 +5,7 @@ import { PropTypes } from 'prop-types'
 class AssetInfo extends React.Component {
   render () {
     const { visible, onExit, confirmLoading, rowData } = this.props
-    const { is_quantity: isQuantity, quantity, value, name, history, description, parent, children,
+    const { type_name: isQuantity, quantity, value, name, history, description, parent, children,
       owner, department, status, startTime, prop } = rowData
     return (
       <div>

@@ -17,7 +17,7 @@ class AssetManagement extends Component {
     this.state = {
       assetList: [
         {
-          is_quantity: true,
+          type_name: 'ITEM',
           quantity: 1,
           value: 1,
           name: 'name',
@@ -69,9 +69,9 @@ class AssetManagement extends Component {
             <Column title="资产名称" dataIndex="name" key="name" align="center"/>
             <Column title="挂账人" dataIndex="owner" key="owner" align="center"/>
             <Column title="所属部门" dataIndex="department" key="department" align="center"/>
-            <Column title="资产类型" dataIndex="is_quantity" key="is_quantity" align="center"
+            <Column title="资产类型" dataIndex="type_name" key="type_name" align="center"
               render={(row) => (
-                <span> {row.is_quantity ? '数量型' : '条目型'} </span>
+                <span> {row.type_name === 'ITEM' ? '数量型' : '条目型'} </span>
               )}/>
             <Column title="资产价值" dataIndex="value" key="value" align="center"/>
             <Column title="操作" key="action" width={200} align="center" render={(row) => (
@@ -174,7 +174,7 @@ class AssetManagement extends Component {
     const res = await assetList()
     const { data: assets, code } = res.data
     // for (let i = 0; i < assets.length; i++) {
-    //   assets[i]['is_quantity'] = assets[i]['is_quantity']
+    //   assets[i]['type_name'] = assets[i]['type_name']
     // }
     if (code === 200) {
       this.setState({

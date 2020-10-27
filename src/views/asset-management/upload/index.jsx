@@ -80,7 +80,7 @@ class UploadAsset extends Component {
           newObj[newKey] = results[i][key]
         } else {
           if (key === '资产类型') {
-            newObj['is_quantity'] = (results[i][key] === '数量型')
+            newObj['type_name'] = (results[i][key] === '数量型')
           }
         }
         return newObj
