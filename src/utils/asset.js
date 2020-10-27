@@ -4,7 +4,8 @@ export const CHINESE_KEY_TO_ENGLISH = {
   资产类型: 'type_name',
   资产价值: 'value',
   资产数量: 'quantity',
-  资产描述: 'description'
+  资产描述: 'description',
+  使用年限: 'service_life'
 }
 
 export const CHINESE_TYPE_TO_ENGLISH = {
