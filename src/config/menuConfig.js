@@ -47,7 +47,7 @@ const menuList = [
       {
         title: '资产分类',
         path: '/asset/category',
-        roles: [PERMISSION.ASSET]
+        roles: [PERMISSION.IT]
       }
     ]
   },

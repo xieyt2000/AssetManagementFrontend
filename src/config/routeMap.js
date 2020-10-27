@@ -55,7 +55,7 @@ export default [
   {
     path: '/asset/category',
     component: AssetCategory,
-    roles: [PERMISSION.ASSET]
+    roles: [PERMISSION.IT]
   },
   {
     path: '/department',
