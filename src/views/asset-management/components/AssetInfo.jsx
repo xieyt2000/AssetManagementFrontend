@@ -6,7 +6,7 @@ class AssetInfo extends React.Component {
   render () {
     const { visible, onExit, confirmLoading, rowData } = this.props
     const { type_name: isQuantity, quantity, value, name, history, description, parent, children,
-      owner, department, status, startTime, prop } = rowData
+      owner, department, status, start_time: startTime, prop } = rowData
     return (
       <div>
         <Modal title = "资产详情" visible={visible}
