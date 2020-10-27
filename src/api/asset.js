@@ -36,3 +36,11 @@ export function getAssetHistory (asset) {
     data: asset
   })
 }
+
+export function assetCollection (data) {
+  return request({
+    url: '/api/asset/require',
+    method: 'post',
+    data: data
+  })
+}

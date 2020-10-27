@@ -1,8 +1,8 @@
 import React from 'react'
 import { connect } from 'react-redux'
-import { assetList } from '../../api/asset'
+import { assetList, assetCollection } from '../../api/asset'
 import HelpCard from '../../components/HelpCard'
-import { Button, Modal, Table } from 'antd'
+import { Button, Modal, Table, message } from 'antd'
 import { CHINESE_STATUS } from '../../utils/asset'
 
 const Column = Table.Column
@@ -37,7 +37,6 @@ class AssetCollection extends React.Component {
   }
 
   handleClickCollect = (row) => {
-    console.log(row)
     this.setState({
       rowData: Object.assign({}, row),
       collectModalVis: true
@@ -45,9 +44,21 @@ class AssetCollection extends React.Component {
   }
 
   handleOk = (ignore) => {
+    const data = { nid: this.state.rowData.nid }
+    assetCollection(data).then((res) => {
+      const { code, m } = res.data
+      if (code === 200) {
+        message.success('资产领用成功')
+      } else {
+        message.error(m)
+      }
+    }).catch(() => {
+      message.error('资产领用失败，请检查网络连接后重试！')
+    })
     this.setState({
       collectModalVis: false
     })
+    this.getAsset()
   }
 
   handleCancel = (ignore) => {
@@ -70,9 +81,17 @@ class AssetCollection extends React.Component {
           <Column title="资产名称" dataIndex="name" key="name" align="center"/>
           <Column title="挂账人" dataIndex="owner" key="owner" align="center"/>
           <Column title="所属部门" dataIndex="department" key="department" align="center"/>
-          <Column title="资产类型" dataIndex="is_quantity" key="is_quantity" align="center"
+          <Column title="资产类型" key="type_name" align="center"
             render={(row) => (
-              <span> {row.is_quantity ? '数量型' : '条目型'} </span>
+              <span> {((row) => {
+                if (row.type_name === 'AMOUNT') {
+                  const str = '数量型'
+                  const quantity = '数量：' + row.quantity
+                  return (<span>{str}<br/>{quantity}</span>)
+                } else {
+                  return '条目型'
+                }
+              })(row)} </span>
             )}/>
           <Column title="资产状态" dataIndex="status" key="status" align="center"
             render={(row) => (
