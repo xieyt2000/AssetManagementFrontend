@@ -5,7 +5,6 @@ import UploadAsset from './upload'
 import AssetInfo from './components/AssetInfo'
 import EditAssetForm from './components/EditAssetForm'
 import { addAsset, assetList, editAsset, assetCategoryList } from '../../api/asset'
-import STATUS from '../../utils/asset'
 import { connect } from 'react-redux'
 import PropTypes from 'prop-types'
 import AddAssetForm from './components/AddAssetForm'
@@ -25,22 +24,6 @@ class AssetManagement extends Component {
     super(props)
     this.state = {
       assetList: [
-        {
-          type_name: 'ITEM',
-          quantity: 1,
-          value: 1,
-          name: 'name',
-          history: [],
-          description: 'description',
-          parent: 'parent',
-          children: ['children'],
-          owner: 'yy',
-          department: 'department',
-          status: STATUS.IN_USE,
-          startTime: '2020-10-20',
-          prop: 'prop',
-          nid: 1
-        }
       ],
       editModalVis: false, // vis for visible
       editModalLod: false, // loa for loading
@@ -205,7 +188,7 @@ class AssetManagement extends Component {
     })
   }
 
-  handleClickAdd = (assets) => {
+  handleClickAdd = () => {
     this.setState({
       addModalVis: true
     })
