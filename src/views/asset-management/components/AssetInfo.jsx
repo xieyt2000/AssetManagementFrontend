@@ -6,7 +6,7 @@ class AssetInfo extends React.Component {
   render () {
     const { visible, onExit, confirmLoading, rowData } = this.props
     const { type_name: isQuantity, quantity, value, name, history, description, parent, children,
-      owner, department, status, start_time: startTime, prop } = rowData
+      owner, department, status, start_time: startTime, prop, service_life: serviceLife } = rowData
     return (
       <div>
         <Modal title = "资产详情" visible={visible}
@@ -36,6 +36,7 @@ class AssetInfo extends React.Component {
             <Descriptions.Item label='所属'>{parent}</Descriptions.Item>
             <Descriptions.Item label='包含'>{children}</Descriptions.Item>
             <Descriptions.Item label='录入时间' >{startTime}</Descriptions.Item>
+            <Descriptions.Item label='使用年限' >{serviceLife + '年'}</Descriptions.Item>
             <br/><br/>
             <Descriptions.Item label='自定义属性' >{prop}</Descriptions.Item>
           </Descriptions>
