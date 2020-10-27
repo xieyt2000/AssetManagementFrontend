@@ -8,7 +8,7 @@ class HistoryTable extends Component {
   render () {
     const { visible, onCancel, loading, history } = this.props
     return (
-      <Modal visible={visible} onCancel={onCancel} footer={null} width='70%'>
+      <Modal visible={visible} onCancel={onCancel} footer={null} width='70%' title='历史记录'>
         <Table
           bordered rowKey="name"
           dataSource={history}
@@ -17,7 +17,12 @@ class HistoryTable extends Component {
           <Column title="时间" dataIndex="time" key="time" align="center"/>
           <Column title="用户" dataIndex="user" key="user" align="center"/>
           <Column title="操作类型" dataIndex="type" key="type" align="center"/>
-          <Column title="详情" dataIndex="info" key="info" align="center"/>
+          <Column title="详情" dataIndex="info" key="info" align="center"
+            render={(array) => {
+              return array.map((text) => {
+                return <span key={text}>{text}<br/></span>
+              })
+            }}/>
         </Table>
       </Modal>
     )
