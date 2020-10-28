@@ -26,6 +26,10 @@ const DepartmentManagement = Loadable({
   loader: () => import(/* webpackChunkName:'User' */'@/views/department-management'),
   loading: Loading
 })
+const AssetCollection = Loadable({
+  loader: () => import(/* webpackChunkName:'User' */'@/views/asset-collection'),
+  loading: Loading
+})
 
 export default [
   {
@@ -51,12 +55,17 @@ export default [
   {
     path: '/asset/category',
     component: AssetCategory,
-    roles: [PERMISSION.ASSET]
+    roles: [PERMISSION.IT]
   },
   {
     path: '/department',
     component: DepartmentManagement,
     roles: [PERMISSION.ASSET]
+  },
+  {
+    path: '/asset/collection',
+    component: AssetCollection,
+    roles: [PERMISSION.IT, PERMISSION.ASSET, PERMISSION.SYSTEM, PERMISSION.STAFF]
   }
   // { path: '/permission/explanation', component: Explanation, roles: ['admin'] },
   // { path: '/permission/adminPage', component: AdminPage, roles: ['admin'] },
