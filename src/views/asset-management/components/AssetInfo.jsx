@@ -6,7 +6,8 @@ class AssetInfo extends React.Component {
   render () {
     const { visible, onExit, confirmLoading, rowData } = this.props
     const { type_name: isQuantity, quantity, value, name, description, parent, children,
-      owner, department, status, start_time: startTime, prop, service_life: serviceLife } = rowData
+      owner, department, status, start_time: startTime, prop, service_life: serviceLife,
+      now_value: nowValue } = rowData
     return (
       <div>
         <Modal title = "资产详情" visible={visible}
@@ -27,11 +28,12 @@ class AssetInfo extends React.Component {
             <Descriptions.Item label='类型'>
               {isQuantity === 'AMOUNT' ? '数量型' : '条目型'}
             </Descriptions.Item>
-            <Descriptions.Item label='数量'>{quantity}</Descriptions.Item>
-            <Descriptions.Item label='价值'>{value}</Descriptions.Item>
+            <Descriptions.Item label='数量' span={2}>{quantity}</Descriptions.Item>
+            <Descriptions.Item label='原价值'>{value}</Descriptions.Item>
+            <Descriptions.Item label='当前价值'>{nowValue}</Descriptions.Item>
+            <Descriptions.Item label='使用年限' >{serviceLife + '年'}</Descriptions.Item>
             <Descriptions.Item label='所属'>{parent}</Descriptions.Item>
             <Descriptions.Item label='包含'>{children}</Descriptions.Item>
-            <Descriptions.Item label='使用年限' >{serviceLife + '年'}</Descriptions.Item>
             <Descriptions.Item label='自定义属性' span={3}>{prop}</Descriptions.Item>
           </Descriptions>
         </Modal>
