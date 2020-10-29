@@ -3,7 +3,7 @@ import React from 'react'
 import { assetCategoryList } from '@/api/asset'
 import HelpCard from '../../components/HelpCard'
 import ChangeCategoryForm from './change-category-form'
-import { getParentKey, expandTree, loop } from '../../utils/cascader'
+import { getParentKey, expandTree, loop } from '../../utils/tree'
 
 const { Search } = Input
 

@@ -3,7 +3,7 @@ import React from 'react'
 import { departmentList, editDepartment, addDepartment, deleteDepartment } from '@/api/department'
 import HelpCard from '../../components/HelpCard'
 import ChangeDepartmentForm from './change-department-form'
-import { getParentKey, expandTree, loop } from '../../utils/cascader'
+import { getParentKey, expandTree, loop } from '../../utils/tree'
 
 const { Search } = Input
 
