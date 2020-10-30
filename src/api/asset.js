@@ -29,6 +29,30 @@ export function assetCategoryList () {
   })
 }
 
+export function addAssetCategory (data) {
+  return request({
+    url: 'api/asset/category/add',
+    method: 'post',
+    data: data
+  })
+}
+
+export function editAssetCategory (data) {
+  return request({
+    url: 'api/asset/category/edit',
+    method: 'post',
+    data: data
+  })
+}
+
+export function deleteAssetCategory (data) {
+  return request({
+    url: 'api/asset/category/delete',
+    method: 'post',
+    data: data
+  })
+}
+
 export function getAssetHistory (asset) {
   return request({
     url: '/api/asset/history',
