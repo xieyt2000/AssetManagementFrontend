@@ -1,9 +1,14 @@
 import { Tree, Input } from 'antd'
 import React from 'react'
-import { assetCategoryList } from '@/api/asset'
+import {
+  assetCategoryList,
+  addAssetCategory,
+  deleteAssetCategory,
+  editAssetCategory
+} from '../../api/asset'
 import HelpCard from '../../components/HelpCard'
 import ChangeCategoryForm from './change-category-form'
-import { getParentKey, expandTree, loop } from '../../utils/tree'
+import { getParentKey, expandTree, loop, handleOkChange, getChangFormData } from '../../utils/tree'
 
 const { Search } = Input
 
@@ -53,23 +58,38 @@ class AssetClassification extends React.Component {
 
   getAssetCategoryList = async () => {
     const res = await assetCategoryList()
-    const { data: categoties, code } = res.data
+    const { data: categories, code } = res.data
     if (code === 200) {
       this.setState({
-        assetCategories: [categoties]
+        assetCategories: [categories]
       })
       const tmpAssetCategoriesList = []
-      expandTree([categoties], tmpAssetCategoriesList)
+      expandTree([categories], tmpAssetCategoriesList)
       this.setState({
         assetCategoriesList: tmpAssetCategoriesList
       })
     }
   }
 
+  handleOkAdd = () => {
+    handleOkChange(getChangFormData(this, this.state.selectedCategory.id),
+      this, addAssetCategory, this.getAssetCategoryList, '添加')
+  }
+
+  handleOkEdit = () => {
+    handleOkChange(getChangFormData(this, this.state.selectedCategory.id),
+      this, editAssetCategory, this.getAssetCategoryList, '编辑')
+  }
+
+  handleOkDelete = () => {
+    handleOkChange(getChangFormData(this, this.state.selectedCategory.id),
+      this, deleteAssetCategory, this.getAssetCategoryList, '删除')
+  }
+
   render () {
     const { searchValue, expandedKeys, autoExpandParent, assetCategories } = this.state
     const description = '作为IT管理员，你可以管理资产的层级分类树，' +
-        '通过左键点击分类来添加、修改、删除分类，下方的搜索框可以帮助你更快地定位分类'
+      '通过左键点击分类来添加、修改、删除分类，下方的搜索框可以帮助你更快地定位分类'
     return (
       <div className='app-container'>
         <HelpCard title='资产分类' source={description}/>
