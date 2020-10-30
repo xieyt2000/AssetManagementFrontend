@@ -24,7 +24,7 @@ export function editAsset (asset) {
 }
 export function assetCategoryList () {
   return request({
-    url: '/api/asset/category',
+    url: '/api/asset/category/tree',
     method: 'get'
   })
 }
