@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import { Form, Input, Modal } from 'antd'
 import { PropTypes } from 'prop-types'
+import { parent } from './sharedFormItem'
 
 class EditAssetForm extends Component {
   render () {
@@ -24,6 +25,7 @@ class EditAssetForm extends Component {
               initialValue: description
             })(<Input placeholder="资产描述"/>)}
           </Form.Item>
+          {parent(form)}
         </Form>
       </Modal>
     )
