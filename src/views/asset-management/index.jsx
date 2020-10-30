@@ -47,7 +47,7 @@ class AssetManagement extends Component {
       <span>
         <Button type='primary' onClick={this.handleClickAdd}>批量导出</Button>
         <Divider type='vertical'/>
-        <Button type='primary' onClick={this.handleClickAdd}>导入资产</Button>
+        <Button type='primary' onClick={this.handleClickAdd}>添加资产</Button>
         <Divider type='vertical'/>
         <UploadAsset uploadSuccess={this.handleExcelUpload}/>
         <Divider type='vertical'/>
@@ -63,6 +63,7 @@ class AssetManagement extends Component {
             dataSource={assetList}
             expandIconColumnIndex={-1}
             pagination={false}>
+            <Column title="资产id" dataIndex="nid" key="nid" align="center"/>
             <Column title="资产名称" dataIndex="name" key="name" align="center"/>
             <Column title="挂账人" dataIndex="owner" key="owner" align="center"/>
             <Column title="所属部门" dataIndex="department" key="department" align="center"/>
