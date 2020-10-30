@@ -176,10 +176,10 @@ class AssetManagement extends Component {
       historyModalVis: true,
       historyModalLod: true
     })
-    handleResponse(getAssetHistory(row), '获取历史', 'curAssetHistoryList', this)
-    this.setState({
-      historyModalLod: false
-    })
+    handleResponse(getAssetHistory(row), '获取历史', this, 'curAssetHistoryList',
+      {
+        historyModalLod: false
+      })
   }
 
   handleOkEdit = (ignore) => {
