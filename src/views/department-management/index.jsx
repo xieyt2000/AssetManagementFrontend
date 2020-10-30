@@ -1,9 +1,9 @@
-import { Tree, Input, message } from 'antd'
+import { Tree, Input } from 'antd'
 import React from 'react'
 import { departmentList, editDepartment, addDepartment, deleteDepartment } from '@/api/department'
 import HelpCard from '../../components/HelpCard'
 import ChangeDepartmentForm from './change-department-form'
-import { getParentKey, expandTree, loop } from '../../utils/tree'
+import { getParentKey, expandTree, loop, handleOkChange, getChangFormData } from '../../utils/tree'
 
 const { Search } = Input
 
@@ -57,7 +57,6 @@ class DepartmentManagement extends React.Component {
       }
       const name = values.name
       const id = this.state.selectedDepartment.id
-      form.resetFields()
       ret = {
         name: name,
         id: id
@@ -66,61 +65,19 @@ class DepartmentManagement extends React.Component {
     return ret
   }
 
-  handleOkAdd = async () => {
-    const addPara = await this.getChangeDepartmentData()
-    if (!addPara) {
-      return
-    }
-    this.setState({ changeModalLod: true })
-    addDepartment({ name: addPara.name, parent_id: addPara.id }).then((res) => {
-      this.setState({ changeModalLod: true, changeModalVis: false })
-      if (res.data.code === 200) {
-        message.success('添加部门成功！')
-        this.getDepartment()
-      } else {
-        message.error('添加部门失败，' + res.data.message)
-      }
-    }).catch(() => {
-      message.error('添加部门失败，请检查网络连接')
-    })
+  handleOkAdd = () => {
+    handleOkChange(getChangFormData(this), this, addDepartment,
+      this.getDepartment, '添加')
   }
 
   handleOkEdit = () => {
-    const editPara = this.getChangeDepartmentData()
-    if (!editPara) {
-      return
-    }
-    this.setState({ changeModalLod: true })
-    editDepartment(editPara).then((res) => {
-      this.setState({ changeModalLod: true, changeModalVis: false })
-      if (res.data.code === 200) {
-        message.success('编辑部门成功！')
-        this.getDepartment()
-      } else {
-        message.error('编辑部门失败，' + res.data.message)
-      }
-    }).catch(() => {
-      message.error('编辑部门失败，请检查网络连接')
-    })
+    handleOkChange(getChangFormData(this), this, editDepartment,
+      this.getDepartment, '编辑')
   }
 
   handleOkDelete = () => {
-    const deletePara = this.getChangeDepartmentData()
-    if (!deletePara) {
-      return
-    }
-    this.setState({ changeModalLod: true })
-    deleteDepartment(deletePara).then((res) => {
-      this.setState({ changeModalLod: true, changeModalVis: false })
-      if (res.data.code === 200) {
-        message.success('删除部门成功！')
-        this.getDepartment()
-      } else {
-        message.error('删除部门失败，' + res.data.message)
-      }
-    }).catch(() => {
-      message.error('删除部门失败，请检查网络连接')
-    })
+    handleOkChange(getChangFormData(this), this, deleteDepartment,
+      this.getDepartment, '删除')
   }
 
   componentDidMount () {
