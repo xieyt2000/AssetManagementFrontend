@@ -6,22 +6,6 @@ import { formLayout } from './form-shared'
 const typeArr = [{ label: '数量型', value: 'AMOUNT' }, { label: '条目型', value: 'ITEM' }]
 
 class AddAssetForm extends Component {
-  // validateNewName = async (rule, name, callback) => {
-  //   if (name) {
-  //     if (!/^[a-zA-Z0-9]{4,20}$/.test(name)) {
-  //       callback('用户名必须为4-20位数字或字母组合')
-  //     }
-  //     const response = await nameExist(name)
-  //     const exist = response.data.exist
-  //     if (exist) {
-  //       callback('用户名已存在')
-  //     }
-  //   } else {
-  //     callback('请输入用户名')
-  //   }
-  //   callback()
-  // }
-
   render () {
     const { visible, onCancel, onOk, form, confirmLoading, assetCategories } = this.props
     return (
