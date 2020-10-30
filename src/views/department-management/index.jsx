@@ -48,35 +48,18 @@ class DepartmentManagement extends React.Component {
     console.log(expandedKeys)
   }
 
-  getChangeDepartmentData () {
-    const form = this.changeFormRef.props.form
-    let ret = false
-    form.validateFields((err, values) => {
-      if (err) {
-        return
-      }
-      const name = values.name
-      const id = this.state.selectedDepartment.id
-      ret = {
-        name: name,
-        id: id
-      }
-    })
-    return ret
-  }
-
   handleOkAdd = () => {
-    handleOkChange(getChangFormData(this), this, addDepartment,
+    handleOkChange(getChangFormData(this, this.state.selectedDepartment.id), this, addDepartment,
       this.getDepartment, '添加')
   }
 
   handleOkEdit = () => {
-    handleOkChange(getChangFormData(this), this, editDepartment,
+    handleOkChange(getChangFormData(this, this.state.selectedDepartment.id), this, editDepartment,
       this.getDepartment, '编辑')
   }
 
   handleOkDelete = () => {
-    handleOkChange(getChangFormData(this), this, deleteDepartment,
+    handleOkChange(getChangFormData(this, this.state.selectedDepartment.id), this, deleteDepartment,
       this.getDepartment, '删除')
   }
 
