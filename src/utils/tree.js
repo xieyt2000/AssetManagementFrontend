@@ -55,7 +55,7 @@ export const loop = (searchValue, data) =>
     return <TreeNode key={item.id} title={title}/>
   })
 
-export const getChangFormData = (self) => {
+export const getChangFormData = (self, id) => { // id from state
   const form = self.changeFormRef.props.form
   let ret = false
   form.validateFields((err, values) => {
@@ -63,7 +63,6 @@ export const getChangFormData = (self) => {
       return
     }
     const name = values.name
-    const id = self.state.selectedDepartment.id
     ret = {
       name: name,
       id: id
