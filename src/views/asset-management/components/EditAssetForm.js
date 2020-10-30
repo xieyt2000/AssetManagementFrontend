@@ -6,7 +6,7 @@ import { parent } from './sharedFormItem'
 class EditAssetForm extends Component {
   render () {
     const { visible, onCancel, onOk, form, confirmLoading, rowData } = this.props
-    const { name, description } = rowData
+    const { name, description, parent_id: parentID } = rowData
     const formLayout = {
       labelCol: { sm: { span: 4 } },
       wrapperCol: { sm: { span: 16 } }
@@ -25,7 +25,7 @@ class EditAssetForm extends Component {
               initialValue: description
             })(<Input placeholder="资产描述"/>)}
           </Form.Item>
-          {parent(form)}
+          {parent(form, parentID)}
         </Form>
       </Modal>
     )
