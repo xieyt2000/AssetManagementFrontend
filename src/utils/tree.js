@@ -1,6 +1,9 @@
 import React from 'react'
 import { Tree } from 'antd'
+import { handleResponse } from './response'
+
 const { TreeNode } = Tree
+
 export const getParentKey = (key, tree) => {
   let parentKey
   for (let i = 0; i < tree.length; i++) {
@@ -31,15 +34,15 @@ export const loop = (searchValue, data) =>
     const beforeStr = item.name.substr(0, index)
     const afterStr = item.name.substr(index + searchValue.length)
     const title =
-          index > -1 ? (
-            <span>
-              {beforeStr}
-              <span style={{ color: '#f50' }}>{searchValue}</span>
-              {afterStr}
-            </span>
-          ) : (
-            <span>{item.name}</span>
-          )
+      index > -1 ? (
+        <span>
+          {beforeStr}
+          <span style={{ color: '#f50' }}>{searchValue}</span>
+          {afterStr}
+        </span>
+      ) : (
+        <span>{item.name}</span>
+      )
     if (item.children) {
       return (
         <TreeNode key={item.id} title={title}
@@ -51,3 +54,33 @@ export const loop = (searchValue, data) =>
     }
     return <TreeNode key={item.id} title={title}/>
   })
+
+export const getChangFormData = (self) => {
+  const form = self.changeFormRef.props.form
+  let ret = false
+  form.validateFields((err, values) => {
+    if (err) {
+      return
+    }
+    const name = values.name
+    const id = self.state.selectedDepartment.id
+    ret = {
+      name: name,
+      id: id
+    }
+  })
+  return ret
+}
+
+export const handleOkChange = (para, self, requestFunc, successFunc, oprMessage) => {
+  if (!para) {
+    return false
+  }
+  if (oprMessage === '添加') {
+    para['parent_id'] = para['id']
+  }
+  self.setState({ changeModalLod: true })
+  handleResponse(requestFunc(para), oprMessage, self, null,
+    { changeModalLod: false, changeModalVis: false }, successFunc,
+    self.changeFormRef.props.form.resetFields)
+}
