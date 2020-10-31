@@ -56,13 +56,13 @@ class PersonalAsset extends React.Component {
           <Column title="资产状态" dataIndex="status" key="status" align="center" />
           <Column title="操作" key="action" width={200} align="center" render={(row) => (
             <span>
-              <Button type="primary" shape="circle" icon="edit" title="申请维保"
+              <Button type="primary" shape="circle" icon="tool" title="申请维保"
                 onClick={this.handleFixClick.bind(this, row)}/>
               <Divider type="vertical"/>
-              <Button type="primary" shape="circle" icon="edit" title="申请转移"
+              <Button type="primary" shape="circle" icon="swap" title="申请转移"
                 onClick={this.handleTransferClick.bind(this, row)}/>
               <Divider type="vertical"/>
-              <Button type="primary" shape="circle" icon="edit" title="申请退库"
+              <Button type="primary" shape="circle" icon="poweroff" title="申请退库"
                 onClick={this.handleReturnClick.bind(this, row)}/>
             </span>)}/>
         </Table>
