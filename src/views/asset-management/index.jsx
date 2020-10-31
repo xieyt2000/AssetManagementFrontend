@@ -10,6 +10,7 @@ import PropTypes from 'prop-types'
 import AddAssetForm from './components/AddAssetForm'
 import HistoryTable from './components/HistoryTable'
 import { handleResponse } from '../../utils/response'
+import QueryPanel from './components/QueryPanel'
 
 const Column = Table.Column
 
@@ -57,6 +58,9 @@ class AssetManagement extends Component {
     return (
       <div className='app-container'>
         <HelpCard title='资产管理' source={description}/>
+        <QueryPanel
+          submitQuery={this.submitQuery}
+          assetCategories={this.state.assetCategoryList}/>
         <Card title={cardTitle}>
           <Table
             bordered rowKey="name"
@@ -130,6 +134,10 @@ class AssetManagement extends Component {
 
       </div>
     )
+  }
+
+  submitQuery (query) {
+    message.success('搜索：' + query.name + '+' + query.category + '+' + query.description)
   }
 
   localAddAsset (assetArr) {
