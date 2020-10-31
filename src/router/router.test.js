@@ -8,8 +8,8 @@ import Adapter from 'enzyme-adapter-react-16'
 
 configure({ adapter: new Adapter() })
 
-describe('Enzyme Shallow', function () {
-  it('App\'s title should be Todos', function () {
+describe('Rounter Test', function () {
+  it('Rounter Test', function () {
     const app = render(
       <Provider store={store}>
         <Router/>
