@@ -1,7 +1,7 @@
 import React from 'react'
 import { connect } from 'react-redux'
 import HelpCard from '../../components/HelpCard'
-import { getAssetHistory, personalAssetList } from '../../api/asset'
+import { personalAssetList } from '../../api/asset'
 import { Button, Divider, Table } from 'antd'
 import InputForm from './components/InputForm'
 import { handleResponse } from '@/utils/response'
