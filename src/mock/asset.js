@@ -16,5 +16,25 @@ export default {
       code: 20000,
       data: { items: list }
     }
+  },
+  addAsset: (_) => {
+    return {
+      data: 'addAsset'
+    }
+  },
+  assetCollection: (_) => {
+    return {
+      data: 'assetCollection'
+    }
+  },
+  assetCategoryList: (_) => {
+    return {
+      data: 'assetCategoryList'
+    }
+  },
+  addAssetCategory: (_) => {
+    return {
+      data: 'addAssetCategory'
+    }
   }
 }

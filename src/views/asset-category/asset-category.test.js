@@ -3,8 +3,6 @@ import React from 'react'
 import AssetClassification from './index'
 import { configure, mount } from 'enzyme'
 import Adapter from 'enzyme-adapter-react-16'
-import { Input } from 'antd'
-const { Search } = Input
 configure({ adapter: new Adapter() })
 const testState = {
   assetCategories: [
@@ -68,9 +66,10 @@ describe('AssetClassification test', function () {
     app.setState({
       ...testState
     })
-    const searchItem = app.find(Search)
-    searchItem.simulate('change', { target: { value: '设备' } })
+    // const searchItem = app.find(Search)
+    // searchItem.simulate('input', { target: { value: '设备' } })
     // const treeItem = app.find(Tree)
-    console.log(app.state().expandedKeys)
+    // treeItem.simulate('expand', { expandedKeys: ['1'] })
+    // console.log(app.state().expandedKeys)
   })
 })
