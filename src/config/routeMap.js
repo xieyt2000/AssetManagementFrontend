@@ -26,8 +26,8 @@ const DepartmentManagement = Loadable({
   loader: () => import(/* webpackChunkName:'User' */'@/views/department-management'),
   loading: Loading
 })
-const AssetCollection = Loadable({
-  loader: () => import(/* webpackChunkName:'User' */'@/views/asset-collection'),
+const AssetRequire = Loadable({
+  loader: () => import(/* webpackChunkName:'User' */'@/views/asset-require'),
   loading: Loading
 })
 const PersonalAsset = Loadable({
@@ -67,8 +67,8 @@ export default [
     roles: [PERMISSION.ASSET]
   },
   {
-    path: '/asset/collection',
-    component: AssetCollection,
+    path: '/asset/require',
+    component: AssetRequire,
     roles: [PERMISSION.IT, PERMISSION.ASSET, PERMISSION.SYSTEM, PERMISSION.STAFF]
   },
   {

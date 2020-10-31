@@ -112,7 +112,7 @@ const menuList = [
     children: [
       {
         title: '资产领用',
-        path: '/asset/collection',
+        path: '/asset/require',
         icon: 'down-square',
         roles: [PERMISSION.IT, PERMISSION.ASSET, PERMISSION.SYSTEM, PERMISSION.STAFF]
       },

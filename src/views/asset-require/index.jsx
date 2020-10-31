@@ -1,6 +1,6 @@
 import React from 'react'
 import { connect } from 'react-redux'
-import { assetList, assetCollection } from '../../api/asset'
+import { availableAssetList, assetRequire } from '../../api/asset'
 import HelpCard from '../../components/HelpCard'
 import { Button, Modal, Table, message } from 'antd'
 import { CHINESE_STATUS } from '../../utils/asset'
@@ -11,7 +11,7 @@ const changeStatusToChinese = (status) => {
   return CHINESE_STATUS[status]
 }
 
-class AssetCollection extends React.Component {
+class AssetRequire extends React.Component {
   constructor (props) {
     super(props)
     this.state = {
@@ -23,7 +23,7 @@ class AssetCollection extends React.Component {
   }
 
   getAsset = async () => {
-    const res = await assetList()
+    const res = await availableAssetList()
     const { data: assets, code } = res.data
     if (code === 200) {
       this.setState({
@@ -45,7 +45,7 @@ class AssetCollection extends React.Component {
 
   handleOk = (ignore) => {
     const data = { nid: this.state.rowData.nid }
-    assetCollection(data).then((res) => {
+    assetRequire(data).then((res) => {
       const { code, m } = res.data
       if (code === 200) {
         message.success('资产领用成功')
@@ -117,4 +117,4 @@ class AssetCollection extends React.Component {
   }
 }
 
-export default connect(state => state.user)(AssetCollection)
+export default connect(state => state.user)(AssetRequire)
