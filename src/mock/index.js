@@ -1,6 +1,7 @@
 import Mock from 'mockjs'
 import loginAPI from './login'
 import remoteSearchAPI from './asset'
+import departmentAPI from './department'
 
 // 登录与用户相关
 Mock.mock(/\/api\/user\/login/, 'post', loginAPI.login)
@@ -18,4 +19,9 @@ Mock.mock(/api\/asset\/category\/edit/, 'post', remoteSearchAPI.editAssetCategor
 Mock.mock(/api\/asset\/category\/delete/, 'post', remoteSearchAPI.deleteAssetCategory)
 Mock.mock(/\/api\/asset\/history/, 'post', remoteSearchAPI.getAssetHistory)
 
+// department
+Mock.mock(/\/api\/department\/tree/, 'get', departmentAPI.departmentList)
+Mock.mock(/api\/department\/add/, 'post', departmentAPI.addDepartment)
+Mock.mock(/api\/department\/edit/, 'post', departmentAPI.editDepartment)
+Mock.mock(/api\/department\/delete/, 'post', departmentAPI.deleteDepartment)
 export default Mock
