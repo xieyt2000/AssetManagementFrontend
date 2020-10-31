@@ -32,9 +32,7 @@ class QueryPanel extends Component {
               <Input onChange={this.queryDesChange} />
             </Form.Item>
             <Form.Item>
-              <Button type="primary" icon="search" onClick={this.submit}>
-                            搜索
-              </Button>
+              <Button type="primary" icon="search" onClick={this.submit}>搜索</Button>
             </Form.Item>
           </Form>
         </Panel>

@@ -7,6 +7,13 @@ export function assetList () {
   })
 }
 
+export function personalAssetList () {
+  return request({
+    url: '/api/user/assets',
+    method: 'get'
+  })
+}
+
 export function assetQuery (query) {
   return request({
     url: '/api/asset/query',
