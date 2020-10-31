@@ -27,7 +27,7 @@ class InputForm extends Component {
         onOk={onOk} confirmLoading={confirmLoading}>
         <Form {...formLayout}>
           <Form.Item label={label}>
-            {form.getFieldDecorator('name', {
+            {form.getFieldDecorator('username', {
               rules: [{ required: true, validator: this.validateName }]
             })(<Input placeholder={label}/>)}
           </Form.Item>

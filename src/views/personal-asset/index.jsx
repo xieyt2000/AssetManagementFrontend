@@ -1,11 +1,12 @@
 import React from 'react'
 import { connect } from 'react-redux'
 import HelpCard from '../../components/HelpCard'
-import { personalAssetList } from '../../api/asset'
+import { getAssetHistory, personalAssetList } from '../../api/asset'
 import { Button, Divider, Table } from 'antd'
-// import { handleResponse } from '@/utils/response'
 import InputForm from './components/InputForm'
-import AddAssetForm from '../asset-management/components/AddAssetForm'
+import { handleResponse } from '@/utils/response'
+import { applyFix, applyTransfer, applyReturn } from '@/api/issue'
+
 const Column = Table.Column
 
 class PersonalAsset extends React.Component {
@@ -50,6 +51,7 @@ class PersonalAsset extends React.Component {
               })(row)} </span>
             )}/>
           <Column title="资产分类" dataIndex="category" key="category" align="center"/>
+          <Column title="资产状态" dataIndex="status" key="status" align="center" />
           <Column title="操作" key="action" width={200} align="center" render={(row) => (
             <span>
               <Button type="primary" shape="circle" icon="edit" title="申请维保"
@@ -88,7 +90,19 @@ class PersonalAsset extends React.Component {
   }
 
   handleOkFix = () => {
-
+    const form = this.formRef.props.form
+    form.validateFields((err, values) => {
+      if (err) {
+        return
+      }
+      this.setState({ modalLod: true })
+      form.resetFields()
+      values.nid = this.state.rowData.nid
+      handleResponse(applyFix(values), '请求维保', this, null,
+        {
+          modalLod: false, modalVis: false
+        })
+    })
   }
 
   handleTransferClick = (row) => {
@@ -102,11 +116,27 @@ class PersonalAsset extends React.Component {
   }
 
   handleOkTransfer = () => {
-
+    const form = this.formRef.props.form
+    form.validateFields((err, values) => {
+      if (err) {
+        return
+      }
+      this.setState({ modalLod: true })
+      form.resetFields()
+      values.nid = this.state.rowData.nid
+      handleResponse(applyTransfer(values), '请求转移', this, null,
+        {
+          modalLod: false, modalVis: false
+        })
+    })
   }
 
   handleReturnClick = (row) => {
-
+    const data = { nid: row.nid }
+    handleResponse(applyReturn(data), '请求退库', this, null,
+      {
+        modalLod: false, modalVis: false
+      })
   }
 
   handleCancel = () => {
