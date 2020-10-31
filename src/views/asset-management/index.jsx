@@ -4,7 +4,7 @@ import HelpCard from '../../components/HelpCard'
 import UploadAsset from './upload'
 import AssetInfo from './components/AssetInfo'
 import EditAssetForm from './components/EditAssetForm'
-import { addAsset, assetList, editAsset, assetCategoryList, getAssetHistory } from '../../api/asset'
+import { addAsset, assetList, assetQuery, editAsset, assetCategoryList, getAssetHistory } from '../../api/asset'
 import { connect } from 'react-redux'
 import PropTypes from 'prop-types'
 import AddAssetForm from './components/AddAssetForm'
@@ -136,8 +136,16 @@ class AssetManagement extends Component {
     )
   }
 
-  submitQuery (query) {
-    message.success('搜索：' + query.name + '+' + query.category + '+' + query.description)
+  submitQuery = async (query) => {
+    const res = await assetQuery(query)
+    const { data: assets, code } = res.data
+    if (code === 200) {
+      this.setState({
+        assetList: assets
+      })
+    } else {
+      message.err('查询失败')
+    }
   }
 
   localAddAsset (assetArr) {

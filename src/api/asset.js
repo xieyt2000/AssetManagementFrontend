@@ -7,6 +7,13 @@ export function assetList () {
   })
 }
 
+export function assetQuery (query) {
+  return request({
+    url: '/api/asset/query',
+    method: 'post',
+    data: query
+  })
+}
 export function addAsset (assetArr) {
   return request({
     url: '/api/asset/add',
