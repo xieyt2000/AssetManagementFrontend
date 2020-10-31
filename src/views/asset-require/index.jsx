@@ -1,9 +1,11 @@
 import React from 'react'
 import { connect } from 'react-redux'
-import { availableAssetList, assetRequire } from '../../api/asset'
+import { availableAssetList } from '@/api/asset'
+import { applyRequire } from '@/api/issue'
 import HelpCard from '../../components/HelpCard'
-import { Button, Modal, Table, message } from 'antd'
+import { Button, Modal, Table } from 'antd'
 import { CHINESE_STATUS } from '../../utils/asset'
+import { handleResponse } from '@/utils/response'
 
 const Column = Table.Column
 
@@ -45,20 +47,11 @@ class AssetRequire extends React.Component {
 
   handleOk = (ignore) => {
     const data = { nid: this.state.rowData.nid }
-    assetRequire(data).then((res) => {
-      const { code, m } = res.data
-      if (code === 200) {
-        message.success('资产领用成功')
-      } else {
-        message.error(m)
-      }
-    }).catch(() => {
-      message.error('资产领用失败，请检查网络连接后重试！')
-    })
-    this.setState({
-      collectModalVis: false
-    })
-    this.getAsset()
+
+    handleResponse(applyRequire(data), '请求领用', this, null,
+      {
+        collectModalLod: false, collectModalVis: false
+      }, null, this.getAsset)
   }
 
   handleCancel = (ignore) => {

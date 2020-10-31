@@ -1,6 +1,14 @@
 
 import request from '@/utils/request'
 
+export function applyRequire (data) {
+  return request({
+    url: '/api/asset/apply-require',
+    method: 'post',
+    data: data
+  })
+}
+
 export function applyFix (data) {
   return request({
     url: '/api/asset/apply-fix',
