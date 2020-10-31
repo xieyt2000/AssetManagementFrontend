@@ -35,6 +35,11 @@ const PersonalAsset = Loadable({
   loading: Loading
 })
 
+const AssetCustom = Loadable({
+  loader: () => import('@/views/asset-custom'),
+  loading: Loading
+})
+
 export default [
   {
     path: '/dashboard',
@@ -75,6 +80,11 @@ export default [
     path: '/asset/personal',
     component: PersonalAsset,
     roles: [PERMISSION.IT, PERMISSION.ASSET, PERMISSION.SYSTEM, PERMISSION.STAFF]
+  },
+  {
+    path: '/asset/custom',
+    component: AssetCustom,
+    roles: [PERMISSION.IT]
   }
   // { path: '/permission/explanation', component: Explanation, roles: ['admin'] },
   // { path: '/permission/adminPage', component: AdminPage, roles: ['admin'] },

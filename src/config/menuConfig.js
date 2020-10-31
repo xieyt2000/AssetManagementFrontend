@@ -48,6 +48,11 @@ const menuList = [
         title: '资产分类',
         path: '/asset/category',
         roles: [PERMISSION.IT]
+      },
+      {
+        title: '自定义属性',
+        path: '/asset/custom',
+        roles: [PERMISSION.IT]
       }
     ]
   },
