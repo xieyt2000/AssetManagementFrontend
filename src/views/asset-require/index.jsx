@@ -1,9 +1,11 @@
 import React from 'react'
 import { connect } from 'react-redux'
-import { assetList, assetCollection } from '../../api/asset'
+import { availableAssetList } from '@/api/asset'
+import { applyRequire } from '@/api/issue'
 import HelpCard from '../../components/HelpCard'
-import { Button, Modal, Table, message } from 'antd'
+import { Button, Modal, Table } from 'antd'
 import { CHINESE_STATUS } from '../../utils/asset'
+import { handleResponse } from '@/utils/response'
 
 const Column = Table.Column
 
@@ -11,7 +13,7 @@ const changeStatusToChinese = (status) => {
   return CHINESE_STATUS[status]
 }
 
-class AssetCollection extends React.Component {
+class AssetRequire extends React.Component {
   constructor (props) {
     super(props)
     this.state = {
@@ -23,7 +25,7 @@ class AssetCollection extends React.Component {
   }
 
   getAsset = async () => {
-    const res = await assetList()
+    const res = await availableAssetList()
     const { data: assets, code } = res.data
     if (code === 200) {
       this.setState({
@@ -45,20 +47,11 @@ class AssetCollection extends React.Component {
 
   handleOk = (ignore) => {
     const data = { nid: this.state.rowData.nid }
-    assetCollection(data).then((res) => {
-      const { code, m } = res.data
-      if (code === 200) {
-        message.success('资产领用成功')
-      } else {
-        message.error(m)
-      }
-    }).catch(() => {
-      message.error('资产领用失败，请检查网络连接后重试！')
-    })
-    this.setState({
-      collectModalVis: false
-    })
-    this.getAsset()
+
+    handleResponse(applyRequire(data), '请求领用', this, null,
+      {
+        collectModalLod: false, collectModalVis: false
+      }, null, this.getAsset)
   }
 
   handleCancel = (ignore) => {
@@ -99,7 +92,7 @@ class AssetCollection extends React.Component {
             )}/>
           <Column title="操作" key="action" width={200} align="center" render={(row) => (
             <span>
-              <Button type="primary" shape="circle" icon="import" title="领用资产"
+              <Button type="primary" shape="circle" icon="check-circle" title="领用资产"
                 onClick={this.handleClickCollect.bind(this, row)}/>
             </span>)}/>
         </Table>
@@ -117,4 +110,4 @@ class AssetCollection extends React.Component {
   }
 }
 
-export default connect(state => state.user)(AssetCollection)
+export default connect(state => state.user)(AssetRequire)

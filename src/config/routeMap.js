@@ -26,8 +26,8 @@ const DepartmentManagement = Loadable({
   loader: () => import(/* webpackChunkName:'User' */'@/views/department-management'),
   loading: Loading
 })
-const AssetCollection = Loadable({
-  loader: () => import(/* webpackChunkName:'User' */'@/views/asset-collection'),
+const AssetRequire = Loadable({
+  loader: () => import(/* webpackChunkName:'User' */'@/views/asset-require'),
   loading: Loading
 })
 const PersonalAsset = Loadable({
@@ -40,6 +40,10 @@ const AssetCustom = Loadable({
   loading: Loading
 })
 
+const IssueBoard = Loadable({
+  loader: () => import(/* webpackChunkName:'User' */'@/views/issue-board'),
+  loading: Loading
+})
 export default [
   {
     path: '/dashboard',
@@ -72,8 +76,8 @@ export default [
     roles: [PERMISSION.ASSET]
   },
   {
-    path: '/asset/collection',
-    component: AssetCollection,
+    path: '/asset/require',
+    component: AssetRequire,
     roles: [PERMISSION.IT, PERMISSION.ASSET, PERMISSION.SYSTEM, PERMISSION.STAFF]
   },
   {
@@ -85,11 +89,10 @@ export default [
     path: '/asset/custom',
     component: AssetCustom,
     roles: [PERMISSION.IT]
+  },
+  {
+    path: '/issue',
+    component: IssueBoard,
+    roles: [PERMISSION.IT, PERMISSION.ASSET, PERMISSION.SYSTEM, PERMISSION.STAFF]
   }
-  // { path: '/permission/explanation', component: Explanation, roles: ['admin'] },
-  // { path: '/permission/adminPage', component: AdminPage, roles: ['admin'] },
-  // { path: '/permission/guestPage', component: GuestPage, roles: ['guest'] },
-  // { path: '/permission/editorPage', component: EditorPage, roles: ['editor'] },
-  // { path: '/nested/menu1/menu11', component: Menu11, roles: ['admin', 'editor'] },
-  // { path: '/nested/menu1/menu12/menu121', component: Menu121, roles: ['admin', 'editor'] }
 ]

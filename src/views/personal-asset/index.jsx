@@ -2,7 +2,10 @@ import React from 'react'
 import { connect } from 'react-redux'
 import HelpCard from '../../components/HelpCard'
 import { personalAssetList } from '../../api/asset'
-import { Button, Divider, Table } from 'antd'
+import { Button, Divider, Modal, Table } from 'antd'
+import InputForm from './components/InputForm'
+import { handleResponse } from '@/utils/response'
+import { applyFix, applyTransfer, applyReturn } from '@/api/issue'
 
 const Column = Table.Column
 
@@ -11,11 +14,14 @@ class PersonalAsset extends React.Component {
     super(props)
     this.state = {
       assetList: [],
-      fixModalVis: false, // vis for visible
-      fixModalLod: false, // loa for loading
-      transferModalVis: false,
-      transferModalLod: false,
-      rowData: {}
+      modalTitle: '',
+      modalVis: false,
+      modalLod: false,
+      modalOk: null,
+      formRef: null,
+      rowData: {},
+      returnModalVis: false,
+      returnModalLod: false
     }
   }
 
@@ -47,30 +53,114 @@ class PersonalAsset extends React.Component {
               })(row)} </span>
             )}/>
           <Column title="资产分类" dataIndex="category" key="category" align="center"/>
+          <Column title="资产状态" dataIndex="status" key="status" align="center" />
           <Column title="操作" key="action" width={200} align="center" render={(row) => (
             <span>
-              <Button type="primary" shape="circle" icon="search" title="申请维保"
+              <Button type="primary" shape="circle" icon="tool" title="申请维保"
                 onClick={this.handleFixClick.bind(this, row)}/>
               <Divider type="vertical"/>
-              <Button type="primary" shape="circle" icon="edit" title="申请转移"
+              <Button type="primary" shape="circle" icon="swap" title="申请转移"
                 onClick={this.handleTransferClick.bind(this, row)}/>
+              <Divider type="vertical"/>
+              <Button type="primary" shape="circle" icon="poweroff" title="申请退库"
+                onClick={this.handleReturnClick.bind(this, row)}/>
             </span>)}/>
         </Table>
+        <InputForm
+          wrappedComponentRef={(formRef) => {
+            this.formRef = formRef
+          }}
+          visible={this.state.modalVis}
+          confirmLoading={this.state.modalLod}
+          onCancel={this.handleCancel}
+          onOk={this.state.modalOk}
+          title={this.state.modalTitle}
+          label={this.state.modalLabel}
+        />
+        <Modal
+          title="资产退库"
+          visible={this.state.returnModalVis}
+          confirmLoading={this.state.returnModalLod}
+          onOk={this.handleReturnOk}
+          onCancel={this.handleCancel}
+        >
+          <p>是否退库资产 {this.state.rowData.name} ?</p>
+        </Modal>
       </div>
     )
   }
 
-  handleFixClick (row) {
+  handleFixClick = (row) => {
     this.setState({
       rowData: Object.assign({}, row),
-      fixModalVis: true
+      modalVis: true,
+      modalTitle: '申请资产维保',
+      modalLabel: '维修人 ',
+      modalOk: this.handleOkFix
     })
   }
 
-  handleTransferClick (row) {
+  handleOkFix = () => {
+    const form = this.formRef.props.form
+    form.validateFields((err, values) => {
+      if (err) {
+        return
+      }
+      this.setState({ modalLod: true })
+      form.resetFields()
+      values.nid = this.state.rowData.nid
+      handleResponse(applyFix(values), '请求维保', this, null,
+        {
+          modalLod: false, modalVis: false
+        }, null, this.getAsset)
+    })
+  }
+
+  handleTransferClick = (row) => {
     this.setState({
-      rowData: Object.assgin({}, row),
-      transferModalVis: true
+      rowData: Object.assign({}, row),
+      modalVis: true,
+      modalTitle: '申请资产转移',
+      modalLabel: '转移对象 ',
+      modalOk: this.handleOkTransfer
+    })
+  }
+
+  handleOkTransfer = () => {
+    const form = this.formRef.props.form
+    form.validateFields((err, values) => {
+      if (err) {
+        return
+      }
+      this.setState({ modalLod: true })
+      form.resetFields()
+      values.nid = this.state.rowData.nid
+      handleResponse(applyTransfer(values), '请求转移', this, null,
+        {
+          modalLod: false, modalVis: false
+        }, null, this.getAsset)
+    })
+  }
+
+  handleReturnClick = (row) => {
+    this.setState({
+      rowData: Object.assign({}, row),
+      returnModalVis: true
+    })
+  }
+
+  handleReturnOk = () => {
+    const data = { nid: this.state.rowData.nid }
+    handleResponse(applyReturn(data), '请求退库', this, null,
+      {
+        returnModalLod: false, returnModalVis: false
+      }, null, this.getAsset)
+  }
+
+  handleCancel = () => {
+    this.setState({
+      modalVis: false,
+      returnModalVis: false
     })
   }
 

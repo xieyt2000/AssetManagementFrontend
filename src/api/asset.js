@@ -14,6 +14,13 @@ export function personalAssetList () {
   })
 }
 
+export function availableAssetList () {
+  return request({
+    url: '/api/asset/available',
+    method: 'get'
+  })
+}
+
 export function assetQuery (query) {
   return request({
     url: '/api/asset/query',
@@ -75,7 +82,7 @@ export function getAssetHistory (asset) {
   })
 }
 
-export function assetCollection (data) {
+export function assetRequire (data) {
   return request({
     url: '/api/asset/require',
     method: 'post',

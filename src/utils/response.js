@@ -13,9 +13,6 @@ export const handleResponse = (promise, oprMessage, self,
       if (successFunc != null) {
         successFunc()
       }
-      if (modalState != null) {
-        self.setState(modalState)
-      }
     } else {
       message.error(oprMessage + '失败，' + res.data.message)
     }
@@ -24,6 +21,9 @@ export const handleResponse = (promise, oprMessage, self,
   }).finally(() => {
     if (finallyFunc != null) {
       finallyFunc()
+    }
+    if (modalState != null) {
+      self.setState(modalState)
     }
   })
 }
