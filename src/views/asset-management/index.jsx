@@ -137,9 +137,11 @@ class AssetManagement extends Component {
   }
 
   submitQuery = async (query) => {
+    const info = query.name + '+' + query.category + '+' + query.description
     const res = await assetQuery(query)
     const { data: assets, code } = res.data
     if (code === 200) {
+      message.success('查询成功：' + info)
       this.setState({
         assetList: assets
       })

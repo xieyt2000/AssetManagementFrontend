@@ -28,7 +28,7 @@ class QueryPanel extends Component {
                 treeData={assetCategories}
               />
             </Form.Item>
-            <Form.Item label="名称:">
+            <Form.Item label="描述:">
               <Input onChange={this.queryDesChange} />
             </Form.Item>
             <Form.Item>
