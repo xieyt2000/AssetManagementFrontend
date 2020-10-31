@@ -2,7 +2,7 @@ import React from 'react'
 import { connect } from 'react-redux'
 import HelpCard from '../../components/HelpCard'
 import { personalAssetList } from '../../api/asset'
-import { Button, Divider, Table } from 'antd'
+import { Button, Divider, Modal, Table } from 'antd'
 import InputForm from './components/InputForm'
 import { handleResponse } from '@/utils/response'
 import { applyFix, applyTransfer, applyReturn } from '@/api/issue'
@@ -19,7 +19,9 @@ class PersonalAsset extends React.Component {
       modalLod: false,
       modalOk: null,
       formRef: null,
-      rowData: {}
+      rowData: {},
+      returnModalVis: false,
+      returnModalLod: false
     }
   }
 
@@ -75,6 +77,15 @@ class PersonalAsset extends React.Component {
           title={this.state.modalTitle}
           label={this.state.modalLabel}
         />
+        <Modal
+          title="资产退库"
+          visible={this.state.returnModalVis}
+          confirmLoading={this.state.returnModalLod}
+          onOk={this.handleReturnOk}
+          onCancel={this.handleCancel}
+        >
+          <p>是否退库资产 {this.state.rowData.name} ?</p>
+        </Modal>
       </div>
     )
   }
@@ -101,7 +112,7 @@ class PersonalAsset extends React.Component {
       handleResponse(applyFix(values), '请求维保', this, null,
         {
           modalLod: false, modalVis: false
-        })
+        }, null, this.getAsset)
     })
   }
 
@@ -127,21 +138,29 @@ class PersonalAsset extends React.Component {
       handleResponse(applyTransfer(values), '请求转移', this, null,
         {
           modalLod: false, modalVis: false
-        })
+        }, null, this.getAsset)
     })
   }
 
   handleReturnClick = (row) => {
-    const data = { nid: row.nid }
+    this.setState({
+      rowData: Object.assign({}, row),
+      returnModalVis: true
+    })
+  }
+
+  handleReturnOk = () => {
+    const data = { nid: this.state.rowData.nid }
     handleResponse(applyReturn(data), '请求退库', this, null,
       {
-        modalLod: false, modalVis: false
-      })
+        returnModalLod: false, returnModalVis: false
+      }, null, this.getAsset)
   }
 
   handleCancel = () => {
     this.setState({
-      modalVis: false
+      modalVis: false,
+      returnModalVis: false
     })
   }
 
