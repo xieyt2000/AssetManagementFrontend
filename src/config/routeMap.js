@@ -34,7 +34,10 @@ const PersonalAsset = Loadable({
   loader: () => import(/* webpackChunkName:'User' */'@/views/personal-asset'),
   loading: Loading
 })
-
+const IssueBoard = Loadable({
+  loader: () => import(/* webpackChunkName:'User' */'@/views/issue-board'),
+  loading: Loading
+})
 export default [
   {
     path: '/dashboard',
@@ -75,11 +78,10 @@ export default [
     path: '/asset/personal',
     component: PersonalAsset,
     roles: [PERMISSION.IT, PERMISSION.ASSET, PERMISSION.SYSTEM, PERMISSION.STAFF]
+  },
+  {
+    path: '/issue',
+    component: IssueBoard,
+    roles: [PERMISSION.IT, PERMISSION.ASSET, PERMISSION.SYSTEM, PERMISSION.STAFF]
   }
-  // { path: '/permission/explanation', component: Explanation, roles: ['admin'] },
-  // { path: '/permission/adminPage', component: AdminPage, roles: ['admin'] },
-  // { path: '/permission/guestPage', component: GuestPage, roles: ['guest'] },
-  // { path: '/permission/editorPage', component: EditorPage, roles: ['editor'] },
-  // { path: '/nested/menu1/menu11', component: Menu11, roles: ['admin', 'editor'] },
-  // { path: '/nested/menu1/menu12/menu121', component: Menu121, roles: ['admin', 'editor'] }
 ]
