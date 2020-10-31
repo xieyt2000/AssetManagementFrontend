@@ -3,7 +3,7 @@ import loginAPI from './login'
 import remoteSearchAPI from './asset'
 import departmentAPI from './department'
 import logAPI from './log'
-
+import UserAPI from './user'
 // 登录与用户相关
 Mock.mock(/\/api\/user\/login/, 'post', loginAPI.login)
 Mock.mock(/\/api\/user\/logout/, 'post', loginAPI.logout)
@@ -28,4 +28,14 @@ Mock.mock(/api\/department\/delete/, 'post', departmentAPI.deleteDepartment)
 
 // log
 Mock.mock(/\/api\/logs/, 'post', logAPI.getLog)
+
+// user
+Mock.mock(/\/api\/user\/info/, 'post', UserAPI.reqUserInfo)
+Mock.mock(/\/api\/user\/list/, 'get', UserAPI.getUsers)
+Mock.mock(/\/api\/user\/delete/, 'post', UserAPI.deleteUser)
+Mock.mock(/\/api\/user\/lock/, 'post', UserAPI.lockUser)
+Mock.mock(/\/api\/user\/edit/, 'post', UserAPI.editUser)
+Mock.mock(/\/api\/user\/exist/, 'post', UserAPI.nameExist)
+Mock.mock(/\/api\/user\/add/, 'post', UserAPI.addUser)
+Mock.mock(/api\/user\/change-password/, 'post', UserAPI.changePassword)
 export default Mock
