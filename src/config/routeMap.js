@@ -30,6 +30,10 @@ const AssetCollection = Loadable({
   loader: () => import(/* webpackChunkName:'User' */'@/views/asset-collection'),
   loading: Loading
 })
+const PersonalAsset = Loadable({
+  loader: () => import(/* webpackChunkName:'User' */'@/views/personal-asset'),
+  loading: Loading
+})
 
 export default [
   {
@@ -65,6 +69,11 @@ export default [
   {
     path: '/asset/collection',
     component: AssetCollection,
+    roles: [PERMISSION.IT, PERMISSION.ASSET, PERMISSION.SYSTEM, PERMISSION.STAFF]
+  },
+  {
+    path: '/asset/personal',
+    component: PersonalAsset,
     roles: [PERMISSION.IT, PERMISSION.ASSET, PERMISSION.SYSTEM, PERMISSION.STAFF]
   }
   // { path: '/permission/explanation', component: Explanation, roles: ['admin'] },

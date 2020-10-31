@@ -106,10 +106,24 @@ const menuList = [
     roles: [PERMISSION.SYSTEM]
   },
   {
-    title: '资产领用',
-    path: '/asset/collection',
+    title: '资产使用',
+    path: '/asset',
     icon: 'down-square',
-    roles: [PERMISSION.IT, PERMISSION.ASSET, PERMISSION.SYSTEM, PERMISSION.STAFF]
+    children: [
+      {
+        title: '资产领用',
+        path: '/asset/collection',
+        icon: 'down-square',
+        roles: [PERMISSION.IT, PERMISSION.ASSET, PERMISSION.SYSTEM, PERMISSION.STAFF]
+      },
+      {
+        title: '个人资产',
+        path: '/asset/personal',
+        icon: 'down-square',
+        roles: [PERMISSION.IT, PERMISSION.ASSET, PERMISSION.SYSTEM, PERMISSION.STAFF]
+      }
+
+    ]
   }
 
 ]
