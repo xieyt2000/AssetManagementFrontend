@@ -89,3 +89,18 @@ export function assetRequire (data) {
     data: data
   })
 }
+
+export function getCustomProp () {
+  return request({
+    url: '/api/asset/custom/list',
+    method: 'get'
+  })
+}
+
+export function editCustomProp (data) {
+  return request({
+    url: '/api/asset/custom/edit',
+    method: 'post',
+    data: data
+  })
+}

@@ -2,26 +2,31 @@ import React, { Component } from 'react'
 import { Form, Button, Icon, Input } from 'antd'
 import HelpCard from '../../components/HelpCard'
 import { PropTypes } from 'prop-types'
+import { getCustomProp, editCustomProp } from '../../api/asset'
+import { handleResponse } from '../../utils/response'
 
 class AssetCustom extends Component {
   constructor (props) {
     super(props)
-    this.id = 0
+    this.state = {
+      customProps: []
+    }
   }
 
   remove = (removeKey) => {
     const { form } = this.props
     const keys = form.getFieldValue('keys')
+    keys.splice(removeKey, 1)
     form.setFieldsValue({
-      keys: keys.filter((key) => key !== removeKey)
+      // keys: keys.filter((key) => key !== removeKey)
+      keys: keys
     })
   }
 
   add = () => {
     const { form } = this.props
     const keys = form.getFieldValue('keys')
-    const newKeys = keys.concat(this.id)
-    this.id++
+    const newKeys = keys.concat('')
     form.setFieldsValue({
       keys: newKeys
     })
@@ -31,10 +36,29 @@ class AssetCustom extends Component {
     e.preventDefault()
     this.props.form.validateFields((err, values) => {
       if (!err) {
-        const { keys, names } = values
-        console.log('Merged values:', keys.map(key => names[key]))
+        let { names } = values
+        if (names === undefined) {
+          names = []
+        }
+        handleResponse(editCustomProp({ custom: names }), '编辑', this, null, null,
+          async () => {
+            await this.localGetProps()
+            this.props.form.resetFields()
+          })
       }
     })
+  }
+
+  async localGetProps () {
+    const customProps = await getCustomProp()
+    this.setState({
+      customProps: customProps.data.data
+      // customProps: ['nm', 'sl']
+    })
+  }
+
+  componentDidMount () {
+    this.localGetProps()
   }
 
   render () {
@@ -44,15 +68,15 @@ class AssetCustom extends Component {
         span: 20, offset: 4
       }
     }
-    getFieldDecorator('keys', { initialValue: [] })
+    getFieldDecorator('keys', { initialValue: this.state.customProps })
     const keys = getFieldValue('keys')
-    const formItems = keys.map((k) => (
+    const formItems = keys.map((k, index) => (
       <Form.Item
         {...formItemLayoutWithOut}
         required={false}
-        key={k}
+        key={index}
       >
-        {getFieldDecorator(`names[${k}]`, {
+        {getFieldDecorator(`names[${index}]`, {
           validateTrigger: ['onChange', 'onBlur'],
           rules: [
             {
@@ -60,13 +84,14 @@ class AssetCustom extends Component {
               whitespace: true,
               message: '请输入自定义属性名称或者删除该条属性'
             }
-          ]
+          ],
+          initialValue: k
         })(<Input placeholder="属性名称" style={{ width: '60%', marginRight: 8 }}/>)}
         {
           <Icon
             className="dynamic-delete-button"
             type="minus-circle-o"
-            onClick={() => this.remove(k)}
+            onClick={() => this.remove(index)}
           />
         }
       </Form.Item>
@@ -86,7 +111,7 @@ class AssetCustom extends Component {
           </Form.Item>
           <Form.Item wrapperCol={{ offset: 15 }}>
             <Button type="primary" htmlType='submit'>
-            提交
+              提交
             </Button>
           </Form.Item>
         </Form>
