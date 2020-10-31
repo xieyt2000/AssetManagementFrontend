@@ -1,4 +1,5 @@
 import Mock from 'mockjs'
+import getReturnFunc from './utils'
 const list = []
 const count = 20
 
@@ -10,6 +11,7 @@ for (let i = 0; i < count; i++) {
     'tag|1': ['success', 'pending']
   }))
 }
+
 export default {
   assetList: (_) => {
     return {
@@ -32,9 +34,10 @@ export default {
       data: 'assetCategoryList'
     }
   },
-  addAssetCategory: (_) => {
-    return {
-      data: 'addAssetCategory'
-    }
-  }
+  editAsset: getReturnFunc('editAsset'),
+  addAssetCategory: getReturnFunc('addAssetCategory'),
+  editAssetCategory: getReturnFunc('editAssetCategory'),
+  deleteAssetCategory: getReturnFunc('deleteAssetCategory'),
+  getAssetHistory: getReturnFunc('getAssetHistory')
+
 }
