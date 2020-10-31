@@ -4,38 +4,38 @@ import '@/mock'
 describe('asset api test', function () {
   it('test assetList', async function () {
     const res = await assetList()
-    console.log(res)
+    expect(res.data.data).toBe('assetList')
   })
   it('test addAsset', async function () {
     const res = await addAsset([])
-    console.log(res)
+    expect(res.data.data).toBe('addAsset')
   })
   it('test assetCollection', async function () {
     const res = await assetCollection({})
-    console.log(res)
+    expect(res.data.data).toBe('assetCollection')
   })
   it('test assetCategoryList', async function () {
     const res = await assetCategoryList()
-    console.log(res)
+    expect(res.data.data).toBe('assetCategoryList')
   })
   it('test deleteAssetCategory', async function () {
     const res = await deleteAssetCategory({})
-    console.log(res)
+    expect(res.data.data).toBe('deleteAssetCategory')
   })
   it('test editAsset', async function () {
     const res = await editAsset({})
-    console.log(res)
+    expect(res.data.data).toBe('editAsset')
   })
   it('test editAssetCategory', async function () {
     const res = await editAssetCategory({})
-    console.log(res)
+    expect(res.data.data).toBe('editAssetCategory')
   })
   it('test addAssetCategory', async function () {
     const res = await addAssetCategory({})
-    console.log(res)
+    expect(res.data.data).toBe('addAssetCategory')
   })
   it('test getAssetHistory', async function () {
     const res = await getAssetHistory({})
-    console.log(res)
+    expect(res.data.data).toBe('getAssetHistory')
   })
 })

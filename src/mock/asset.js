@@ -13,31 +13,13 @@ for (let i = 0; i < count; i++) {
 }
 
 export default {
-  assetList: (_) => {
-    return {
-      code: 20000,
-      data: { items: list }
-    }
-  },
-  addAsset: (_) => {
-    return {
-      data: 'addAsset'
-    }
-  },
-  assetCollection: (_) => {
-    return {
-      data: 'assetCollection'
-    }
-  },
-  assetCategoryList: (_) => {
-    return {
-      data: 'assetCategoryList'
-    }
-  },
+  assetList: getReturnFunc('assetList'),
+  addAsset: getReturnFunc('addAsset'),
+  assetCollection: getReturnFunc('assetCollection'),
+  assetCategoryList: getReturnFunc('assetCategoryList'),
   editAsset: getReturnFunc('editAsset'),
   addAssetCategory: getReturnFunc('addAssetCategory'),
   editAssetCategory: getReturnFunc('editAssetCategory'),
   deleteAssetCategory: getReturnFunc('deleteAssetCategory'),
   getAssetHistory: getReturnFunc('getAssetHistory')
-
 }
