@@ -97,7 +97,7 @@ const menuList = [
     title: '部门管理',
     path: '/department',
     icon: 'profile',
-    roles: [PERMISSION.SYSTEM]
+    roles: [PERMISSION.ASSET]
   },
   {
     title: '操作日志',
