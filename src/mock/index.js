@@ -1,6 +1,6 @@
 import Mock from 'mockjs'
 import loginAPI from './login'
-import remoteSearchAPI from './asset'
+import AssetAPI from './asset'
 import departmentAPI from './department'
 import logAPI from './log'
 import UserAPI from './user'
@@ -10,15 +10,18 @@ Mock.mock(/\/api\/user\/logout/, 'post', loginAPI.logout)
 Mock.mock(/\/api\/user\/info/, 'post', loginAPI.userInfo)
 
 // asset
-Mock.mock(/\/api\/asset\/list/, 'get', remoteSearchAPI.assetList)
-Mock.mock(/\/api\/asset\/add/, 'post', remoteSearchAPI.addAsset)
-Mock.mock(/\/api\/asset\/edit/, 'post', remoteSearchAPI.editAsset)
-Mock.mock(/\/api\/asset\/require/, 'post', remoteSearchAPI.assetRequire)
-Mock.mock(/\/api\/asset\/category\/tree/, 'get', remoteSearchAPI.assetCategoryList)
-Mock.mock(/api\/asset\/category\/add/, 'post', remoteSearchAPI.addAssetCategory)
-Mock.mock(/api\/asset\/category\/edit/, 'post', remoteSearchAPI.editAssetCategory)
-Mock.mock(/api\/asset\/category\/delete/, 'post', remoteSearchAPI.deleteAssetCategory)
-Mock.mock(/\/api\/asset\/history/, 'post', remoteSearchAPI.getAssetHistory)
+Mock.mock(/\/api\/asset\/list/, 'get', AssetAPI.assetList)
+Mock.mock(/\/api\/asset\/add/, 'post', AssetAPI.addAsset)
+Mock.mock(/\/api\/asset\/edit/, 'post', AssetAPI.editAsset)
+Mock.mock(/\/api\/asset\/require/, 'post', AssetAPI.assetRequire)
+Mock.mock(/\/api\/asset\/category\/tree/, 'get', AssetAPI.assetCategoryList)
+Mock.mock(/api\/asset\/category\/add/, 'post', AssetAPI.addAssetCategory)
+Mock.mock(/api\/asset\/category\/edit/, 'post', AssetAPI.editAssetCategory)
+Mock.mock(/api\/asset\/category\/delete/, 'post', AssetAPI.deleteAssetCategory)
+Mock.mock(/\/api\/asset\/history/, 'post', AssetAPI.getAssetHistory)
+Mock.mock(/\/api\/user\/assets/, 'get', AssetAPI.personalAssetList)
+Mock.mock(/\/api\/asset\/available/, 'get', AssetAPI.availableAssetList)
+Mock.mock(/\/api\/asset\/query/, 'post', AssetAPI.assetQuery)
 
 // department
 Mock.mock(/\/api\/department\/tree/, 'get', departmentAPI.departmentList)

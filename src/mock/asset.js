@@ -21,5 +21,8 @@ export default {
   addAssetCategory: getReturnFunc('addAssetCategory'),
   editAssetCategory: getReturnFunc('editAssetCategory'),
   deleteAssetCategory: getReturnFunc('deleteAssetCategory'),
-  getAssetHistory: getReturnFunc('getAssetHistory')
+  getAssetHistory: getReturnFunc('getAssetHistory'),
+  personalAssetList: getReturnFunc('personalAssetList'),
+  availableAssetList: getReturnFunc('availableAssetList'),
+  assetQuery: getReturnFunc('assetQuery')
 }
