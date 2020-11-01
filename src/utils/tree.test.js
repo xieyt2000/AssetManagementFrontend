@@ -21,6 +21,25 @@ const testTree = [
     ]
   }
 ]
+const genPromise = (para) => {
+  return new Promise((resolve, reject) => {
+    resolve(para.id)
+  })
+}
+const para = {
+  id: 1
+}
+const testNode = {
+  setState: (data) => {},
+  changeFormRef: {
+    props: {
+      form: {
+        resetFields: () => {},
+        validateFields: () => {}
+      }
+    }
+  }
+}
 describe('utils/tree', () => {
   it('test getParentKey', () => {
     expect(Tree.getParentKey(3, testTree)).toBe(2)
@@ -32,5 +51,12 @@ describe('utils/tree', () => {
   })
   it('test loop', () => {
     Tree.loop('1', testTree)
+  })
+  it('test handleOkChange', () => {
+    Tree.handleOkChange(para, testNode, genPromise, null, '添加')
+    Tree.handleOkChange(null, testNode, genPromise, null, '添加')
+  })
+  it('test getChangFormData', () => {
+    Tree.getChangFormData(testNode, 1)
   })
 })
