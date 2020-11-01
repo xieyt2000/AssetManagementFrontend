@@ -35,30 +35,19 @@ const menuList = [
     ]
   },
   {
-    title: '工作台',
+    title: '事项工作台',
     path: '/issue',
-    icon: 'home',
-    roles: [PERMISSION.IT, PERMISSION.ASSET, PERMISSION.SYSTEM, PERMISSION.STAFF]
-  },
-  {
-    title: '资产管理',
-    path: '/asset',
-    icon: 'account-book',
+    icon: 'database',
     children: [
       {
-        title: '资产列表',
-        path: '/asset/management',
-        roles: [PERMISSION.ASSET]
+        title: '待办事项',
+        path: '/issue/handle',
+        roles: [PERMISSION.IT, PERMISSION.ASSET, PERMISSION.SYSTEM, PERMISSION.STAFF]
       },
       {
-        title: '资产分类',
-        path: '/asset/category',
-        roles: [PERMISSION.IT]
-      },
-      {
-        title: '自定义属性',
-        path: '/asset/custom',
-        roles: [PERMISSION.IT]
+        title: '个人申请',
+        path: '/issue/personal',
+        roles: [PERMISSION.IT, PERMISSION.ASSET, PERMISSION.SYSTEM, PERMISSION.STAFF]
       }
     ]
   },
@@ -81,20 +70,33 @@ const menuList = [
     roles: [PERMISSION.SYSTEM]
   },
   {
-    title: '资产使用',
+    title: '资产管理',
     path: '/asset',
     icon: 'down-square',
     children: [
       {
+        title: '资产列表',
+        path: '/asset/management',
+        roles: [PERMISSION.ASSET]
+      },
+      {
+        title: '资产分类',
+        path: '/asset/category',
+        roles: [PERMISSION.IT]
+      },
+      {
+        title: '自定义属性',
+        path: '/asset/custom',
+        roles: [PERMISSION.IT]
+      },
+      {
         title: '资产领用',
         path: '/asset/require',
-        icon: 'down-square',
         roles: [PERMISSION.IT, PERMISSION.ASSET, PERMISSION.SYSTEM, PERMISSION.STAFF]
       },
       {
         title: '个人资产',
         path: '/asset/personal',
-        icon: 'down-square',
         roles: [PERMISSION.IT, PERMISSION.ASSET, PERMISSION.SYSTEM, PERMISSION.STAFF]
       }
 

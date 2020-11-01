@@ -44,6 +44,10 @@ const IssueBoard = Loadable({
   loader: () => import(/* webpackChunkName:'User' */'@/views/issue-board'),
   loading: Loading
 })
+const IssuePersonal = Loadable({
+  loader: () => import(/* webpackChunkName:'User' */'@/views/issue-personal'),
+  loading: Loading
+})
 export default [
   {
     path: '/dashboard',
@@ -91,8 +95,13 @@ export default [
     roles: [PERMISSION.IT]
   },
   {
-    path: '/issue',
+    path: '/issue/handle',
     component: IssueBoard,
+    roles: [PERMISSION.IT, PERMISSION.ASSET, PERMISSION.SYSTEM, PERMISSION.STAFF]
+  },
+  {
+    path: '/issue/personal',
+    component: IssuePersonal,
     roles: [PERMISSION.IT, PERMISSION.ASSET, PERMISSION.SYSTEM, PERMISSION.STAFF]
   }
 ]

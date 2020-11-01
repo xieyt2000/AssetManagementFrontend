@@ -3,7 +3,7 @@ import request from '@/utils/request'
 
 export function applyRequire (data) {
   return request({
-    url: '/api/issue/apply-require',
+    url: '/api/issue/require',
     method: 'post',
     data: data
   })
@@ -11,7 +11,7 @@ export function applyRequire (data) {
 
 export function applyFix (data) {
   return request({
-    url: '/api/issue/apply-fix',
+    url: '/api/issue/fix',
     method: 'post',
     data: data
   })
@@ -19,15 +19,37 @@ export function applyFix (data) {
 
 export function applyTransfer (data) {
   return request({
-    url: '/api/issue/apply-transfer',
+    url: '/api/issue/transfer',
     method: 'post',
     data: data
   })
 }
 export function applyReturn (data) {
   return request({
-    url: '/api/issue/apply-return',
+    url: '/api/issue/return',
     method: 'post',
     data: data
+  })
+}
+
+export function issueToHandle () {
+  return request({
+    url: '/api/issue/handling',
+    method: 'get'
+  })
+}
+
+export function handleIssue (data) {
+  return request({
+    url: '/api/issue/handle',
+    method: 'post',
+    data: data
+  })
+}
+
+export function personalIssue () {
+  return request({
+    url: '/api/issue/waiting',
+    method: 'get'
   })
 }

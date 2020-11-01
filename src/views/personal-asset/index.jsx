@@ -6,6 +6,8 @@ import { Button, Divider, Modal, Table } from 'antd'
 import InputForm from './components/InputForm'
 import { handleResponse } from '@/utils/response'
 import { applyFix, applyTransfer, applyReturn } from '@/api/issue'
+import { renderAssetType, renderChineseStatus } from '../../utils/asset'
+import { getList } from '../../utils/list'
 
 const Column = Table.Column
 
@@ -41,19 +43,10 @@ class PersonalAsset extends React.Component {
           {/* <Column title="挂账人" dataIndex="owner" key="owner" align="center"/> */}
           {/* <Column title="所属部门" dataIndex="department" key="department" align="center"/> */}
           <Column title="资产类型" key="type_name" align="center"
-            render={(row) => (
-              <span> {((row) => {
-                if (row.type_name === 'AMOUNT') {
-                  const str = '数量型'
-                  const quantity = '数量：' + row.quantity
-                  return (<span>{str}<br/>{quantity}</span>)
-                } else {
-                  return '条目型'
-                }
-              })(row)} </span>
-            )}/>
+            render = {renderAssetType}/>
           <Column title="资产分类" dataIndex="category" key="category" align="center"/>
-          <Column title="资产状态" dataIndex="status" key="status" align="center" />
+          <Column title="资产状态" dataIndex="status" key="status" align="center"
+            render={renderChineseStatus}/>
           <Column title="操作" key="action" width={200} align="center" render={(row) => (
             <span>
               <Button type="primary" shape="circle" icon="tool" title="申请维保"
@@ -84,7 +77,7 @@ class PersonalAsset extends React.Component {
           onOk={this.handleReturnOk}
           onCancel={this.handleCancel}
         >
-          <p>是否退库资产 {this.state.rowData.name} ?</p>
+          <p>是否申请退库资产 {this.state.rowData.name} ?</p>
         </Modal>
       </div>
     )
@@ -100,8 +93,8 @@ class PersonalAsset extends React.Component {
     })
   }
 
-  handleOkFix = () => {
-    const form = this.formRef.props.form
+  handleOkForm = (form, apply, operation) => {
+    // operation:str 操作名称
     form.validateFields((err, values) => {
       if (err) {
         return
@@ -109,11 +102,15 @@ class PersonalAsset extends React.Component {
       this.setState({ modalLod: true })
       form.resetFields()
       values.nid = this.state.rowData.nid
-      handleResponse(applyFix(values), '请求维保', this, null,
+      handleResponse(apply(values), operation, this, null,
         {
           modalLod: false, modalVis: false
         }, null, this.getAsset)
     })
+  }
+
+  handleOkFix = () => {
+    this.handleOkForm(this.formRef.props.form, applyFix, '请求维保')
   }
 
   handleTransferClick = (row) => {
@@ -127,19 +124,7 @@ class PersonalAsset extends React.Component {
   }
 
   handleOkTransfer = () => {
-    const form = this.formRef.props.form
-    form.validateFields((err, values) => {
-      if (err) {
-        return
-      }
-      this.setState({ modalLod: true })
-      form.resetFields()
-      values.nid = this.state.rowData.nid
-      handleResponse(applyTransfer(values), '请求转移', this, null,
-        {
-          modalLod: false, modalVis: false
-        }, null, this.getAsset)
-    })
+    this.handleOkForm(this.formRef.props.form, applyTransfer, '请求转移')
   }
 
   handleReturnClick = (row) => {
@@ -165,13 +150,7 @@ class PersonalAsset extends React.Component {
   }
 
   getAsset = async () => {
-    const res = await personalAssetList()
-    const { data: assets, code } = res.data
-    if (code === 200) {
-      this.setState({
-        assetList: assets
-      })
-    }
+    getList(personalAssetList, this, 'assetList')
   }
 
   componentDidMount () {
