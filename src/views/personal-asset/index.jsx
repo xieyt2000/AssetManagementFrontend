@@ -2,7 +2,7 @@ import React from 'react'
 import { connect } from 'react-redux'
 import HelpCard from '../../components/HelpCard'
 import { personalAssetList } from '../../api/asset'
-import { Button, Divider, Modal, Table } from 'antd'
+import { Button, Card, Divider, Modal, Table } from 'antd'
 import InputForm from './components/InputForm'
 import { handleResponse } from '@/utils/response'
 import { applyFix, applyTransfer, applyReturn } from '@/api/issue'
@@ -33,32 +33,33 @@ class PersonalAsset extends React.Component {
     return (
       <div className='app-container'>
         <HelpCard title='个人资产' source={description} />
-        <Table
-          bordered rowKey="name"
-          dataSource={assetList}
-          expandIconColumnIndex={-1}
-          pagination={false}>
-          <Column title="资产id" dataIndex="nid" key="nid" align="center"/>
-          <Column title="资产名称" dataIndex="name" key="name" align="center"/>
-          {/* <Column title="挂账人" dataIndex="owner" key="owner" align="center"/> */}
-          {/* <Column title="所属部门" dataIndex="department" key="department" align="center"/> */}
-          <Column title="资产类型" key="type_name" align="center"
-            render = {renderAssetType}/>
-          <Column title="资产分类" dataIndex="category" key="category" align="center"/>
-          <Column title="资产状态" dataIndex="status" key="status" align="center"
-            render={renderChineseStatus}/>
-          <Column title="操作" key="action" width={200} align="center" render={(row) => (
-            <span>
-              <Button type="primary" shape="circle" icon="tool" title="申请维保"
-                onClick={this.handleFixClick.bind(this, row)}/>
-              <Divider type="vertical"/>
-              <Button type="primary" shape="circle" icon="swap" title="申请转移"
-                onClick={this.handleTransferClick.bind(this, row)}/>
-              <Divider type="vertical"/>
-              <Button type="primary" shape="circle" icon="poweroff" title="申请退库"
-                onClick={this.handleReturnClick.bind(this, row)}/>
-            </span>)}/>
-        </Table>
+        <br/>
+        <Card>
+          <Table
+            bordered rowKey="name"
+            dataSource={assetList}
+            expandIconColumnIndex={-1}
+            pagination={false}>
+            <Column title="资产id" dataIndex="nid" key="nid" align="center"/>
+            <Column title="资产名称" dataIndex="name" key="name" align="center"/>
+            <Column title="资产类型" key="type_name" align="center"
+              render = {renderAssetType}/>
+            <Column title="资产分类" dataIndex="category" key="category" align="center"/>
+            <Column title="资产状态" dataIndex="status" key="status" align="center"
+              render={renderChineseStatus}/>
+            <Column title="操作" key="action" width={200} align="center" render={(row) => (
+              <span>
+                <Button type="primary" shape="circle" icon="tool" title="申请维保"
+                  onClick={this.handleFixClick.bind(this, row)}/>
+                <Divider type="vertical"/>
+                <Button type="primary" shape="circle" icon="swap" title="申请转移"
+                  onClick={this.handleTransferClick.bind(this, row)}/>
+                <Divider type="vertical"/>
+                <Button type="primary" shape="circle" icon="poweroff" title="申请退库"
+                  onClick={this.handleReturnClick.bind(this, row)}/>
+              </span>)}/>
+          </Table>
+        </Card>
         <InputForm
           wrappedComponentRef={(formRef) => {
             this.formRef = formRef
