@@ -4,6 +4,7 @@ import AssetAPI from './asset'
 import departmentAPI from './department'
 import logAPI from './log'
 import UserAPI from './user'
+import IssueAPI from './issue'
 // 登录与用户相关
 Mock.mock(/\/api\/user\/login/, 'post', loginAPI.login)
 Mock.mock(/\/api\/user\/logout/, 'post', loginAPI.logout)
@@ -41,4 +42,12 @@ Mock.mock(/\/api\/user\/edit/, 'post', UserAPI.editUser)
 Mock.mock(/\/api\/user\/exist/, 'post', UserAPI.nameExist)
 Mock.mock(/\/api\/user\/add/, 'post', UserAPI.addUser)
 Mock.mock(/api\/user\/change-password/, 'post', UserAPI.changePassword)
+
+// issue
+Mock.mock(/\/api\/issue\/require/, 'post', IssueAPI.applyRequire)
+Mock.mock(/\/api\/issue\/fix/, 'post', IssueAPI.applyFix)
+Mock.mock(/\/api\/issue\/transfer/, 'post', IssueAPI.applyTransfer)
+Mock.mock(/\/api\/issue\/return/, 'post', IssueAPI.applyReturn)
+Mock.mock(/\/api\/issue\/handling/, 'get', IssueAPI.issueToHandle)
+
 export default Mock
