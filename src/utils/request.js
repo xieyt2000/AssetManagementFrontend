@@ -1,8 +1,6 @@
 import axios from 'axios'
 import store from '@/store'
-import { Modal } from 'antd'
 import { getToken } from '@/utils/auth'
-import { logout } from '@/store/actions'
 
 // 创建一个axios示例
 const service = axios.create({
@@ -65,23 +63,6 @@ service.interceptors.response.use(
   // },
   (error) => {
     console.log('err' + error) // for debug
-    const { status } = error.response
-    if (status === 403) {
-      Modal.confirm({
-        title: '确定登出?',
-        content:
-          '由于长时间未操作，您已被登出，可以取消继续留在该页面，或者重新登录',
-        okText: '重新登录',
-        cancelText: '取消',
-        onOk () {
-          const token = store.getState().user.token
-          store.dispatch(logout(token))
-        },
-        onCancel () {
-          console.log('Cancel')
-        }
-      })
-    }
     return Promise.reject(error)
   }
 )

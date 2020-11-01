@@ -16,7 +16,6 @@ export const getParentKey = (key, tree) => {
       }
     }
   }
-  console.log(parentKey)
   return parentKey
 }
 

@@ -1,28 +1,22 @@
 import React from 'react'
 import { Provider } from 'react-redux'
-import renderer from 'react-test-renderer'
+
 import Login from './index'
-import configureStore from 'redux-mock-store'
-const mockStore = configureStore([])
-describe('Login test', () => {
-  let component
-  const store = mockStore({
-    user: {
-      name: '',
-      role: []
-    }
-  })
-  beforeEach(() => {
-    component = renderer.create(
+import { store } from '@/utils/mockStore'
+import { configure, mount } from 'enzyme'
+import Adapter from 'enzyme-adapter-react-16'
+import { HashRouter } from 'react-router-dom'
+
+configure({ adapter: new Adapter() })
+
+describe('Login Test', function () {
+  it('Login Test', function () {
+    const app = mount(
       <Provider store={store}>
-        <Login/>
-      </Provider>
-    )
-  })
-  afterEach(() => {
-    component.unmount()
-  })
-  it('render', () => {
-    // expect(component.toJSON()).toMatchSnapshot()
+        <HashRouter>
+          <Login/>
+        </HashRouter>
+      </Provider>)
+    console.log(app)
   })
 })
