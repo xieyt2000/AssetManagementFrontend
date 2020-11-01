@@ -3,15 +3,12 @@ import { connect } from 'react-redux'
 import { availableAssetList } from '@/api/asset'
 import { applyRequire } from '@/api/issue'
 import HelpCard from '../../components/HelpCard'
-import { Button, Modal, Table } from 'antd'
-import { CHINESE_STATUS } from '../../utils/asset'
+import { Button, Card, Modal, Table } from 'antd'
+import { renderChineseStatus, renderAssetType } from '../../utils/asset'
 import { handleResponse } from '@/utils/response'
+import { getList } from '../../utils/list'
 
 const Column = Table.Column
-
-const changeStatusToChinese = (status) => {
-  return CHINESE_STATUS[status]
-}
 
 class AssetRequire extends React.Component {
   constructor (props) {
@@ -25,13 +22,7 @@ class AssetRequire extends React.Component {
   }
 
   getAsset = async () => {
-    const res = await availableAssetList()
-    const { data: assets, code } = res.data
-    if (code === 200) {
-      this.setState({
-        assetList: assets
-      })
-    }
+    getList(availableAssetList, this, 'assetList')
   }
 
   componentDidMount () {
@@ -62,40 +53,31 @@ class AssetRequire extends React.Component {
 
   render () {
     const assetList = this.state.assetList
-    const description = '你可以进行资产的领用'
+    const description = '作为企业员工，你可以在这里提出领用资产申请'
     return (
       <div className='app-container'>
         <HelpCard title='资产管理' source={description}/>
-        <Table
-          bordered rowKey="name"
-          dataSource={assetList}
-          expandIconColumnIndex={-1}
-          pagination={false}>
-          <Column title="资产名称" dataIndex="name" key="name" align="center"/>
-          <Column title="挂账人" dataIndex="owner" key="owner" align="center"/>
-          <Column title="所属部门" dataIndex="department" key="department" align="center"/>
-          <Column title="资产类型" key="type_name" align="center"
-            render={(row) => (
-              <span> {((row) => {
-                if (row.type_name === 'AMOUNT') {
-                  const str = '数量型'
-                  const quantity = '数量：' + row.quantity
-                  return (<span>{str}<br/>{quantity}</span>)
-                } else {
-                  return '条目型'
-                }
-              })(row)} </span>
-            )}/>
-          <Column title="资产状态" dataIndex="status" key="status" align="center"
-            render={(row) => (
-              <span> {changeStatusToChinese(row)} </span>
-            )}/>
-          <Column title="操作" key="action" width={200} align="center" render={(row) => (
-            <span>
-              <Button type="primary" shape="circle" icon="check-circle" title="领用资产"
-                onClick={this.handleClickCollect.bind(this, row)}/>
-            </span>)}/>
-        </Table>
+        <br/>
+        <Card>
+          <Table
+            bordered rowKey="name"
+            dataSource={assetList}
+            expandIconColumnIndex={-1}
+            pagination={false}>
+            <Column title="资产名称" dataIndex="name" key="name" align="center"/>
+            <Column title="挂账人" dataIndex="owner" key="owner" align="center"/>
+            <Column title="所属部门" dataIndex="department" key="department" align="center"/>
+            <Column title="资产类型" key="type_name" align="center"
+              render={renderAssetType}/>
+            <Column title="资产状态" dataIndex="status" key="status" align="center"
+              render={renderChineseStatus}/>
+            <Column title="操作" key="action" width={200} align="center" render={(row) => (
+              <span>
+                <Button type="primary" shape="circle" icon="check" title="领用资产"
+                  onClick={this.handleClickCollect.bind(this, row)}/>
+              </span>)}/>
+          </Table>
+        </Card>
         <Modal
           title="资产领用"
           visible={this.state.collectModalVis}

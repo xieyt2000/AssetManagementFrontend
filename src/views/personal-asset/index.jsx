@@ -2,10 +2,12 @@ import React from 'react'
 import { connect } from 'react-redux'
 import HelpCard from '../../components/HelpCard'
 import { personalAssetList } from '../../api/asset'
-import { Button, Divider, Modal, Table } from 'antd'
+import { Button, Card, Divider, Modal, Table } from 'antd'
 import InputForm from './components/InputForm'
 import { handleResponse } from '@/utils/response'
 import { applyFix, applyTransfer, applyReturn } from '@/api/issue'
+import { renderAssetType, renderChineseStatus } from '../../utils/asset'
+import { getList } from '../../utils/list'
 
 const Column = Table.Column
 
@@ -26,46 +28,38 @@ class PersonalAsset extends React.Component {
   }
 
   render () {
-    const description = '查看个人名下的资产，并进行维保、转移等操作'
+    const description = '作为企业员工，你可以查看你使用中的资产，并且可以向相关负责人申请维保、转移、退库'
     const assetList = this.state.assetList
     return (
       <div className='app-container'>
         <HelpCard title='个人资产' source={description} />
-        <Table
-          bordered rowKey="name"
-          dataSource={assetList}
-          expandIconColumnIndex={-1}
-          pagination={false}>
-          <Column title="资产id" dataIndex="nid" key="nid" align="center"/>
-          <Column title="资产名称" dataIndex="name" key="name" align="center"/>
-          {/* <Column title="挂账人" dataIndex="owner" key="owner" align="center"/> */}
-          {/* <Column title="所属部门" dataIndex="department" key="department" align="center"/> */}
-          <Column title="资产类型" key="type_name" align="center"
-            render={(row) => (
-              <span> {((row) => {
-                if (row.type_name === 'AMOUNT') {
-                  const str = '数量型'
-                  const quantity = '数量：' + row.quantity
-                  return (<span>{str}<br/>{quantity}</span>)
-                } else {
-                  return '条目型'
-                }
-              })(row)} </span>
-            )}/>
-          <Column title="资产分类" dataIndex="category" key="category" align="center"/>
-          <Column title="资产状态" dataIndex="status" key="status" align="center" />
-          <Column title="操作" key="action" width={200} align="center" render={(row) => (
-            <span>
-              <Button type="primary" shape="circle" icon="tool" title="申请维保"
-                onClick={this.handleFixClick.bind(this, row)}/>
-              <Divider type="vertical"/>
-              <Button type="primary" shape="circle" icon="swap" title="申请转移"
-                onClick={this.handleTransferClick.bind(this, row)}/>
-              <Divider type="vertical"/>
-              <Button type="primary" shape="circle" icon="poweroff" title="申请退库"
-                onClick={this.handleReturnClick.bind(this, row)}/>
-            </span>)}/>
-        </Table>
+        <br/>
+        <Card>
+          <Table
+            bordered rowKey="name"
+            dataSource={assetList}
+            expandIconColumnIndex={-1}
+            pagination={false}>
+            <Column title="资产id" dataIndex="nid" key="nid" align="center"/>
+            <Column title="资产名称" dataIndex="name" key="name" align="center"/>
+            <Column title="资产类型" key="type_name" align="center"
+              render = {renderAssetType}/>
+            <Column title="资产分类" dataIndex="category" key="category" align="center"/>
+            <Column title="资产状态" dataIndex="status" key="status" align="center"
+              render={renderChineseStatus}/>
+            <Column title="操作" key="action" width={200} align="center" render={(row) => (
+              <span>
+                <Button type="primary" shape="circle" icon="tool" title="申请维保"
+                  onClick={this.handleFixClick.bind(this, row)}/>
+                <Divider type="vertical"/>
+                <Button type="primary" shape="circle" icon="swap" title="申请转移"
+                  onClick={this.handleTransferClick.bind(this, row)}/>
+                <Divider type="vertical"/>
+                <Button type="primary" shape="circle" icon="poweroff" title="申请退库"
+                  onClick={this.handleReturnClick.bind(this, row)}/>
+              </span>)}/>
+          </Table>
+        </Card>
         <InputForm
           wrappedComponentRef={(formRef) => {
             this.formRef = formRef
@@ -84,7 +78,7 @@ class PersonalAsset extends React.Component {
           onOk={this.handleReturnOk}
           onCancel={this.handleCancel}
         >
-          <p>是否退库资产 {this.state.rowData.name} ?</p>
+          <p>是否申请退库资产 {this.state.rowData.name} ?</p>
         </Modal>
       </div>
     )
@@ -100,8 +94,8 @@ class PersonalAsset extends React.Component {
     })
   }
 
-  handleOkFix = () => {
-    const form = this.formRef.props.form
+  handleOkForm = (form, apply, operation) => {
+    // operation:str 操作名称
     form.validateFields((err, values) => {
       if (err) {
         return
@@ -109,11 +103,15 @@ class PersonalAsset extends React.Component {
       this.setState({ modalLod: true })
       form.resetFields()
       values.nid = this.state.rowData.nid
-      handleResponse(applyFix(values), '请求维保', this, null,
+      handleResponse(apply(values), operation, this, null,
         {
           modalLod: false, modalVis: false
         }, null, this.getAsset)
     })
+  }
+
+  handleOkFix = () => {
+    this.handleOkForm(this.formRef.props.form, applyFix, '请求维保')
   }
 
   handleTransferClick = (row) => {
@@ -127,19 +125,7 @@ class PersonalAsset extends React.Component {
   }
 
   handleOkTransfer = () => {
-    const form = this.formRef.props.form
-    form.validateFields((err, values) => {
-      if (err) {
-        return
-      }
-      this.setState({ modalLod: true })
-      form.resetFields()
-      values.nid = this.state.rowData.nid
-      handleResponse(applyTransfer(values), '请求转移', this, null,
-        {
-          modalLod: false, modalVis: false
-        }, null, this.getAsset)
-    })
+    this.handleOkForm(this.formRef.props.form, applyTransfer, '请求转移')
   }
 
   handleReturnClick = (row) => {
@@ -165,13 +151,7 @@ class PersonalAsset extends React.Component {
   }
 
   getAsset = async () => {
-    const res = await personalAssetList()
-    const { data: assets, code } = res.data
-    if (code === 200) {
-      this.setState({
-        assetList: assets
-      })
-    }
+    getList(personalAssetList, this, 'assetList')
   }
 
   componentDidMount () {

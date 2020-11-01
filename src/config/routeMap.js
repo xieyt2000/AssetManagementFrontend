@@ -34,8 +34,18 @@ const PersonalAsset = Loadable({
   loader: () => import(/* webpackChunkName:'User' */'@/views/personal-asset'),
   loading: Loading
 })
+
+const AssetCustom = Loadable({
+  loader: () => import('@/views/asset-custom'),
+  loading: Loading
+})
+
 const IssueBoard = Loadable({
   loader: () => import(/* webpackChunkName:'User' */'@/views/issue-board'),
+  loading: Loading
+})
+const IssuePersonal = Loadable({
+  loader: () => import(/* webpackChunkName:'User' */'@/views/issue-personal'),
   loading: Loading
 })
 export default [
@@ -80,8 +90,18 @@ export default [
     roles: [PERMISSION.IT, PERMISSION.ASSET, PERMISSION.SYSTEM, PERMISSION.STAFF]
   },
   {
-    path: '/issue',
+    path: '/asset/custom',
+    component: AssetCustom,
+    roles: [PERMISSION.IT]
+  },
+  {
+    path: '/issue/handle',
     component: IssueBoard,
+    roles: [PERMISSION.IT, PERMISSION.ASSET, PERMISSION.SYSTEM, PERMISSION.STAFF]
+  },
+  {
+    path: '/issue/personal',
+    component: IssuePersonal,
     roles: [PERMISSION.IT, PERMISSION.ASSET, PERMISSION.SYSTEM, PERMISSION.STAFF]
   }
 ]

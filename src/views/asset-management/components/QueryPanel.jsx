@@ -16,7 +16,7 @@ class QueryPanel extends Component {
     const { assetCategories } = this.props
     return (
       <Collapse defaultActiveKey={['0']}>
-        <Panel header="筛选" key="1">
+        <Panel header="条件搜索" key="1">
           <Form layout="inline">
             <Form.Item label="名称:">
               <Input onChange={this.queryNameChange} />

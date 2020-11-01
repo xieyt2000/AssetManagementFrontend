@@ -35,15 +35,9 @@ const menuList = [
     ]
   },
   {
-    title: '工作台',
-    path: '/issue',
-    icon: 'home',
-    roles: [PERMISSION.IT, PERMISSION.ASSET, PERMISSION.SYSTEM, PERMISSION.STAFF]
-  },
-  {
     title: '资产管理',
     path: '/asset',
-    icon: 'account-book',
+    icon: 'transaction',
     children: [
       {
         title: '资产列表',
@@ -54,6 +48,39 @@ const menuList = [
         title: '资产分类',
         path: '/asset/category',
         roles: [PERMISSION.IT]
+      },
+      {
+        title: '自定义属性',
+        path: '/asset/custom',
+        roles: [PERMISSION.IT]
+      },
+      {
+        title: '资产领用',
+        path: '/asset/require',
+        roles: [PERMISSION.IT, PERMISSION.ASSET, PERMISSION.SYSTEM, PERMISSION.STAFF]
+      },
+      {
+        title: '个人资产',
+        path: '/asset/personal',
+        roles: [PERMISSION.IT, PERMISSION.ASSET, PERMISSION.SYSTEM, PERMISSION.STAFF]
+      }
+
+    ]
+  },
+  {
+    title: '个人事项',
+    path: '/issue',
+    icon: 'unordered-list',
+    children: [
+      {
+        title: '待办事项',
+        path: '/issue/handle',
+        roles: [PERMISSION.IT, PERMISSION.ASSET, PERMISSION.SYSTEM, PERMISSION.STAFF]
+      },
+      {
+        title: '我的申请',
+        path: '/issue/personal',
+        roles: [PERMISSION.IT, PERMISSION.ASSET, PERMISSION.SYSTEM, PERMISSION.STAFF]
       }
     ]
   },
@@ -66,7 +93,7 @@ const menuList = [
   {
     title: '部门管理',
     path: '/department',
-    icon: 'profile',
+    icon: 'gold',
     roles: [PERMISSION.ASSET]
   },
   {
@@ -74,26 +101,6 @@ const menuList = [
     path: '/log',
     icon: 'database',
     roles: [PERMISSION.SYSTEM]
-  },
-  {
-    title: '资产使用',
-    path: '/asset',
-    icon: 'down-square',
-    children: [
-      {
-        title: '资产领用',
-        path: '/asset/require',
-        icon: 'down-square',
-        roles: [PERMISSION.IT, PERMISSION.ASSET, PERMISSION.SYSTEM, PERMISSION.STAFF]
-      },
-      {
-        title: '个人资产',
-        path: '/asset/personal',
-        icon: 'down-square',
-        roles: [PERMISSION.IT, PERMISSION.ASSET, PERMISSION.SYSTEM, PERMISSION.STAFF]
-      }
-
-    ]
   }
 
 ]

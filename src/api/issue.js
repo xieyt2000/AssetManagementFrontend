@@ -38,3 +38,18 @@ export function issueToHandle () {
     method: 'get'
   })
 }
+
+export function handleIssue (data) {
+  return request({
+    url: '/api/issue/handle',
+    method: 'post',
+    data: data
+  })
+}
+
+export function personalIssue () {
+  return request({
+    url: '/api/issue/waiting',
+    method: 'get'
+  })
+}
