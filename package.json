@@ -102,6 +102,7 @@
     "mockjs": "^1.1.0",
     "react-app-rewired": "^2.1.5",
     "redux-mock-store": "^1.5.4",
+    "sinon": "^9.2.1",
     "user-agent": "^1.0.4"
   },
   "proxy": "http://127.0.0.1:8000"
