@@ -92,7 +92,7 @@ class PersonalAsset extends React.Component {
     })
   }
 
-  handleOkForm = (form, operation) => {
+  handleOkForm = (form, apply, operation) => {
     // operation:str 操作名称
     form.validateFields((err, values) => {
       if (err) {
@@ -101,7 +101,7 @@ class PersonalAsset extends React.Component {
       this.setState({ modalLod: true })
       form.resetFields()
       values.nid = this.state.rowData.nid
-      handleResponse(applyFix(values), operation, this, null,
+      handleResponse(apply(values), operation, this, null,
         {
           modalLod: false, modalVis: false
         }, null, this.getAsset)
@@ -109,7 +109,7 @@ class PersonalAsset extends React.Component {
   }
 
   handleOkFix = () => {
-    this.handleOkForm(this.formRef.props.form, '请求维保')
+    this.handleOkForm(this.formRef.props.form, applyFix, '请求维保')
   }
 
   handleTransferClick = (row) => {
@@ -123,7 +123,7 @@ class PersonalAsset extends React.Component {
   }
 
   handleOkTransfer = () => {
-    this.handleOkForm(this.formRef.props.form, '请求转移')
+    this.handleOkForm(this.formRef.props.form, applyTransfer, '请求转移')
   }
 
   handleReturnClick = (row) => {
