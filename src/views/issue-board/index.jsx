@@ -93,7 +93,8 @@ class IssueBoard extends React.Component {
       nid: this.state.rowData.nid,
       success: (this.state.opType === '同意')
     }
-    handleResponse(handleIssue(data), this.state.opType + '申请', this, null, { modalVis: false, modalLod: false }, this.getIssue)
+    handleResponse(handleIssue(data), this.state.opType + '申请', this, null,
+      { modalVis: false, modalLod: false }, this.getIssue)
   }
 
   handleCancel = () => {

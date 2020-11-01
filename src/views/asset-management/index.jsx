@@ -19,7 +19,6 @@ import { handleResponse } from '../../utils/response'
 import QueryPanel from './components/QueryPanel'
 import { renderAssetType, renderChineseStatus } from '../../utils/asset'
 import { getList } from '../../utils/list'
-import { issueToHandle } from '../../api/issue'
 
 const Column = Table.Column
 
