@@ -3,8 +3,9 @@ import { connect } from 'react-redux'
 import HelpCard from '../../components/HelpCard'
 import { Button, Card, Modal, Table } from 'antd'
 import { renderAssignee, renderIssueType, renderIssueStatus } from '../../utils/issue'
-import { personalIssue } from '../../api/issue'
+import { personalIssue, deleteIssue } from '../../api/issue'
 import { getList } from '../../utils/list'
+import { handleResponse } from '../../utils/response'
 
 const Column = Table.Column
 
@@ -44,6 +45,11 @@ class IssuePersonal extends React.Component {
     this.setState({
       modalLod: true
     })
+    const data = {
+      nid: this.state.rowData.nid
+    }
+    handleResponse(deleteIssue(data), '删除事项', this, null,
+      { modalVis: false, modalLod: false }, this.getIssue)
   }
 
   render () {

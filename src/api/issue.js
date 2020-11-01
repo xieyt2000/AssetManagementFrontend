@@ -53,3 +53,11 @@ export function personalIssue () {
     method: 'get'
   })
 }
+
+export function deleteIssue (data) {
+  return request({
+    url: '/api/issue/delete',
+    method: 'post',
+    data: data
+  })
+}
