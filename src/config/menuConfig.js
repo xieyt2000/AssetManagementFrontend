@@ -35,16 +35,21 @@ const menuList = [
     ]
   },
   {
-    title: '工作台',
-    path: '/issue-board',
-    icon: 'home',
-    roles: [PERMISSION.IT, PERMISSION.ASSET, PERMISSION.SYSTEM, PERMISSION.STAFF]
-  },
-  {
-    title: '个人申请',
-    path: '/issue-personal',
-    icon: 'home',
-    roles: [PERMISSION.IT, PERMISSION.ASSET, PERMISSION.SYSTEM, PERMISSION.STAFF]
+    title: '事项工作台',
+    path: '/issue',
+    icon: 'database',
+    children: [
+      {
+        title: '待办事项',
+        path: '/issue/handle',
+        roles: [PERMISSION.IT, PERMISSION.ASSET, PERMISSION.SYSTEM, PERMISSION.STAFF]
+      },
+      {
+        title: '个人申请',
+        path: '/issue/personal',
+        roles: [PERMISSION.IT, PERMISSION.ASSET, PERMISSION.SYSTEM, PERMISSION.STAFF]
+      }
+    ]
   },
   {
     title: '资产管理',

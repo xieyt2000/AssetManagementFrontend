@@ -84,12 +84,12 @@ export default [
     roles: [PERMISSION.IT, PERMISSION.ASSET, PERMISSION.SYSTEM, PERMISSION.STAFF]
   },
   {
-    path: '/issue-board',
+    path: '/issue/handle',
     component: IssueBoard,
     roles: [PERMISSION.IT, PERMISSION.ASSET, PERMISSION.SYSTEM, PERMISSION.STAFF]
   },
   {
-    path: '/issue-personal',
+    path: '/issue/personal',
     component: IssuePersonal,
     roles: [PERMISSION.IT, PERMISSION.ASSET, PERMISSION.SYSTEM, PERMISSION.STAFF]
   }
