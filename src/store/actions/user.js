@@ -16,21 +16,6 @@ export const getUserInfo = (token) => (dispatch) => {
         }
       })
       .catch((error) => {
-        // 绕过后端请求直接进入
-        // const data = {
-        //   status: 0,
-        //   userInfo: {
-        //     id: 'admin',
-        //     role: [PERMISSION.IT, PERMISSION.ASSET, PERMISSION.SYSTEM, PERMISSION.STAFF],
-        //     name: 'yy',
-        //     avatar: '',
-        //     description: 'admin'
-        //   }
-        // }
-        // const userInfo = data.userInfo
-        // dispatch(setUserInfo(userInfo))
-        // resolve(data)
-        // console.log(error)
         reject(error)
       })
   })

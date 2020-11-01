@@ -52,23 +52,6 @@ const menuList = [
     ]
   },
   {
-    title: '资产管理',
-    path: '/asset',
-    icon: 'account-book',
-    children: [
-      {
-        title: '资产列表',
-        path: '/asset/management',
-        roles: [PERMISSION.ASSET]
-      },
-      {
-        title: '资产分类',
-        path: '/asset/category',
-        roles: [PERMISSION.IT]
-      }
-    ]
-  },
-  {
     title: '用户管理',
     path: '/user',
     icon: 'usergroup-add',
@@ -87,20 +70,28 @@ const menuList = [
     roles: [PERMISSION.SYSTEM]
   },
   {
-    title: '资产使用',
+    title: '资产管理',
     path: '/asset',
     icon: 'down-square',
     children: [
       {
+        title: '资产列表',
+        path: '/asset/management',
+        roles: [PERMISSION.ASSET]
+      },
+      {
+        title: '资产分类',
+        path: '/asset/category',
+        roles: [PERMISSION.IT]
+      },
+      {
         title: '资产领用',
         path: '/asset/require',
-        icon: 'down-square',
         roles: [PERMISSION.IT, PERMISSION.ASSET, PERMISSION.SYSTEM, PERMISSION.STAFF]
       },
       {
         title: '个人资产',
         path: '/asset/personal',
-        icon: 'down-square',
         roles: [PERMISSION.IT, PERMISSION.ASSET, PERMISSION.SYSTEM, PERMISSION.STAFF]
       }
 

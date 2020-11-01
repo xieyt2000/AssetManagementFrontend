@@ -71,7 +71,7 @@ class AssetRequire extends React.Component {
             render={renderChineseStatus}/>
           <Column title="操作" key="action" width={200} align="center" render={(row) => (
             <span>
-              <Button type="primary" shape="circle" icon="check-circle" title="领用资产"
+              <Button type="primary" shape="circle" icon="check" title="领用资产"
                 onClick={this.handleClickCollect.bind(this, row)}/>
             </span>)}/>
         </Table>

@@ -49,10 +49,10 @@ class IssueBoard extends React.Component {
             />
             <Column title="操作" key="action" width={200} align="center" render={(row) => (
               <span>
-                <Button type="primary" shape="circle" icon="check-circle" title="批准"
+                <Button type="primary" shape="circle" icon="check" title="批准"
                   onClick={this.handlePermit.bind(this, row)}/>
                 <Divider type="vertical" />
-                <Button type="primary" shape="circle" icon="close-circle" title="拒绝"
+                <Button type="primary" shape="circle" icon="close" title="拒绝"
                   onClick={this.handleRefuse.bind(this, row)} />
               </span>)}/>
           </Table>

@@ -46,3 +46,10 @@ export function handleIssue (data) {
     data: data
   })
 }
+
+export function personalIssue () {
+  return request({
+    url: '/api/issue/waiting',
+    method: 'get'
+  })
+}
