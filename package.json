@@ -101,6 +101,7 @@
     "jest-sonar-reporter": "^2.0.0",
     "mockjs": "^1.1.0",
     "react-app-rewired": "^2.1.5",
+    "react-highlight-words": "^0.16.0",
     "redux-mock-store": "^1.5.4",
     "user-agent": "^1.0.4"
   },
