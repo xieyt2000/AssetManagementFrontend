@@ -37,7 +37,7 @@ const menuList = [
   {
     title: '资产管理',
     path: '/asset',
-    icon: 'down-square',
+    icon: 'transaction',
     children: [
       {
         title: '资产列表',
@@ -68,9 +68,9 @@ const menuList = [
     ]
   },
   {
-    title: '事项工作台',
+    title: '待办事项',
     path: '/issue',
-    icon: 'database',
+    icon: 'unordered-list',
     children: [
       {
         title: '待办事项',
@@ -93,7 +93,7 @@ const menuList = [
   {
     title: '部门管理',
     path: '/department',
-    icon: 'profile',
+    icon: 'gold',
     roles: [PERMISSION.ASSET]
   },
   {
