@@ -68,7 +68,7 @@ const menuList = [
     ]
   },
   {
-    title: '待办事项',
+    title: '个人事项',
     path: '/issue',
     icon: 'unordered-list',
     children: [
@@ -78,7 +78,7 @@ const menuList = [
         roles: [PERMISSION.IT, PERMISSION.ASSET, PERMISSION.SYSTEM, PERMISSION.STAFF]
       },
       {
-        title: '个人申请',
+        title: '我的申请',
         path: '/issue/personal',
         roles: [PERMISSION.IT, PERMISSION.ASSET, PERMISSION.SYSTEM, PERMISSION.STAFF]
       }

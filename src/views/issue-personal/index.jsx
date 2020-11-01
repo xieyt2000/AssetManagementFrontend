@@ -28,7 +28,7 @@ class IssuePersonal extends React.Component {
 
   render () {
     const issueList = this.state.issueList
-    const description = '当前用户发起的所有事项'
+    const description = '作为企业员工，你可以在这里看到你提出的所有事项申请'
     return (
       <div className='app-container'>
         <HelpCard title='个人事项' source={description} />
