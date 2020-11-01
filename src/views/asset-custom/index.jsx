@@ -14,7 +14,7 @@ class AssetCustom extends Component {
   }
 
   remove = (removeIdx) => {
-    const curProps = this.state.customProps
+    const curProps = this.props.form.getFieldValue('names')
     curProps.splice(removeIdx, 1)
     this.setState({
       customProps: curProps
