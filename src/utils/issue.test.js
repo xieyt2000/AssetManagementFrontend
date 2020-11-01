@@ -7,7 +7,12 @@ describe('utils/issue', () => {
   it('test renderIssueType', () => {
     renderIssueType((row))
   })
+  it('test renderAssignee TRANSFER', () => {
+    row.type_name = 'TRANSFER'
+    renderAssignee(row)
+  })
   it('test renderAssignee', () => {
+    row.type_name = 'REQUIRE'
     renderAssignee(row)
   })
   it('test renderIssueStatus', () => {
