@@ -1,10 +1,16 @@
 import React, { Component } from 'react'
 import { Table, Modal } from 'antd'
 import { PropTypes } from 'prop-types'
+import { getColumnSearchProps } from '../../../utils/table'
 
 const Column = Table.Column
 
 class HistoryTable extends Component {
+  state = {
+    searchText: '',
+    searchedColumn: ''
+  }
+
   render () {
     const { visible, onCancel, loading, history } = this.props
     return (
@@ -13,16 +19,16 @@ class HistoryTable extends Component {
           bordered rowKey="name"
           dataSource={history}
           pagination={false}
-          loading={loading}>
-          <Column title="时间" dataIndex="time" key="time" align="center"/>
-          <Column title="用户" dataIndex="user" key="user" align="center"/>
-          <Column title="操作类型" dataIndex="type" key="type" align="center"/>
+          loading={loading} style={{ whiteSpace: 'pre' }}>
+          <Column title="时间" dataIndex="time" key="time" align="center"
+            {...getColumnSearchProps('time', this, '时间')}/>
+          <Column title="用户" dataIndex="user" key="user" align="center"
+            {...getColumnSearchProps('user', this, '用户')}/>
+          <Column title="操作类型" dataIndex="type" key="type" align="center"
+            {...getColumnSearchProps('type', this, '操作类型')}/>
           <Column title="详情" dataIndex="info" key="info" align="center"
-            render={(array) => {
-              return array.map((text) => {
-                return <span key={text}>{text}<br/></span>
-              })
-            }}/>
+            {...getColumnSearchProps('info', this, '操作类型')}
+          />
         </Table>
       </Modal>
     )
