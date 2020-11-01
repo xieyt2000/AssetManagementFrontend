@@ -4,6 +4,16 @@ describe('reducers/app', () => {
   const testState = {
     taglist: []
   }
+  const testState2 = {
+    taglist: ['1']
+  }
+  const testState3 = {
+    taglist: [
+      {
+        path: '/dashboard'
+      }
+    ]
+  }
   const actionAdd = {
     type: types.TAGSVIEW_ADD_TAG,
     tag: '1'
@@ -25,16 +35,20 @@ describe('reducers/app', () => {
     const res = app(testState, actionAdd)
     expect(res).toHaveProperty('taglist', ['1'])
   })
+  it('test app TAGSVIEW_ADD_TAG2', () => {
+    const res = app(testState2, actionAdd)
+    expect(res).toHaveProperty('taglist')
+  })
   it('test app TAGSVIEW_DELETE_TAG', () => {
-    const res = app(testState, actionDelete)
+    const res = app(testState2, actionDelete)
     expect(res).toHaveProperty('taglist', [])
   })
   it('test app TAGSVIEW_EMPTY_TAGLIST', () => {
-    const res = app(testState, actionEmpty)
+    const res = app(testState3, actionEmpty)
     expect(res).toHaveProperty('taglist')
   })
   it('test app TAGSVIEW_CLOSE_OTHER_TAGS', () => {
-    const res = app(testState, actionClose)
+    const res = app(testState3, actionClose)
     expect(res).toHaveProperty('taglist')
   })
   it('test app default', () => {
