@@ -1,15 +1,18 @@
 import React from 'react'
 import { connect } from 'react-redux'
 import HelpCard from '../../components/HelpCard'
-import { Button, Divider, Table } from 'antd'
-import { issueToHandle } from '../../api/issue'
+import { Button, Divider, Modal, Table } from 'antd'
+import { handleIssue, issueToHandle } from '../../api/issue'
 import { renderAssignee, renderIssueType } from '../../utils/issue'
+import { handleResponse } from '../../utils/response'
+
 const Column = Table.Column
 
 class IssueBoard extends React.Component {
   constructor (props) {
     super(props)
     this.state = {
+      opType: '',
       issueList: [],
       rowData: {},
       modalVis: false,
@@ -58,14 +61,50 @@ class IssueBoard extends React.Component {
                   onClick={this.handleRefuse.bind(this, row)} />
               </span>)}/>
           </Table>
+          <Modal
+            title={this.state.opType + '申请'}
+            visible={this.state.modalVis}
+            confirmLoading={this.state.modalLod}
+            onOk={this.handleOk}
+            onCancel={this.handleCancel}
+          >
+            <p>是否{this.state.opType}申请？</p>
+          </Modal>
         </div>
       )
     }
 
-  handlePermit = () => {
+  handlePermit = (row) => {
+    this.setState({
+      modalVis: true,
+      opType: '同意',
+      rowData: Object.assign({}, row)
+    })
   }
 
-  handleRefuse = () => {
+  handleRefuse = (row) => {
+    this.setState({
+      modalVis: true,
+      opType: '拒绝',
+      rowData: Object.assign({}, row)
+    })
+  }
+
+  handleOk = () => {
+    this.setState({
+      modalLod: true
+    })
+    const data = {
+      nid: this.state.rowData.nid,
+      success: (this.state.opType === '同意')
+    }
+    handleResponse(handleIssue(data), this.state.opType + '申请', this, null, { modalVis: false, modalLod: false }, this.getIssue)
+  }
+
+  handleCancel = () => {
+    this.setState({
+      modalVis: false
+    })
   }
 }
 

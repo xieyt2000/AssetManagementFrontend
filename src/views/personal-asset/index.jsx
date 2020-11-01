@@ -76,7 +76,7 @@ class PersonalAsset extends React.Component {
           onOk={this.handleReturnOk}
           onCancel={this.handleCancel}
         >
-          <p>是否退库资产 {this.state.rowData.name} ?</p>
+          <p>是否申请退库资产 {this.state.rowData.name} ?</p>
         </Modal>
       </div>
     )
