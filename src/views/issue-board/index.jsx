@@ -1,7 +1,7 @@
 import React from 'react'
 import { connect } from 'react-redux'
 import HelpCard from '../../components/HelpCard'
-import { Button, Divider, Modal, Table } from 'antd'
+import { Button, Card, Divider, Modal, Table } from 'antd'
 import { handleIssue, issueToHandle } from '../../api/issue'
 import { renderAssignee, renderIssueType } from '../../utils/issue'
 import { handleResponse } from '../../utils/response'
@@ -31,31 +31,34 @@ class IssueBoard extends React.Component {
 
     render () {
       const issueList = this.state.issueList
-      const description = '当前用户所有待处理的事项'
+      const description = '作为管理员，在这里可以看到其他员工向你提交的待处理事项'
       return (
         <div className='app-container'>
-          <HelpCard title='个人工作台' source={description} />
-          <Table
-            bordered rowKey="name"
-            dataSource={issueList}
-            expandIconColumnIndex={-1}
-            pagination={false}>
-            <Column title="事项id" dataIndex="nid" key="nid" align="center"/>
-            <Column title="发起人" dataIndex="initiator" key="initiator" align="center"/>
-            <Column title="涉及资产" dataIndex="asset" key="asset" align="center"/>
-            <Column title="事件类型" key="type_name" align="center" render={renderIssueType}/>
-            <Column title="接受人" key="initiator" align="center"
-              render={renderAssignee}
-            />
-            <Column title="操作" key="action" width={200} align="center" render={(row) => (
-              <span>
-                <Button type="primary" shape="circle" icon="check" title="批准"
-                  onClick={this.handlePermit.bind(this, row)}/>
-                <Divider type="vertical" />
-                <Button type="primary" shape="circle" icon="close" title="拒绝"
-                  onClick={this.handleRefuse.bind(this, row)} />
-              </span>)}/>
-          </Table>
+          <HelpCard title='待办事项' source={description} />
+          <br/>
+          <Card>
+            <Table
+              bordered rowKey="name"
+              dataSource={issueList}
+              expandIconColumnIndex={-1}
+              pagination={false}>
+              <Column title="事项id" dataIndex="nid" key="nid" align="center"/>
+              <Column title="发起人" dataIndex="initiator" key="initiator" align="center"/>
+              <Column title="涉及资产" dataIndex="asset" key="asset" align="center"/>
+              <Column title="事件类型" key="type_name" align="center" render={renderIssueType}/>
+              <Column title="接受人" key="initiator" align="center"
+                render={renderAssignee}
+              />
+              <Column title="操作" key="action" width={200} align="center" render={(row) => (
+                <span>
+                  <Button type="primary" shape="circle" icon="check" title="批准"
+                    onClick={this.handlePermit.bind(this, row)}/>
+                  <Divider type="vertical" />
+                  <Button type="primary" shape="circle" icon="close" title="拒绝"
+                    onClick={this.handleRefuse.bind(this, row)} />
+                </span>)}/>
+            </Table>
+          </Card>
           <Modal
             title={this.state.opType + '申请'}
             visible={this.state.modalVis}
