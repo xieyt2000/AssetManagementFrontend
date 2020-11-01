@@ -31,27 +31,27 @@ describe('reducers/app', () => {
   const action = {
     type: ''
   }
-  it('test app TAGSVIEW_ADD_TAG', () => {
+  it('test tagView TAGSVIEW_ADD_TAG', () => {
     const res = app(testState, actionAdd)
     expect(res).toHaveProperty('taglist', ['1'])
   })
-  it('test app TAGSVIEW_ADD_TAG2', () => {
+  it('test tagView TAGSVIEW_ADD_TAG2', () => {
     const res = app(testState2, actionAdd)
     expect(res).toHaveProperty('taglist')
   })
-  it('test app TAGSVIEW_DELETE_TAG', () => {
+  it('test tagView TAGSVIEW_DELETE_TAG', () => {
     const res = app(testState2, actionDelete)
     expect(res).toHaveProperty('taglist', [])
   })
-  it('test app TAGSVIEW_EMPTY_TAGLIST', () => {
+  it('test tagView TAGSVIEW_EMPTY_TAGLIST', () => {
     const res = app(testState3, actionEmpty)
     expect(res).toHaveProperty('taglist')
   })
-  it('test app TAGSVIEW_CLOSE_OTHER_TAGS', () => {
+  it('test tagView TAGSVIEW_CLOSE_OTHER_TAGS', () => {
     const res = app(testState3, actionClose)
     expect(res).toHaveProperty('taglist')
   })
-  it('test app default', () => {
+  it('test tagView default', () => {
     const res = app(testState, action)
     expect(res).toHaveProperty('taglist')
   })
