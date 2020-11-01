@@ -35,6 +35,12 @@ const menuList = [
     ]
   },
   {
+    title: '工作台',
+    path: '/issue',
+    icon: 'home',
+    roles: [PERMISSION.IT, PERMISSION.ASSET, PERMISSION.SYSTEM, PERMISSION.STAFF]
+  },
+  {
     title: '资产管理',
     path: '/asset',
     icon: 'account-book',
@@ -51,42 +57,6 @@ const menuList = [
       }
     ]
   },
-  // {
-  //   title: '路由嵌套',
-  //   path: '/nested',
-  //   icon: 'cluster',
-  //   roles: [PERMISSION.IT, PERMISSION.ASSET, PERMISSION.SYSTEM, PERMISSION.STAFF],
-  //   children: [
-  //     {
-  //       title: '菜单1',
-  //       path: '/nested/menu1',
-  //       children: [
-  //         {
-  //           title: '菜单1-1',
-  //           path: '/nested/menu1/menu11',
-  //           roles: [PERMISSION.IT, PERMISSION.ASSET, PERMISSION.SYSTEM, PERMISSION.STAFF]
-  //         },
-  //         {
-  //           title: '菜单1-2',
-  //           path: '/nested/menu1/menu12',
-  //           children: [
-  //             {
-  //               title: '菜单1-2-1',
-  //               path: '/nested/menu1/menu12/menu121',
-  //               roles: [PERMISSION.IT, PERMISSION.ASSET, PERMISSION.SYSTEM, PERMISSION.STAFF]
-  //             }
-  //           ]
-  //         }
-  //       ]
-  //     }
-  //   ]
-  // },
-  // {
-  //   title: '表格',
-  //   path: '/table',
-  //   icon: 'table',
-  //   roles: [PERMISSION.IT, PERMISSION.ASSET, PERMISSION.SYSTEM, PERMISSION.STAFF]
-  // },
   {
     title: '用户管理',
     path: '/user',
@@ -106,10 +76,24 @@ const menuList = [
     roles: [PERMISSION.SYSTEM]
   },
   {
-    title: '资产领用',
-    path: '/asset/collection',
+    title: '资产使用',
+    path: '/asset',
     icon: 'down-square',
-    roles: [PERMISSION.IT, PERMISSION.ASSET, PERMISSION.SYSTEM, PERMISSION.STAFF]
+    children: [
+      {
+        title: '资产领用',
+        path: '/asset/require',
+        icon: 'down-square',
+        roles: [PERMISSION.IT, PERMISSION.ASSET, PERMISSION.SYSTEM, PERMISSION.STAFF]
+      },
+      {
+        title: '个人资产',
+        path: '/asset/personal',
+        icon: 'down-square',
+        roles: [PERMISSION.IT, PERMISSION.ASSET, PERMISSION.SYSTEM, PERMISSION.STAFF]
+      }
+
+    ]
   }
 
 ]
