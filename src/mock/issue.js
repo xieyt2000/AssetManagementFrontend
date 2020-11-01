@@ -5,5 +5,7 @@ export default {
   applyFix: getReturnFunc('applyFix'),
   applyTransfer: getReturnFunc('applyTransfer'),
   applyReturn: getReturnFunc('applyReturn'),
-  issueToHandle: getReturnFunc('issueToHandle')
+  issueToHandle: getReturnFunc('issueToHandle'),
+  handleIssue: getReturnFunc('handleIssue'),
+  personalIssue: getReturnFunc('personalIssue')
 }

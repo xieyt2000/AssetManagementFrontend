@@ -21,4 +21,12 @@ describe('api/issue', function () {
     const res = await API.issueToHandle()
     expect(res.data.data).toBe('issueToHandle')
   })
+  it('test handleIssue', async function () {
+    const res = await API.handleIssue({})
+    expect(res.data.data).toBe('handleIssue')
+  })
+  it('test personalIssue', async function () {
+    const res = await API.personalIssue()
+    expect(res.data.data).toBe('personalIssue')
+  })
 })

@@ -17,5 +17,7 @@ export default {
   getAssetHistory: getReturnFunc('getAssetHistory'),
   personalAssetList: getReturnFunc('personalAssetList'),
   availableAssetList: getReturnFunc('availableAssetList'),
-  assetQuery: getReturnFunc('assetQuery')
+  assetQuery: getReturnFunc('assetQuery'),
+  getCustomProp: getReturnFunc('getCustomProp'),
+  editCustomProp: getReturnFunc('editCustomProp')
 }

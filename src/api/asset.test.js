@@ -1,6 +1,7 @@
 import { assetList, addAsset, assetRequire, assetCategoryList, addAssetCategory
   , deleteAssetCategory, editAsset, editAssetCategory, getAssetHistory,
-  assetQuery, personalAssetList, availableAssetList } from './asset'
+  assetQuery, personalAssetList, availableAssetList, getCustomProp,
+  editCustomProp } from './asset'
 import '@/mock'
 describe('asset api test', function () {
   it('test assetList', async function () {
@@ -50,5 +51,13 @@ describe('asset api test', function () {
   it('test assetQuery', async function () {
     const res = await assetQuery({})
     expect(res.data.data).toBe('assetQuery')
+  })
+  it('test getCustomProp', async function () {
+    const res = await getCustomProp()
+    expect(res.data.data).toBe('getCustomProp')
+  })
+  it('test editCustomProp', async function () {
+    const res = await editCustomProp({})
+    expect(res.data.data).toBe('editCustomProp')
   })
 })

@@ -1,6 +1,16 @@
-import { CHINESE_ISSUE } from './issue'
+import { renderIssueType, renderAssignee, renderIssueStatus } from './issue'
 describe('utils/issue', () => {
-  it('test CHINESE_ISSUE', () => {
-    expect(CHINESE_ISSUE).toHaveProperty('TRANSFER', '转移')
+  const row = {
+    type_name: 'TRANSFER',
+    status: 'DOING'
+  }
+  it('test renderIssueType', () => {
+    renderIssueType((row))
+  })
+  it('test renderAssignee', () => {
+    renderAssignee(row)
+  })
+  it('test renderIssueStatus', () => {
+    renderIssueStatus(row)
   })
 })
