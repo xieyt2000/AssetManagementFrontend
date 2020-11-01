@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { Button, Card, Table, Divider, message } from 'antd'
+import { Button, Card, Table, Divider, message, Modal } from 'antd'
 import HelpCard from '../../components/HelpCard'
 import UploadAsset from './upload'
 import AssetInfo from './components/AssetInfo'
@@ -10,7 +10,8 @@ import {
   editAsset,
   assetCategoryList,
   getAssetHistory,
-  assetQuery } from '../../api/asset'
+  assetQuery,
+  assetRetire } from '../../api/asset'
 import { connect } from 'react-redux'
 import PropTypes from 'prop-types'
 import AddAssetForm from './components/AddAssetForm'
@@ -45,7 +46,9 @@ class AssetManagement extends Component {
       assetCategoryList: [],
       historyModalVis: false,
       historyModalLod: false,
-      curAssetHistoryList: []
+      curAssetHistoryList: [],
+      retireModalVis: false,
+      retireModalLod: false
     }
   }
 
@@ -88,14 +91,17 @@ class AssetManagement extends Component {
               render={renderChineseStatus}/>
             <Column title="操作" key="action" width={200} align="center" render={(row) => (
               <span>
-                <Button type="primary" shape="circle" icon="search" title="查看详情"
+                <Button type="primary" shape="circle" icon="search" title="查看详情" size='small'
                   onClick={this.handleAssetInfoClick.bind(this, row)}/>
                 <Divider type="vertical"/>
-                <Button type="primary" shape="circle" icon="edit" title="编辑"
+                <Button type="primary" shape="circle" icon="edit" title="编辑" size='small'
                   onClick={this.handleEditAssetFormClick.bind(this, row)}/>
                 <Divider type="vertical"/>
-                <Button type="primary" shape="circle" icon="history" title="历史"
+                <Button type="primary" shape="circle" icon="history" title="历史" size='small'
                   onClick={this.handleHistoryClick.bind(this, row)}/>
+                <Divider type="vertical"/>
+                <Button type="primary" shape="circle" icon="close" title="清退" size='small'
+                  onClick={this.handleRetireClick.bind(this, row)}/>
               </span>)}/>
           </Table>
         </Card>
@@ -133,6 +139,15 @@ class AssetManagement extends Component {
           onOk={this.handleOkAdd}
           assetCategories={this.state.assetCategoryList}
         />
+        <Modal
+          title='清退资产'
+          visible={this.state.retireModalVis}
+          confirmLoading={this.state.retireModalLod}
+          onOk={this.handleOkRetire}
+          onCancel={this.handleCancel}
+        >
+          <p>是否清退资产</p>
+        </Modal>
 
       </div>
     )
@@ -203,6 +218,24 @@ class AssetManagement extends Component {
       })
   }
 
+  handleRetireClick = (row) => {
+    this.setState({
+      rowData: Object.assign({}, row),
+      retireModalVis: true
+    })
+  }
+
+  handleOkRetire = (ignore) => {
+    this.setState({
+      retireModalLod: false
+    })
+    const data = {
+      nid: this.state.rowData.nid
+    }
+    handleResponse(assetRetire(data), '资产清退', this, null,
+      { retireModalVis: false, retireModalLod: false }, this.getAsset())
+  }
+
   handleOkEdit = (ignore) => {
     const form = this.editFormRef.props.form
     form.validateFields((err, values) => {
@@ -230,7 +263,8 @@ class AssetManagement extends Component {
     this.setState({
       editModalVis: false,
       addModalVis: false,
-      historyModalVis: false
+      historyModalVis: false,
+      retireModalVis: false
     })
   }
 

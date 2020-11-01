@@ -104,3 +104,11 @@ export function editCustomProp (data) {
     data: data
   })
 }
+
+export function assetRetire (data) {
+  return request({
+    url: '/api/asset/retire',
+    method: 'post',
+    data: data
+  })
+}
