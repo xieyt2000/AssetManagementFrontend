@@ -1,4 +1,4 @@
-import { assetList, addAsset, assetCollection, assetCategoryList, addAssetCategory
+import { assetList, addAsset, assetRequire, assetCategoryList, addAssetCategory
   , deleteAssetCategory, editAsset, editAssetCategory, getAssetHistory } from './asset'
 import '@/mock'
 describe('asset api test', function () {
@@ -10,9 +10,9 @@ describe('asset api test', function () {
     const res = await addAsset([])
     expect(res.data.data).toBe('addAsset')
   })
-  it('test assetCollection', async function () {
-    const res = await assetCollection({})
-    expect(res.data.data).toBe('assetCollection')
+  it('test assetRequire', async function () {
+    const res = await assetRequire({})
+    expect(res.data.data).toBe('assetRequire')
   })
   it('test assetCategoryList', async function () {
     const res = await assetCategoryList()

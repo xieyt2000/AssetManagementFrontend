@@ -15,7 +15,7 @@ for (let i = 0; i < count; i++) {
 export default {
   assetList: getReturnFunc('assetList'),
   addAsset: getReturnFunc('addAsset'),
-  assetCollection: getReturnFunc('assetCollection'),
+  assetRequire: getReturnFunc('assetRequire'),
   assetCategoryList: getReturnFunc('assetCategoryList'),
   editAsset: getReturnFunc('editAsset'),
   addAssetCategory: getReturnFunc('addAssetCategory'),
