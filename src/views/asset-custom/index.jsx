@@ -13,22 +13,18 @@ class AssetCustom extends Component {
     }
   }
 
-  remove = (removeKey) => {
-    const { form } = this.props
-    const keys = form.getFieldValue('keys')
-    keys.splice(removeKey, 1)
-    form.setFieldsValue({
-      // keys: keys.filter((key) => key !== removeKey)
-      keys: keys
+  remove = (removeIdx) => {
+    const curProps = this.state.customProps
+    curProps.splice(removeIdx, 1)
+    this.setState({
+      customProps: curProps
     })
   }
 
   add = () => {
-    const { form } = this.props
-    const keys = form.getFieldValue('keys')
-    const newKeys = keys.concat('')
-    form.setFieldsValue({
-      keys: newKeys
+    const curProps = this.state.customProps.concat('')
+    this.setState({
+      customProps: curProps
     })
   }
 
@@ -62,15 +58,14 @@ class AssetCustom extends Component {
   }
 
   render () {
-    const { getFieldDecorator, getFieldValue } = this.props.form
+    const { getFieldDecorator } = this.props.form
     const formItemLayoutWithOut = {
       wrapperCol: {
         span: 20, offset: 4
       }
     }
-    getFieldDecorator('keys', { initialValue: this.state.customProps })
-    const keys = getFieldValue('keys')
-    const formItems = keys.map((k, index) => (
+    const curProps = this.state.customProps
+    const formItems = curProps.map((propName, index) => (
       <Form.Item
         {...formItemLayoutWithOut}
         required={false}
@@ -85,7 +80,7 @@ class AssetCustom extends Component {
               message: '请输入自定义属性名称或者删除该条属性'
             }
           ],
-          initialValue: k
+          initialValue: propName
         })(<Input placeholder="属性名称" style={{ width: '60%', marginRight: 8 }}/>)}
         {
           <Icon
