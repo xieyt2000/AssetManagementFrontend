@@ -28,7 +28,7 @@ class PersonalAsset extends React.Component {
   }
 
   render () {
-    const description = '查看个人名下的资产，并进行维保、转移等操作'
+    const description = '作为企业员工，你可以查看你使用中的资产，并且可以向相关负责人申请维保、转移、退库'
     const assetList = this.state.assetList
     return (
       <div className='app-container'>
