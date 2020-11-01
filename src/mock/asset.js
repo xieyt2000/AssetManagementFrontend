@@ -1,7 +1,12 @@
 import getReturnFunc from './utils'
 
 export default {
-  assetList: getReturnFunc('assetList'),
+  assetList: () => {
+    return {
+      code: 200,
+      data: 'assetList'
+    }
+  },
   addAsset: getReturnFunc('addAsset'),
   assetRequire: getReturnFunc('assetRequire'),
   assetCategoryList: getReturnFunc('assetCategoryList'),
