@@ -4,8 +4,13 @@ import HelpCard from '../../components/HelpCard'
 import UploadAsset from './upload'
 import AssetInfo from './components/AssetInfo'
 import EditAssetForm from './components/EditAssetForm'
-import { addAsset, assetList, editAsset, assetCategoryList, getAssetHistory, assetQuery } from '../../api/asset'
-
+import {
+  addAsset,
+  assetList,
+  editAsset,
+  assetCategoryList,
+  getAssetHistory,
+  assetQuery } from '../../api/asset'
 import { connect } from 'react-redux'
 import PropTypes from 'prop-types'
 import AddAssetForm from './components/AddAssetForm'

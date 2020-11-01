@@ -36,7 +36,13 @@ const menuList = [
   },
   {
     title: '工作台',
-    path: '/issue',
+    path: '/issue-board',
+    icon: 'home',
+    roles: [PERMISSION.IT, PERMISSION.ASSET, PERMISSION.SYSTEM, PERMISSION.STAFF]
+  },
+  {
+    title: '个人申请',
+    path: '/issue-personal',
     icon: 'home',
     roles: [PERMISSION.IT, PERMISSION.ASSET, PERMISSION.SYSTEM, PERMISSION.STAFF]
   },

@@ -2,14 +2,10 @@ import React from 'react'
 import { connect } from 'react-redux'
 import HelpCard from '../../components/HelpCard'
 import { Button, Divider, Table } from 'antd'
-import { CHINESE_ISSUE } from '@/utils/issue'
 import { issueToHandle } from '../../api/issue'
+import { renderAssignee, renderChineseIssue } from '../../utils/issue'
 const Column = Table.Column
 
-const changeIssueToChinese = (name) => {
-  console.log(name)
-  return CHINESE_ISSUE[name]
-}
 class IssueBoard extends React.Component {
   constructor (props) {
     super(props)
@@ -49,20 +45,9 @@ class IssueBoard extends React.Component {
             <Column title="事项id" dataIndex="nid" key="nid" align="center"/>
             <Column title="发起人" dataIndex="initiator" key="initiator" align="center"/>
             <Column title="涉及资产" dataIndex="asset" key="asset" align="center"/>
-            <Column title="事件类型" key="type_name" align="center"
-              render={(row) => (
-                <span> {changeIssueToChinese(row.type_name)} </span>
-              )}/>
-            <Column title="接受人" dataIndex="initiator" key="initiator" align="center"
-              render={(row) => (
-                <span> {((row) => {
-                  if (row.type_name === 'TRANSFER') {
-                    return row.assignee
-                  } else {
-                    return '不适用'
-                  }
-                })(row)} </span>
-              )}
+            <Column title="事件类型" key="type_name" align="center" render={renderChineseIssue}/>
+            <Column title="接受人" key="initiator" align="center"
+              render={renderAssignee}
             />
             <Column title="操作" key="action" width={200} align="center" render={(row) => (
               <span>
@@ -72,7 +57,6 @@ class IssueBoard extends React.Component {
                 <Button type="primary" shape="circle" icon="close-circle" title="拒绝"
                   onClick={this.handleRefuse.bind(this, row)} />
               </span>)}/>
-
           </Table>
         </div>
       )
