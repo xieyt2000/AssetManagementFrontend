@@ -2,7 +2,7 @@ import React from 'react'
 import { connect } from 'react-redux'
 import HelpCard from '../../components/HelpCard'
 import { Table } from 'antd'
-import { renderAssignee, renderChineseIssue } from '../../utils/issue'
+import { renderAssignee, renderIssueType, renderIssueStatus } from '../../utils/issue'
 const Column = Table.Column
 
 class IssuePersonal extends React.Component {
@@ -29,10 +29,9 @@ class IssuePersonal extends React.Component {
           pagination={false}>
           <Column title="事项id" dataIndex="nid" key="nid" align="center"/>
           <Column title="涉及资产" dataIndex="asset" key="asset" align="center"/>
-          <Column title="事件类型" key="type_name" align="center" render={renderChineseIssue}/>
-          <Column title="接受人" dataIndex="initiator" key="initiator" align="center"
-            render={renderAssignee}
-          />
+          <Column title="事件类型" key="type_name" align="center" render={renderIssueType}/>
+          <Column title="接受人" key="initiator" align="center" render={renderAssignee}/>
+          <Column title="状态" key="status" align="center" render={renderIssueStatus}/>
         </Table>
       </div>
     )

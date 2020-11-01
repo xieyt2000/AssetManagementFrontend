@@ -3,7 +3,7 @@ import { connect } from 'react-redux'
 import HelpCard from '../../components/HelpCard'
 import { Button, Divider, Table } from 'antd'
 import { issueToHandle } from '../../api/issue'
-import { renderAssignee, renderChineseIssue } from '../../utils/issue'
+import { renderAssignee, renderIssueType } from '../../utils/issue'
 const Column = Table.Column
 
 class IssueBoard extends React.Component {
@@ -45,7 +45,7 @@ class IssueBoard extends React.Component {
             <Column title="事项id" dataIndex="nid" key="nid" align="center"/>
             <Column title="发起人" dataIndex="initiator" key="initiator" align="center"/>
             <Column title="涉及资产" dataIndex="asset" key="asset" align="center"/>
-            <Column title="事件类型" key="type_name" align="center" render={renderChineseIssue}/>
+            <Column title="事件类型" key="type_name" align="center" render={renderIssueType}/>
             <Column title="接受人" key="initiator" align="center"
               render={renderAssignee}
             />

@@ -1,14 +1,19 @@
 import React from 'react'
 
-export const CHINESE_ISSUE = {
+const CHINESE_ISSUE_TYPE = {
   REQUIRE: '领用',
   MAINTAIN: '维修',
   TRANSFER: '转移',
   RETURN: '退库'
 }
 
-export const renderChineseIssue = (row) => (
-  <span> {CHINESE_ISSUE[row.type_name]} </span>
+const CHINESE_ISSUE_STATUS = {
+  DOING: '进行中',
+  SUCCESS: '成功',
+  FAIL: '失败'
+}
+export const renderIssueType = (row) => (
+  <span> {CHINESE_ISSUE_TYPE[row.type_name]} </span>
 )
 
 export const renderAssignee = (row) => {
@@ -16,3 +21,7 @@ export const renderAssignee = (row) => {
     return (<span>{row.assignee}</span>)
   }
 }
+
+export const renderIssueStatus = (status) => (
+  <span> {CHINESE_ISSUE_STATUS[status]} </span>
+)
