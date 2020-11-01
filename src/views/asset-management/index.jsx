@@ -66,9 +66,11 @@ class AssetManagement extends Component {
     return (
       <div className='app-container'>
         <HelpCard title='资产管理' source={description}/>
+        <br/>
         <QueryPanel
           submitQuery={this.submitQuery}
           assetCategories={this.state.assetCategoryList}/>
+        <br/>
         <Card title={cardTitle}>
           <Table
             bordered rowKey="name"
