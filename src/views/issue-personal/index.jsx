@@ -3,6 +3,8 @@ import { connect } from 'react-redux'
 import HelpCard from '../../components/HelpCard'
 import { Table } from 'antd'
 import { renderAssignee, renderIssueType, renderIssueStatus } from '../../utils/issue'
+import { issueToHandle } from '../../api/issue'
+import { getList } from '../../utils/list'
 const Column = Table.Column
 
 class IssuePersonal extends React.Component {
@@ -14,6 +16,14 @@ class IssuePersonal extends React.Component {
       modalVis: false,
       modalLod: false
     }
+  }
+
+  getIssue = () => {
+    getList(issueToHandle, this, 'issueList')
+  }
+
+  componentDidMount () {
+    this.getIssue()
   }
 
   render () {

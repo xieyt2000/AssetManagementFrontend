@@ -96,7 +96,6 @@ class UserManagement extends Component {
       return Array.from(roles, role =>
         CHINESE_PERMISSION[role]).join('，')
     }
-
     const res = await getUsers()
     const { data: users, code } = res.data
     for (let i = 0; i < users.length; i++) {

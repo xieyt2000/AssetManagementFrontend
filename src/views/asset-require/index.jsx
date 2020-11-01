@@ -6,6 +6,7 @@ import HelpCard from '../../components/HelpCard'
 import { Button, Modal, Table } from 'antd'
 import { renderChineseStatus, renderAssetType } from '../../utils/asset'
 import { handleResponse } from '@/utils/response'
+import { getList } from '../../utils/list'
 
 const Column = Table.Column
 
@@ -21,13 +22,7 @@ class AssetRequire extends React.Component {
   }
 
   getAsset = async () => {
-    const res = await availableAssetList()
-    const { data: assets, code } = res.data
-    if (code === 200) {
-      this.setState({
-        assetList: assets
-      })
-    }
+    getList(availableAssetList, this, 'assetList')
   }
 
   componentDidMount () {

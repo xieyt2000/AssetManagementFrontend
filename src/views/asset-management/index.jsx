@@ -18,6 +18,8 @@ import HistoryTable from './components/HistoryTable'
 import { handleResponse } from '../../utils/response'
 import QueryPanel from './components/QueryPanel'
 import { renderAssetType, renderChineseStatus } from '../../utils/asset'
+import { getList } from '../../utils/list'
+import { issueToHandle } from '../../api/issue'
 
 const Column = Table.Column
 
@@ -250,14 +252,8 @@ class AssetManagement extends Component {
     })
   }
 
-  getAsset = async () => {
-    const res = await assetList()
-    const { data: assets, code } = res.data
-    if (code === 200) {
-      this.setState({
-        assetList: assets
-      })
-    }
+  getAsset = () => {
+    getList(assetList, this, 'assetList')
   }
 
   getAssetCategories = async () => {

@@ -7,6 +7,7 @@ import InputForm from './components/InputForm'
 import { handleResponse } from '@/utils/response'
 import { applyFix, applyTransfer, applyReturn } from '@/api/issue'
 import { renderAssetType, renderChineseStatus } from '../../utils/asset'
+import { getList } from '../../utils/list'
 
 const Column = Table.Column
 
@@ -149,13 +150,7 @@ class PersonalAsset extends React.Component {
   }
 
   getAsset = async () => {
-    const res = await personalAssetList()
-    const { data: assets, code } = res.data
-    if (code === 200) {
-      this.setState({
-        assetList: assets
-      })
-    }
+    getList(personalAssetList, this, 'assetList')
   }
 
   componentDidMount () {

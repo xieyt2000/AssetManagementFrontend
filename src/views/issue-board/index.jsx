@@ -5,6 +5,7 @@ import { Button, Divider, Modal, Table } from 'antd'
 import { handleIssue, issueToHandle } from '../../api/issue'
 import { renderAssignee, renderIssueType } from '../../utils/issue'
 import { handleResponse } from '../../utils/response'
+import { getList } from '../../utils/list'
 
 const Column = Table.Column
 
@@ -20,14 +21,8 @@ class IssueBoard extends React.Component {
     }
   }
 
-    getIssue = async () => {
-      const res = await issueToHandle()
-      const { data: issues, code } = res.data
-      if (code === 200) {
-        this.setState({
-          issueList: issues
-        })
-      }
+    getIssue = () => {
+      getList(issueToHandle, this, 'issueList')
     }
 
     componentDidMount () {
