@@ -12,6 +12,7 @@ import AddAssetForm from './components/AddAssetForm'
 import HistoryTable from './components/HistoryTable'
 import { handleResponse } from '../../utils/response'
 import QueryPanel from './components/QueryPanel'
+import { renderAssetType, renderChineseStatus } from '../../utils/asset'
 
 const Column = Table.Column
 
@@ -73,18 +74,10 @@ class AssetManagement extends Component {
             <Column title="挂账人" dataIndex="owner" key="owner" align="center"/>
             <Column title="所属部门" dataIndex="department" key="department" align="center"/>
             <Column title="资产类型" key="type_name" align="center"
-              render={(row) => (
-                <span> {((row) => {
-                  if (row.type_name === 'AMOUNT') {
-                    const str = '数量型'
-                    const quantity = '数量：' + row.quantity
-                    return (<span>{str}<br/>{quantity}</span>)
-                  } else {
-                    return '条目型'
-                  }
-                })(row)} </span>
-              )}/>
+              render={renderAssetType}/>
             <Column title="资产分类" dataIndex="category" key="category" align="center"/>
+            <Column title="资产状态" dataIndex="status" key="status" align="center"
+              render={renderChineseStatus}/>
             <Column title="操作" key="action" width={200} align="center" render={(row) => (
               <span>
                 <Button type="primary" shape="circle" icon="search" title="查看详情"
@@ -210,7 +203,6 @@ class AssetManagement extends Component {
       }
       this.setState({ editModalLod: true })
       values.nid = this.state.rowData.nid
-      console.log(values)
       editAsset(values).then((res) => {
         form.resetFields()
         this.setState({ editModalVis: false, editModalLod: false })
@@ -256,9 +248,6 @@ class AssetManagement extends Component {
   getAsset = async () => {
     const res = await assetList()
     const { data: assets, code } = res.data
-    // for (let i = 0; i < assets.length; i++) {
-    //   assets[i]['type_name'] = assets[i]['type_name']
-    // }
     if (code === 200) {
       this.setState({
         assetList: assets

@@ -1,3 +1,5 @@
+import React from 'react'
+
 export const CHINESE_KEY_TO_ENGLISH = {
   资产名称: 'name',
   资产分类: 'category',
@@ -31,5 +33,18 @@ export const CHINESE_STATUS = {
   IN_MAINTAIN: '维修中',
   RETIRED: '已清退',
   DELETED: '已删除'
+}
+export const renderAssetType = (row) => {
+  if (row.type_name === 'AMOUNT') {
+    const str = '数量型'
+    const quantity = '数量：' + row.quantity
+    return (<span>{str}<br/>{quantity}</span>)
+  } else {
+    const str = '条目型'
+    return (<span>{str}</span>)
+  }
+}
+export const renderChineseStatus = (status) => {
+  return (<span> {CHINESE_STATUS[status]} </span>)
 }
 export default STATUS
