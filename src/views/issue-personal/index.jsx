@@ -1,7 +1,7 @@
 import React from 'react'
 import { connect } from 'react-redux'
 import HelpCard from '../../components/HelpCard'
-import { Card, Table } from 'antd'
+import { Button, Card, Modal, Table } from 'antd'
 import { renderAssignee, renderIssueType, renderIssueStatus } from '../../utils/issue'
 import { personalIssue } from '../../api/issue'
 import { getList } from '../../utils/list'
@@ -27,6 +27,25 @@ class IssuePersonal extends React.Component {
     this.getIssue()
   }
 
+  handleCancelClick = (row) => {
+    this.setState({
+      modalVis: true,
+      rowData: Object.assign({}, row)
+    })
+  }
+
+  handleCancel = () => {
+    this.setState({
+      modalVis: false
+    })
+  }
+
+  handleOk = () => {
+    this.setState({
+      modalLod: true
+    })
+  }
+
   render () {
     const issueList = this.state.issueList
     const description = '作为企业员工，你可以在这里看到你提出的所有事项申请'
@@ -45,7 +64,21 @@ class IssuePersonal extends React.Component {
             <Column title="事件类型" key="type_name" align="center" render={renderIssueType}/>
             <Column title="接受人" key="initiator" align="center" render={renderAssignee}/>
             <Column title="状态" key="status" align="center" render={renderIssueStatus}/>
+            <Column title="操作" key="action" width={200} align="center" render={(row) => (
+              <span>
+                <Button type="primary" shape="circle" icon="close" title="取消"
+                  onClick={this.handleCancelClick.bind(this, row)}/>
+              </span>)}/>
           </Table>
+          <Modal
+            title='删除事项'
+            visible={this.state.modalVis}
+            confirmLoading={this.state.modalLod}
+            onOk={this.handleOk}
+            onCancel={this.handleCancel}
+          >
+            <p>是否删除事项？</p>
+          </Modal>
         </Card>
       </div>
     )
