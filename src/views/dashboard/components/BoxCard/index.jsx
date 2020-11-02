@@ -44,7 +44,8 @@ class BoxCard extends Component {
         >
           <Descriptions title="用户信息" column={1}>
             <Descriptions.Item label="用户名" span={1}>{name}</Descriptions.Item>
-            <Descriptions.Item label="角色" span={1}>{this.convertRoleToString(role)}</Descriptions.Item>
+            <Descriptions.Item label="角色" span={1}>{this.convertRoleToString(role)}
+            </Descriptions.Item>
             <Descriptions.Item label="部门" span={1}>{department}</Descriptions.Item>
           </Descriptions>
         </Card>

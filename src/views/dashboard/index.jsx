@@ -1,7 +1,7 @@
 import React from 'react'
 import './index.less'
 import BoxCard from './components/BoxCard'
-import { Row, Col } from 'antd'
+import { Col } from 'antd'
 
 const Dashboard = () => {
   return (

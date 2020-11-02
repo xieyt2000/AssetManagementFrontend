@@ -26,7 +26,8 @@ class AssetInfo extends React.Component {
     context.scale(1.8, 1.8)
 
     html2canvas(element, { canvas: newCanvas }).then((canvas) => {
-      const imgUri = canvas.toDataURL('image/png').replace('image/png', 'image/octet-stream') // 获取生成的图片的url
+      const imgUri = canvas.toDataURL('image/png')
+        .replace('image/png', 'image/octet-stream') // 获取生成的图片的url
       const base64ToBlob = (code) => {
         const parts = code.split(';base64,')
         const contentType = parts[0].split(':')[1]
