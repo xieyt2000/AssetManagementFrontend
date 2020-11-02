@@ -30,7 +30,7 @@ class BoxCard extends Component {
   }
 
   render () {
-    const { name, role } = this.props
+    const { name, role, department } = this.props
     return (
       <div className="box-card-component">
         <Card
@@ -42,9 +42,11 @@ class BoxCard extends Component {
             />
           }
         >
-          <Descriptions title="用户信息" layout="vertical">
-            <Descriptions.Item label="用户名">{name}</Descriptions.Item>
-            <Descriptions.Item label="权限">{this.convertRoleToString(role)}</Descriptions.Item>
+          <Descriptions title="用户信息" column={1}>
+            <Descriptions.Item label="用户名" span={1}>{name}</Descriptions.Item>
+            <Descriptions.Item label="角色" span={1}>{this.convertRoleToString(role)}
+            </Descriptions.Item>
+            <Descriptions.Item label="部门" span={1}>{department}</Descriptions.Item>
           </Descriptions>
         </Card>
       </div>
@@ -54,7 +56,8 @@ class BoxCard extends Component {
 
 BoxCard.propTypes = {
   name: PropTypes.string,
-  role: PropTypes.array
+  role: PropTypes.array,
+  department: PropTypes.string
 }
 
 export default connect((state) => state.user)(BoxCard)
