@@ -60,6 +60,11 @@ const menuList = [
         roles: [PERMISSION.IT, PERMISSION.ASSET, PERMISSION.SYSTEM, PERMISSION.STAFF]
       },
       {
+        title: '资产调拨',
+        path: '/asset/allocation',
+        roles: [PERMISSION.ASSET]
+      },
+      {
         title: '个人资产',
         path: '/asset/personal',
         roles: [PERMISSION.IT, PERMISSION.ASSET, PERMISSION.SYSTEM, PERMISSION.STAFF]

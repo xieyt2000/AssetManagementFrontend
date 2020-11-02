@@ -48,6 +48,10 @@ const IssuePersonal = Loadable({
   loader: () => import(/* webpackChunkName:'User' */'@/views/issue-personal'),
   loading: Loading
 })
+const AssetAllocation = Loadable({
+  loader: () => import(/* webpackChunkName:'User' */'@/views/asset-allocation'),
+  loading: Loading
+})
 export default [
   {
     path: '/dashboard',
@@ -95,6 +99,11 @@ export default [
     roles: [PERMISSION.IT]
   },
   {
+    path: '/asset/allocation',
+    component: AssetAllocation,
+    roles: [PERMISSION.ASSET]
+  },
+  {
     path: '/issue/handle',
     component: IssueBoard,
     roles: [PERMISSION.IT, PERMISSION.ASSET, PERMISSION.SYSTEM, PERMISSION.STAFF]
@@ -104,4 +113,5 @@ export default [
     component: IssuePersonal,
     roles: [PERMISSION.IT, PERMISSION.ASSET, PERMISSION.SYSTEM, PERMISSION.STAFF]
   }
+
 ]
