@@ -1,31 +1,36 @@
 import React from 'react'
-import { Table, Button, TreeSelect } from 'antd'
+import { Table, Button, TreeSelect, message, Card, Divider } from 'antd'
 import { getDepartments } from '../../utils/department'
-import { handleResponse } from '../../utils/response'
-import { assetAllocationList } from '../../api/asset'
+import { assetAllocate, availableAssetList } from '../../api/asset'
 import { renderAssetType, renderChineseStatus } from '../../utils/asset'
+import HelpCard from '../../components/HelpCard'
 
 const columns = [
   {
     title: '资产名称',
-    dataIndex: 'name'
+    dataIndex: 'name',
+    align: 'center'
   },
   {
     title: '挂账人',
-    dataIndex: 'owner'
+    dataIndex: 'owner',
+    align: 'center'
   },
   {
     title: '所属部门',
-    dataIndex: 'category'
+    dataIndex: 'department',
+    align: 'center'
   },
   {
     title: '资产类型',
-    render: renderAssetType
+    render: renderAssetType,
+    align: 'center'
   },
   {
     title: '资产状态',
     dataIndex: 'status',
-    render: renderChineseStatus
+    render: renderChineseStatus,
+    align: 'center'
   }
 ]
 
@@ -35,13 +40,14 @@ class AssetAllocation extends React.Component {
     this.state = {
       selectedRowKeys: [], // Check here to configure the default column
       loading: false,
-      assetList: [],
-      departmentList: []
+      departmentList: [],
+      dataSource: []
     }
   }
 
   componentDidMount () {
     getDepartments(this)
+    this.getAssetList()
   }
 
   onSelectChange = selectedRowKeys => {
@@ -49,41 +55,88 @@ class AssetAllocation extends React.Component {
     this.setState({ selectedRowKeys })
   };
 
+  getAssetList = () => {
+    availableAssetList()
+      .then((res) => {
+        if (res.data.code === 200) {
+          const tmpData = []
+          for (let i = 0; i < res.data.data.length; i++) {
+            tmpData.push(res.data.data[i])
+            tmpData[i].key = tmpData[i].nid
+            delete tmpData[i].children
+          }
+          this.setState({
+            dataSource: tmpData
+          })
+          message.success('获取资产成功')
+        } else {
+          message.error('获取资产失败' + res.data.message)
+        }
+      })
+      .catch(() => {
+        message.error('获取资产失败，请检查网络连接后重试！')
+      })
+  }
+
   handleTreeSelect = (value) => {
-    const data = { id: value }
-    handleResponse(assetAllocationList(data), '获取资产', this, 'assetList'
-      , null, null, null)
-    const tmpAssetList = this.state.assetList
-    tmpAssetList.forEach(item => {
-      item.key = item.nid
-    })
-    this.setState({
-      assetList: tmpAssetList
-    })
+    this.departmentId = value
+  }
+
+  handleAllocationClick = () => {
+    this.setState({ loading: true })
+    const data = { idList: this.state.selectedRowKeys, id: this.departmentId }
+    assetAllocate(data)
+      .then((res) => {
+        if (res.data.code === 200) {
+          message.success('调拨资产成功')
+        } else {
+          message.error('调拨资产失败,' + res.data.message)
+        }
+      })
+      .catch(() => {
+        message.error('调拨资产失败,请检查网络连接后重试！')
+      })
+      .finally(async () => {
+        this.setState({ loading: false, selectedRowKeys: [] })
+        this.getAssetList()
+      })
   }
 
   render () {
-    const { loading, selectedRowKeys, assetList, departmentList } = this.state
+    const { loading, selectedRowKeys, departmentList, dataSource } = this.state
     const rowSelection = {
       selectedRowKeys,
       onChange: this.onSelectChange
     }
     const hasSelected = selectedRowKeys.length > 0
+    const description = '作为资产管理员，你可以进行资产的批量调拨'
     return (
       <div className='app-container'>
         <div style={{ marginBottom: 16 }}>
-          <TreeSelect
-            onSelect={this.handleTreeSelect}
-            treeData={departmentList}
-          />
-          <Button type="primary" onClick={this.start} disabled={!hasSelected} loading={loading}>
+          <HelpCard title='资产调拨' source={description}/>
+          <br/>
+          <Card>
+            <TreeSelect
+              onSelect={this.handleTreeSelect}
+              treeData={departmentList}
+              style={{ width: '200px' }}
+            />
+            <Divider type='vertical'/>
+            <Button type="primary" onClick={this.handleAllocationClick}
+              disabled={!hasSelected} loading={loading}>
               调拨
-          </Button>
-          <span style={{ marginLeft: 8 }}>
-            {hasSelected ? `Selected ${selectedRowKeys.length} items` : ''}
-          </span>
+            </Button>
+
+            <span style={{ marginLeft: 8 }}>
+              {hasSelected ? `您一共选择了 ${selectedRowKeys.length} 项` : ''}
+            </span>
+          </Card>
         </div>
-        <Table rowSelection={rowSelection} columns={columns} dataSource={assetList} />
+        <Card>
+          <Table rowSelection={rowSelection} columns={columns}
+            dataSource={dataSource} pagination={false}
+            bordered />
+        </Card>
       </div>
     )
   }
