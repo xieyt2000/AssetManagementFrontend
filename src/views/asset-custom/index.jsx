@@ -49,7 +49,6 @@ class AssetCustom extends Component {
     const customProps = await getCustomProp()
     this.setState({
       customProps: customProps.data.data
-      // customProps: ['nm', 'sl']
     })
   }
 
