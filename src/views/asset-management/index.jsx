@@ -11,7 +11,9 @@ import {
   assetCategoryList,
   getAssetHistory,
   assetQuery,
-  assetRetire } from '../../api/asset'
+  assetRetire,
+  getCustomProp
+} from '../../api/asset'
 import { connect } from 'react-redux'
 import PropTypes from 'prop-types'
 import AddAssetForm from './components/AddAssetForm'
@@ -19,6 +21,7 @@ import HistoryTable from './components/HistoryTable'
 import { handleResponse } from '../../utils/response'
 import QueryPanel from './components/QueryPanel'
 import { renderAssetType, renderChineseStatus } from '../../utils/asset'
+import { putCustom } from './components/form-shared'
 import { getList } from '../../utils/list'
 
 const Column = Table.Column
@@ -48,7 +51,8 @@ class AssetManagement extends Component {
       historyModalLod: false,
       curAssetHistoryList: [],
       retireModalVis: false,
-      retireModalLod: false
+      retireModalLod: false,
+      customPropList: []
     }
   }
 
@@ -122,7 +126,9 @@ class AssetManagement extends Component {
           visible={this.state.editModalVis}
           conirmLoading={this.state.editModalLod}
           onCancel={this.handleCancel}
-          onOk={this.handleOkEdit}/>
+          onOk={this.handleOkEdit}
+          customPropList={this.state.customPropList}
+        />
         <HistoryTable
           visible={this.state.historyModalVis}
           loading={this.state.historyModalLod}
@@ -138,6 +144,7 @@ class AssetManagement extends Component {
           onCancel={this.handleCancel}
           onOk={this.handleOkAdd}
           assetCategories={this.state.assetCategoryList}
+          customPropList={this.state.customPropList}
         />
         <Modal
           title='清退资产'
@@ -281,9 +288,8 @@ class AssetManagement extends Component {
         return
       }
       this.setState({ addModalLod: true })
-      console.log(values)
       form.resetFields()
-      this.localAddAsset([values])
+      this.localAddAsset([putCustom(values, this.state.customPropList)])
     })
   }
 
@@ -303,9 +309,19 @@ class AssetManagement extends Component {
     }
   }
 
+  localGetCustomProp = async () => {
+    const res = await getCustomProp()
+    if (res.data.code === 200) {
+      this.setState({
+        customPropList: res.data.data
+      })
+    }
+  }
+
   componentDidMount () {
     this.getAsset()
     this.getAssetCategories()
+    this.localGetCustomProp()
   }
 }
 
