@@ -1,11 +1,11 @@
 import React, { Component } from 'react'
 import { Form, Input, Modal } from 'antd'
 import { PropTypes } from 'prop-types'
-import { parent } from './form-shared'
+import { parent, getCustomPropFormItem } from './form-shared'
 
 class EditAssetForm extends Component {
   render () {
-    const { visible, onCancel, onOk, form, confirmLoading, rowData } = this.props
+    const { visible, onCancel, onOk, form, confirmLoading, rowData, customPropList } = this.props
     const { name, description, parent_id: parentID } = rowData
     const formLayout = {
       labelCol: { sm: { span: 4 } },
@@ -26,6 +26,8 @@ class EditAssetForm extends Component {
             })(<Input placeholder="资产描述"/>)}
           </Form.Item>
           {parent(form, parentID)}
+          <br/>
+          {getCustomPropFormItem(customPropList, form)}
         </Form>
       </Modal>
     )
@@ -38,7 +40,8 @@ EditAssetForm.propTypes = {
   onOk: PropTypes.func,
   confirmLoading: PropTypes.func,
   form: PropTypes.object,
-  rowData: PropTypes.object // refer to `rowData` in ../index.js
+  rowData: PropTypes.object, // refer to `rowData` in ../index.js
+  customPropList: PropTypes.array
 }
 
 export default Form.create()(EditAssetForm)
