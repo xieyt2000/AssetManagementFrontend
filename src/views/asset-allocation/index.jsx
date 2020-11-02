@@ -1,7 +1,6 @@
 import React from 'react'
 import { Table, Button, TreeSelect, message } from 'antd'
 import { getDepartments } from '../../utils/department'
-import { handleResponse } from '../../utils/response'
 import { assetAllocationList, assetAllocate } from '../../api/asset'
 import { renderAssetType, renderChineseStatus } from '../../utils/asset'
 
@@ -16,7 +15,7 @@ const columns = [
   },
   {
     title: '所属部门',
-    dataIndex: 'category'
+    dataIndex: 'department'
   },
   {
     title: '资产类型',
@@ -35,7 +34,6 @@ class AssetAllocation extends React.Component {
     this.state = {
       selectedRowKeys: [], // Check here to configure the default column
       loading: false,
-      assetList: [],
       departmentList: [],
       dataSource: []
     }
@@ -43,9 +41,6 @@ class AssetAllocation extends React.Component {
 
   componentDidMount () {
     getDepartments(this)
-    this.setState({
-      assetList: []
-    })
   }
 
   onSelectChange = selectedRowKeys => {
@@ -53,8 +48,7 @@ class AssetAllocation extends React.Component {
     this.setState({ selectedRowKeys })
   };
 
-  handleTreeSelect = async (value) => {
-    const data = { id: value }
+  getAssetList = (data) => {
     assetAllocationList(data)
       .then((res) => {
         if (res.data.code === 200) {
@@ -77,9 +71,31 @@ class AssetAllocation extends React.Component {
       })
   }
 
+  handleTreeSelect = async (value) => {
+    const data = { id: value }
+    this.departmentId = value
+    this.getAssetList(data)
+  }
+
   handleAllocationClick = () => {
+    this.setState({ loading: true })
     const data = { idList: this.state.selectedRowKeys }
-    handleResponse(assetAllocate(data), '调拨')
+    const listData = { id: this.departmentId }
+    assetAllocate(data)
+      .then((res) => {
+        if (res.data.code === 200) {
+          message.success('调拨资产成功')
+        } else {
+          message.error('调拨资产失败')
+        }
+      })
+      .catch(() => {
+        message.error('调拨资产失败,请检查网络连接后重试！')
+      })
+      .finally(async () => {
+        this.setState({ loading: false, selectedRowKeys: [] })
+        this.getAssetList(listData)
+      })
   }
 
   render () {
