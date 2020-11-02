@@ -10,22 +10,9 @@ class AssetInfo extends React.Component {
   }
 
   saveLabel () {
-    const newCanvas = document.createElement('canvas')
     const element = document.getElementById('label')
 
-    const width = parseInt(window.getComputedStyle(element).width)
-    const height = parseInt(window.getComputedStyle(element).height)
-    console.log(width)
-    console.log(height)
-    // 将canvas画布放大若干倍，然后盛放在较小的容器内，就显得不模糊了
-    newCanvas.width = width * 2
-    newCanvas.height = height * 2
-    newCanvas.style.width = width + 'px'
-    newCanvas.style.height = height + 'px'
-    const context = newCanvas.getContext('2d')
-    context.scale(1.8, 1.8)
-
-    html2canvas(element, { canvas: newCanvas }).then((canvas) => {
+    html2canvas(element).then((canvas) => {
       const imgUri = canvas.toDataURL('image/png')
         .replace('image/png', 'image/octet-stream') // 获取生成的图片的url
       const base64ToBlob = (code) => {
@@ -143,9 +130,7 @@ class AssetInfo extends React.Component {
           </Descriptions>
           <center>
             <div id="label" style={{ width: '200px' }}>
-              <Card
-                style={{ width: '200px' }}
-              >
+              <Card>
                 <center>
                   <h5> {name}</h5>
                   <p> {'资产id: ' + id}</p>
