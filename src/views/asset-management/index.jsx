@@ -251,7 +251,7 @@ class AssetManagement extends Component {
       }
       this.setState({ editModalLod: true })
       values.nid = this.state.rowData.nid
-      editAsset(putCustom(values)).then((res) => {
+      editAsset(putCustom(values, this.state.customPropList)).then((res) => {
         form.resetFields()
         this.setState({ editModalVis: false, editModalLod: false })
         if (res.data.code === 200) {

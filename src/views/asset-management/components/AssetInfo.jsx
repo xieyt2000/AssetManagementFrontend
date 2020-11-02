@@ -3,19 +3,37 @@ import { Modal, Button, Descriptions } from 'antd'
 import { PropTypes } from 'prop-types'
 
 class AssetInfo extends React.Component {
+  getCustomPropDescription (customProps) {
+    const resArr = []
+    if (customProps === undefined || customProps === null) {
+      return resArr
+    }
+    Object.keys(customProps).forEach((propName) => {
+      resArr.push(
+        <Descriptions.Item label={propName}>
+          {customProps[propName]}
+        </Descriptions.Item>
+      )
+    })
+
+    return resArr
+  }
+
   render () {
     const { visible, onExit, confirmLoading, rowData } = this.props
-    const { type_name: isQuantity, quantity, value, name, description, parent, children,
+    const {
+      type_name: isQuantity, quantity, value, name, description, parent, children,
       owner, department, status, start_time: startTime, prop, service_life: serviceLife,
-      now_value: nowValue, nid: id } = rowData
+      now_value: nowValue, nid: id, custom
+    } = rowData
     return (
       <div>
-        <Modal title = "资产详情" visible={visible}
+        <Modal title="资产详情" visible={visible}
           onCancel={onExit} confirmLoading={confirmLoading}
           footer={[
             // 定义右下角 按钮的地方 可根据需要使用 一个或者 2个按钮
             <Button key="submit" type="primary" onClick={onExit}>
-                            返回
+                   返回
             </Button>]}
         >
           <Descriptions column={3}>
@@ -32,16 +50,18 @@ class AssetInfo extends React.Component {
             <Descriptions.Item label='数量' span={2}>{quantity}</Descriptions.Item>
             <Descriptions.Item label='原价值'>{value}</Descriptions.Item>
             <Descriptions.Item label='当前价值'>{nowValue}</Descriptions.Item>
-            <Descriptions.Item label='使用年限' >{serviceLife + '年'}</Descriptions.Item>
-            <Descriptions.Item label='所属'>{parent}</Descriptions.Item>
-            <Descriptions.Item label='包含' span={2}>{children}</Descriptions.Item>
+            <Descriptions.Item label='使用年限'>{serviceLife + '年'}</Descriptions.Item>
+            <Descriptions.Item label='父资产'>{parent}</Descriptions.Item>
+            <Descriptions.Item label='子资产' span={2}>{children}</Descriptions.Item>
             <Descriptions.Item label='自定义属性' span={3}>{prop}</Descriptions.Item>
+            {this.getCustomPropDescription(custom)}
           </Descriptions>
         </Modal>
       </div>
     )
   }
 }
+
 AssetInfo.propTypes = {
   visible: PropTypes.bool,
   onExit: PropTypes.func,
