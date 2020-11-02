@@ -1,14 +1,18 @@
 import React, { Component } from 'react'
 import { Form, Input, Modal, TreeSelect, Radio } from 'antd'
 import { PropTypes } from 'prop-types'
-import { formLayout } from './form-shared'
+import { formLayout, getCustomPropFormItem } from './form-shared'
 import { parent } from './sharedFormItem'
 
 const typeArr = [{ label: '数量型', value: 'AMOUNT' }, { label: '条目型', value: 'ITEM' }]
 
 class AddAssetForm extends Component {
   render () {
-    const { visible, onCancel, onOk, form, confirmLoading, assetCategories } = this.props
+    const {
+      visible, onCancel, onOk, form, confirmLoading,
+      assetCategories, customPropList
+    } = this.props
+    const customItem = getCustomPropFormItem(customPropList, form)
     return (
       <Modal title="添加资产" visible={visible} onCancel={onCancel}
         onOk={onOk} confirmLoading={confirmLoading}>
@@ -27,8 +31,7 @@ class AddAssetForm extends Component {
             })(<Radio.Group options={typeArr}/>)}
           </Form.Item>
           <Form.Item label={'资产数量'} help='默认为1，条目型资产无需填写此项'>
-            {form.getFieldDecorator('quantity', {
-            })(<Input placeholder="资产数量"/>)}
+            {form.getFieldDecorator('quantity', {})(<Input placeholder="资产数量"/>)}
           </Form.Item>
           <Form.Item label={'资产价值'}>
             {form.getFieldDecorator('value', {
@@ -48,6 +51,8 @@ class AddAssetForm extends Component {
             })(<Input placeholder="使用年限"/>)}
           </Form.Item>
           {parent(form)}
+          <br/>
+          {customItem}
         </Form>
       </Modal>
     )
@@ -60,7 +65,8 @@ AddAssetForm.propTypes = {
   onOk: PropTypes.func,
   confirmLoading: PropTypes.bool,
   form: PropTypes.object,
-  assetCategories: PropTypes.array
+  assetCategories: PropTypes.array,
+  customPropList: PropTypes.array
 }
 
 export default Form.create()(AddAssetForm)
