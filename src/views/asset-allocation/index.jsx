@@ -37,6 +37,10 @@ class AssetAllocation extends React.Component {
     this.setState({ selectedRowKeys })
   };
 
+  handleTreeSelect = (value) => {
+    console.log(value)
+  }
+
   render () {
     const { loading, selectedRowKeys, assetList, departmentList } = this.state
     const rowSelection = {
@@ -48,6 +52,7 @@ class AssetAllocation extends React.Component {
       <div className='app-container'>
         <div style={{ marginBottom: 16 }}>
           <TreeSelect
+            onSelect={this.handleTreeSelect}
             treeData={departmentList}
           />
           <Button type="primary" onClick={this.start} disabled={!hasSelected} loading={loading}>
