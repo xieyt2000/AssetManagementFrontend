@@ -1,8 +1,8 @@
 import React from 'react'
-import { Table, Button, TreeSelect } from 'antd'
+import { Table, Button, TreeSelect, message } from 'antd'
 import { getDepartments } from '../../utils/department'
 import { handleResponse } from '../../utils/response'
-import { assetAllocationList } from '../../api/asset'
+import { assetAllocationList, assetAllocate } from '../../api/asset'
 import { renderAssetType, renderChineseStatus } from '../../utils/asset'
 
 const columns = [
@@ -36,12 +36,16 @@ class AssetAllocation extends React.Component {
       selectedRowKeys: [], // Check here to configure the default column
       loading: false,
       assetList: [],
-      departmentList: []
+      departmentList: [],
+      dataSource: []
     }
   }
 
   componentDidMount () {
     getDepartments(this)
+    this.setState({
+      assetList: []
+    })
   }
 
   onSelectChange = selectedRowKeys => {
@@ -49,26 +53,43 @@ class AssetAllocation extends React.Component {
     this.setState({ selectedRowKeys })
   };
 
-  handleTreeSelect = (value) => {
+  handleTreeSelect = async (value) => {
     const data = { id: value }
-    handleResponse(assetAllocationList(data), '获取资产', this, 'assetList'
-      , null, null, null)
-    const tmpAssetList = this.state.assetList
-    tmpAssetList.forEach(item => {
-      item.key = item.nid
-    })
-    this.setState({
-      assetList: tmpAssetList
-    })
+    assetAllocationList(data)
+      .then((res) => {
+        if (res.data.code === 200) {
+          const tmpData = []
+          for (let i = 0; i < res.data.data.length; i++) {
+            tmpData.push(res.data.data[i])
+            tmpData[i].key = tmpData[i].nid
+            delete tmpData[i].children
+          }
+          this.setState({
+            dataSource: tmpData
+          })
+          message.success('获取资产成功')
+        } else {
+          message.error('获取资产失败' + res.data.message)
+        }
+      })
+      .catch(() => {
+        message.error('获取资产失败，请检查网络连接后重试！')
+      })
+  }
+
+  handleAllocationClick = () => {
+    const data = { idList: this.state.selectedRowKeys }
+    handleResponse(assetAllocate(data), '调拨')
   }
 
   render () {
-    const { loading, selectedRowKeys, assetList, departmentList } = this.state
+    const { loading, selectedRowKeys, departmentList, dataSource } = this.state
     const rowSelection = {
       selectedRowKeys,
       onChange: this.onSelectChange
     }
     const hasSelected = selectedRowKeys.length > 0
+
     return (
       <div className='app-container'>
         <div style={{ marginBottom: 16 }}>
@@ -76,14 +97,16 @@ class AssetAllocation extends React.Component {
             onSelect={this.handleTreeSelect}
             treeData={departmentList}
           />
-          <Button type="primary" onClick={this.start} disabled={!hasSelected} loading={loading}>
+          <Button type="primary" onClick={this.handleAllocationClick}
+            disabled={!hasSelected} loading={loading}>
               调拨
           </Button>
           <span style={{ marginLeft: 8 }}>
             {hasSelected ? `Selected ${selectedRowKeys.length} items` : ''}
           </span>
         </div>
-        <Table rowSelection={rowSelection} columns={columns} dataSource={assetList} />
+        <Table rowSelection={rowSelection} columns={columns}
+          dataSource={dataSource} pagination={false}/>
       </div>
     )
   }
