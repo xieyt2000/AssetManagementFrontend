@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import { Form, Input, Modal } from 'antd'
 import { PropTypes } from 'prop-types'
-import { parent } from './sharedFormItem'
+import { parent } from './form-shared'
 
 class EditAssetForm extends Component {
   render () {

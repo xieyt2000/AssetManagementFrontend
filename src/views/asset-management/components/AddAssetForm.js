@@ -1,8 +1,7 @@
 import React, { Component } from 'react'
 import { Form, Input, Modal, TreeSelect, Radio } from 'antd'
 import { PropTypes } from 'prop-types'
-import { formLayout, getCustomPropFormItem } from './form-shared'
-import { parent } from './sharedFormItem'
+import { formLayout, getCustomPropFormItem, parent } from './form-shared'
 
 const typeArr = [{ label: '数量型', value: 'AMOUNT' }, { label: '条目型', value: 'ITEM' }]
 
