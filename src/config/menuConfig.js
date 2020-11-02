@@ -40,7 +40,7 @@ const menuList = [
     icon: 'transaction',
     children: [
       {
-        title: '资产列表',
+        title: '资产管理',
         path: '/asset/management',
         roles: [PERMISSION.ASSET]
       },
