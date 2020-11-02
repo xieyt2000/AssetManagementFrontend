@@ -1,30 +1,36 @@
 import React from 'react'
-import { Table, Button, TreeSelect, message } from 'antd'
+import { Table, Button, TreeSelect, message, Card, Divider } from 'antd'
 import { getDepartments } from '../../utils/department'
-import { assetAllocationList, assetAllocate } from '../../api/asset'
+import { assetAllocate, availableAssetList } from '../../api/asset'
 import { renderAssetType, renderChineseStatus } from '../../utils/asset'
+import HelpCard from '../../components/HelpCard'
 
 const columns = [
   {
     title: '资产名称',
-    dataIndex: 'name'
+    dataIndex: 'name',
+    align: 'center'
   },
   {
     title: '挂账人',
-    dataIndex: 'owner'
+    dataIndex: 'owner',
+    align: 'center'
   },
   {
     title: '所属部门',
-    dataIndex: 'department'
+    dataIndex: 'department',
+    align: 'center'
   },
   {
     title: '资产类型',
-    render: renderAssetType
+    render: renderAssetType,
+    align: 'center'
   },
   {
     title: '资产状态',
     dataIndex: 'status',
-    render: renderChineseStatus
+    render: renderChineseStatus,
+    align: 'center'
   }
 ]
 
@@ -41,6 +47,7 @@ class AssetAllocation extends React.Component {
 
   componentDidMount () {
     getDepartments(this)
+    this.getAssetList()
   }
 
   onSelectChange = selectedRowKeys => {
@@ -48,8 +55,8 @@ class AssetAllocation extends React.Component {
     this.setState({ selectedRowKeys })
   };
 
-  getAssetList = (data) => {
-    assetAllocationList(data)
+  getAssetList = () => {
+    availableAssetList()
       .then((res) => {
         if (res.data.code === 200) {
           const tmpData = []
@@ -71,22 +78,19 @@ class AssetAllocation extends React.Component {
       })
   }
 
-  handleTreeSelect = async (value) => {
-    const data = { id: value }
+  handleTreeSelect = (value) => {
     this.departmentId = value
-    this.getAssetList(data)
   }
 
   handleAllocationClick = () => {
     this.setState({ loading: true })
-    const data = { idList: this.state.selectedRowKeys }
-    const listData = { id: this.departmentId }
+    const data = { idList: this.state.selectedRowKeys, id: this.departmentId }
     assetAllocate(data)
       .then((res) => {
         if (res.data.code === 200) {
           message.success('调拨资产成功')
         } else {
-          message.error('调拨资产失败')
+          message.error('调拨资产失败,' + res.data.message)
         }
       })
       .catch(() => {
@@ -94,7 +98,7 @@ class AssetAllocation extends React.Component {
       })
       .finally(async () => {
         this.setState({ loading: false, selectedRowKeys: [] })
-        this.getAssetList(listData)
+        this.getAssetList()
       })
   }
 
@@ -105,24 +109,34 @@ class AssetAllocation extends React.Component {
       onChange: this.onSelectChange
     }
     const hasSelected = selectedRowKeys.length > 0
-
+    const description = '作为资产管理员，你可以进行资产的批量调拨'
     return (
       <div className='app-container'>
         <div style={{ marginBottom: 16 }}>
-          <TreeSelect
-            onSelect={this.handleTreeSelect}
-            treeData={departmentList}
-          />
-          <Button type="primary" onClick={this.handleAllocationClick}
-            disabled={!hasSelected} loading={loading}>
+          <HelpCard title='资产调拨' source={description}/>
+          <br/>
+          <Card>
+            <TreeSelect
+              onSelect={this.handleTreeSelect}
+              treeData={departmentList}
+              style={{ width: '200px' }}
+            />
+            <Divider type='vertical'/>
+            <Button type="primary" onClick={this.handleAllocationClick}
+              disabled={!hasSelected} loading={loading}>
               调拨
-          </Button>
-          <span style={{ marginLeft: 8 }}>
-            {hasSelected ? `Selected ${selectedRowKeys.length} items` : ''}
-          </span>
+            </Button>
+
+            <span style={{ marginLeft: 8 }}>
+              {hasSelected ? `您一共选择了 ${selectedRowKeys.length} 项` : ''}
+            </span>
+          </Card>
         </div>
-        <Table rowSelection={rowSelection} columns={columns}
-          dataSource={dataSource} pagination={false}/>
+        <Card>
+          <Table rowSelection={rowSelection} columns={columns}
+            dataSource={dataSource} pagination={false}
+            bordered />
+        </Card>
       </div>
     )
   }

@@ -113,14 +113,6 @@ export function assetRetire (data) {
   })
 }
 
-export function assetAllocationList (data) {
-  return request({
-    url: '/api/asset/allocation/list',
-    method: 'post',
-    data: data
-  })
-}
-
 export function assetAllocate (data) {
   return request({
     url: '/api/asset/allocate',
