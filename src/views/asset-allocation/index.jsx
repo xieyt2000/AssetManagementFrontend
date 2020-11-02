@@ -1,19 +1,31 @@
 import React from 'react'
 import { Table, Button, TreeSelect } from 'antd'
 import { getDepartments } from '../../utils/department'
+import { handleResponse } from '../../utils/response'
+import { assetAllocationList } from '../../api/asset'
+import { renderAssetType, renderChineseStatus } from '../../utils/asset'
 
 const columns = [
   {
-    title: 'Name',
+    title: '资产名称',
     dataIndex: 'name'
   },
   {
-    title: 'Age',
-    dataIndex: 'age'
+    title: '挂账人',
+    dataIndex: 'owner'
   },
   {
-    title: 'Address',
-    dataIndex: 'address'
+    title: '所属部门',
+    dataIndex: 'category'
+  },
+  {
+    title: '资产类型',
+    render: renderAssetType
+  },
+  {
+    title: '资产状态',
+    dataIndex: 'status',
+    render: renderChineseStatus
   }
 ]
 
@@ -38,7 +50,16 @@ class AssetAllocation extends React.Component {
   };
 
   handleTreeSelect = (value) => {
-    console.log(value)
+    const data = { id: value }
+    handleResponse(assetAllocationList(data), '获取资产', this, 'assetList'
+      , null, null, null)
+    const tmpAssetList = this.state.assetList
+    tmpAssetList.forEach(item => {
+      item.key = item.nid
+    })
+    this.setState({
+      assetList: tmpAssetList
+    })
   }
 
   render () {
@@ -56,7 +77,7 @@ class AssetAllocation extends React.Component {
             treeData={departmentList}
           />
           <Button type="primary" onClick={this.start} disabled={!hasSelected} loading={loading}>
-              Reload
+              调拨
           </Button>
           <span style={{ marginLeft: 8 }}>
             {hasSelected ? `Selected ${selectedRowKeys.length} items` : ''}
