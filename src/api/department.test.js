@@ -3,7 +3,7 @@ import '@/mock'
 describe('department api test', function () {
   it('test departmentList', async function () {
     const res = await departmentList()
-    expect(res.data.data).toBe('departmentList')
+    expect(res.data.code).toBe(200)
   })
   it('test addDepartment', async function () {
     const res = await addDepartment({})
