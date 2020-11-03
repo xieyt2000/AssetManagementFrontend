@@ -64,7 +64,6 @@ class AssetManagement extends Component {
         <Button type='primary' onClick={this.handleClickAdd}>添加资产</Button>
         <Divider type='vertical'/>
         <UploadAsset uploadSuccess={this.handleExcelUpload}/>
-        <Divider type='vertical'/>
       </span>
     )
     const description = '作为资产管理员，你可以进行资产管理和批量导入、导出'
