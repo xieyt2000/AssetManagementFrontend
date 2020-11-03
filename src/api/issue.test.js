@@ -29,4 +29,8 @@ describe('api/issue', function () {
     const res = await API.personalIssue()
     expect(res.data.data).toBe('personalIssue')
   })
+  it('test deleteIssue', async function () {
+    const res = await API.deleteIssue()
+    expect(res.data.data).toBe('deleteIssue')
+  })
 })

@@ -7,5 +7,6 @@ export default {
   applyReturn: getReturnFunc('applyReturn'),
   issueToHandle: getReturnFunc('issueToHandle'),
   handleIssue: getReturnFunc('handleIssue'),
-  personalIssue: getReturnFunc('personalIssue')
+  personalIssue: getReturnFunc('personalIssue'),
+  deleteIssue: getReturnFunc('deleteIssue')
 }

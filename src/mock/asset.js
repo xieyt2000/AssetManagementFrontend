@@ -19,5 +19,7 @@ export default {
   availableAssetList: getReturnFunc('availableAssetList'),
   assetQuery: getReturnFunc('assetQuery'),
   getCustomProp: getReturnFunc('getCustomProp'),
-  editCustomProp: getReturnFunc('editCustomProp')
+  editCustomProp: getReturnFunc('editCustomProp'),
+  assetRetire: getReturnFunc('assetRetire'),
+  assetAllocate: getReturnFunc('assetAllocate')
 }

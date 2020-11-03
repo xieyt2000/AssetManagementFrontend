@@ -23,6 +23,8 @@ Mock.mock(/\/api\/asset\/history/, 'post', AssetAPI.getAssetHistory)
 Mock.mock(/\/api\/user\/assets/, 'get', AssetAPI.personalAssetList)
 Mock.mock(/\/api\/asset\/available/, 'get', AssetAPI.availableAssetList)
 Mock.mock(/\/api\/asset\/query/, 'post', AssetAPI.assetQuery)
+Mock.mock(/\/api\/asset\/retire/, 'post', AssetAPI.assetRetire)
+Mock.mock(/\/api\/asset\/allocate/, 'post', AssetAPI.assetAllocate)
 Mock.mock(/\/api\/asset\/custom\/list/, 'get', AssetAPI.getCustomProp)
 Mock.mock(/\/api\/asset\/custom\/edit/, 'post', AssetAPI.editCustomProp)
 
@@ -53,5 +55,6 @@ Mock.mock(/\/api\/issue\/return/, 'post', IssueAPI.applyReturn)
 Mock.mock(/\/api\/issue\/handling/, 'get', IssueAPI.issueToHandle)
 Mock.mock(/\/api\/issue\/handle/, 'post', IssueAPI.handleIssue)
 Mock.mock(/\/api\/issue\/waiting/, 'get', IssueAPI.personalIssue)
+Mock.mock(/\/api\/issue\/delete/, 'post', IssueAPI.deleteIssue)
 
 export default Mock
