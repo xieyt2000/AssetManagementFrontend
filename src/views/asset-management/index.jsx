@@ -61,8 +61,6 @@ class AssetManagement extends Component {
 
     const cardTitle = (
       <span>
-        <Button type='primary' onClick={this.handleClickAdd}>批量导出</Button>
-        <Divider type='vertical'/>
         <Button type='primary' onClick={this.handleClickAdd}>添加资产</Button>
         <Divider type='vertical'/>
         <UploadAsset uploadSuccess={this.handleExcelUpload}/>
