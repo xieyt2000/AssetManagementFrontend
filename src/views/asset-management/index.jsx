@@ -73,7 +73,9 @@ class AssetManagement extends Component {
         <br/>
         <QueryPanel
           submitQuery={this.submitQuery}
-          assetCategories={this.state.assetCategoryList}/>
+          assetCategories={this.state.assetCategoryList}
+          customProps={this.state.customPropList}
+        />
         <br/>
         <Card title={cardTitle}>
           <Table
