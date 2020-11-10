@@ -36,7 +36,7 @@ export const loop = (searchValue, data) =>
       index > -1 ? (
         <span>
           {beforeStr}
-          <span style={{ color: '#f50' }}>{searchValue}</span>
+          <span style={{ color: '#ffc069' }}>{searchValue}</span>
           {afterStr}
         </span>
       ) : (

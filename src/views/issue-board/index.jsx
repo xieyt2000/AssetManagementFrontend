@@ -7,6 +7,7 @@ import { renderIssueType } from '../../utils/issue'
 import { handleResponse } from '../../utils/response'
 import { getList } from '../../utils/list'
 import RequireModal from './require-modal'
+import { refuseColor } from '../../utils/style'
 
 const Column = Table.Column
 
@@ -59,7 +60,7 @@ class IssueBoard extends React.Component {
                   onClick={this.handlePermit.bind(this, row)}/>
                 <Divider type="vertical"/>
                 <Button type="primary" shape="circle" icon="close" title="拒绝"
-                  onClick={this.handleRefuse.bind(this, row)}/>
+                  onClick={this.handleRefuse.bind(this, row)} style={refuseColor}/>
               </span>)}/>
           </Table>
         </Card>

@@ -23,6 +23,7 @@ import QueryPanel from './components/QueryPanel'
 import { renderChineseStatus, getAssetCategories } from '../../utils/asset'
 import { putCustom } from './components/form-shared'
 import { getList } from '../../utils/list'
+import { deleteColor, disableColor, editColor, searchColor } from '../../utils/style'
 
 const Column = Table.Column
 
@@ -86,16 +87,16 @@ class AssetManagement extends Component {
             <Column title="操作" key="action" width={200} align="center" render={(row) => (
               <span>
                 <Button type="primary" shape="circle" icon="search" title="查看详情" size='small'
-                  onClick={this.handleAssetInfoClick.bind(this, row)}/>
+                  style={searchColor} onClick={this.handleAssetInfoClick.bind(this, row)}/>
                 <Divider type="vertical"/>
                 <Button type="primary" shape="circle" icon="edit" title="编辑" size='small'
-                  onClick={this.handleEditAssetFormClick.bind(this, row)}/>
+                  style={editColor} onClick={this.handleEditAssetFormClick.bind(this, row)}/>
                 <Divider type="vertical"/>
                 <Button type="primary" shape="circle" icon="history" title="历史" size='small'
-                  onClick={this.handleHistoryClick.bind(this, row)}/>
+                  style={disableColor} onClick={this.handleHistoryClick.bind(this, row)}/>
                 <Divider type="vertical"/>
-                <Button type="primary" shape="circle" icon="close" title="清退" size='small'
-                  onClick={this.handleRetireClick.bind(this, row)}/>
+                <Button type="primary" shape="circle" icon="delete" title="清退" size='small'
+                  style={deleteColor} onClick={this.handleRetireClick.bind(this, row)}/>
               </span>)}/>
           </Table>
         </Card>

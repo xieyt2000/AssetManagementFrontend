@@ -6,6 +6,7 @@ import EditUserForm from './forms/edit-user-form'
 import AddUserForm from './forms/add-user-form'
 import { CHINESE_PERMISSION } from '@/utils/permission'
 import { getDepartments } from '../../utils/department'
+import { deleteColor, disableColor, editColor } from '../../utils/style'
 
 const Column = Table.Column
 
@@ -46,14 +47,14 @@ class UserManagement extends Component {
             <Column title="操作" key="action" width={200} align="center" render={(row) => (
               <span>
                 <Button type="primary" shape="circle" icon={row.is_active ? 'unlock' : 'lock'}
-                  title="锁定" style={row.is_active ? {} : { backgroundColor: '#666666' }}
+                  title="锁定" style={row.is_active ? {} : disableColor}
                   onClick={this.handleClickLock.bind(this, row)}/>
                 <Divider type="vertical"/>
                 <Button type="primary" shape="circle" icon="edit" title="编辑"
-                  onClick={this.handleClickEdit.bind(this, row)}/>
+                  style={editColor} onClick={this.handleClickEdit.bind(this, row)}/>
                 <Divider type="vertical"/>
                 <Button type="primary" shape="circle" icon="delete" title="删除"
-                  onClick={this.handleClickDelete.bind(this, row)}/>
+                  onClick={this.handleClickDelete.bind(this, row)} style={deleteColor}/>
               </span>)}/>
           </Table>
         </Card>

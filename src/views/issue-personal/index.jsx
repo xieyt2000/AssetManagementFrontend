@@ -6,6 +6,7 @@ import { renderIssueType } from '../../utils/issue'
 import { personalIssue, deleteIssue } from '../../api/issue'
 import { getList } from '../../utils/list'
 import { handleResponse } from '../../utils/response'
+import { deleteColor } from '../../utils/style'
 
 const Column = Table.Column
 
@@ -71,8 +72,8 @@ class IssuePersonal extends React.Component {
             <Column title="信息" dataIndex="info" key="info" align="center"/>
             <Column title="操作" key="action" width={200} align="center" render={(row) => (
               <span>
-                <Button type="primary" shape="circle" icon="close" title="取消"
-                  onClick={this.handleCancelClick.bind(this, row)}/>
+                <Button type="primary" shape="circle" icon="delete" title="取消"
+                  onClick={this.handleCancelClick.bind(this, row)} style={deleteColor}/>
               </span>)}/>
           </Table>
           <Modal
