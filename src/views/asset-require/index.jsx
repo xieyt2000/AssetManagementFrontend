@@ -1,18 +1,18 @@
 import React from 'react'
 import { connect } from 'react-redux'
-import { applyRequire } from '@/api/issue'
 import HelpCard from '../../components/HelpCard'
 import { Button, Card, Form, Input, TreeSelect } from 'antd'
 import { getAssetCategories } from '../../utils/asset'
-import { handleResponse } from '@/utils/response'
+
 import { PropTypes } from 'prop-types'
+import { assetRequire } from '../../api/asset'
+import { handleResponse } from '../../utils/response'
 
 class AssetRequire extends React.Component {
   constructor (props) {
     super(props)
     this.state = {
-      assetCategoryList: [],
-      chosenCategory: ''
+      assetCategoryList: []
     }
   }
 
@@ -20,25 +20,21 @@ class AssetRequire extends React.Component {
     getAssetCategories(this)
   }
 
-  handleClickCollect = (row) => {
-    this.setState({
-      rowData: Object.assign({}, row),
-      collectModalVis: true
-    })
-  }
-
-  handleOk = (ignore) => {
-    const data = { nid: this.state.rowData.nid }
-
-    handleResponse(applyRequire(data), '请求领用', this, null,
-      {
-        collectModalLod: false, collectModalVis: false
-      }, null, this.getAsset)
-  }
-
-  handleCancel = (ignore) => {
-    this.setState({
-      collectModalVis: false
+  handleSubmit = e => {
+    e.preventDefault()
+    this.props.form.validateFields((err, values) => {
+      if (!err) {
+        const { category } = values
+        let { reason } = values
+        if (!reason) {
+          reason = '无'
+        }
+        console.log(category, reason)
+        handleResponse(assetRequire({ category: category, reason: reason }), '领用', this, null, null,
+          () => {
+            this.props.form.resetFields()
+          })
+      }
     })
   }
 
@@ -48,7 +44,7 @@ class AssetRequire extends React.Component {
     const assetCategories = this.state.assetCategoryList
     return (
       <div className='app-container'>
-        <HelpCard title='资产管理' source={description}/>
+        <HelpCard title='资产领用' source={description}/>
         <br/>
         <Card>
           <Form onSubmit={this.handleSubmit}>

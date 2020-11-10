@@ -84,7 +84,7 @@ export function getAssetHistory (asset) {
 
 export function assetRequire (data) {
   return request({
-    url: '/api/asset/require',
+    url: '/api/issue/require',
     method: 'post',
     data: data
   })
