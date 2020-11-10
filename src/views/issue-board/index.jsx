@@ -6,6 +6,8 @@ import { handleIssue, issueToHandle } from '../../api/issue'
 import { renderAssignee, renderIssueType } from '../../utils/issue'
 import { handleResponse } from '../../utils/response'
 import { getList } from '../../utils/list'
+import RequireModal from './require-modal'
+import { assetList } from '../../api/asset'
 
 const Column = Table.Column
 
@@ -17,66 +19,94 @@ class IssueBoard extends React.Component {
       issueList: [],
       rowData: {},
       modalVis: false,
-      modalLod: false
+      modalLod: false,
+      assetList: [],
+      requireModalVis: false,
+      requireModalConfirmLoading: false,
+      requireModalLod: false
     }
   }
 
-    getIssue = () => {
-      getList(issueToHandle, this, 'issueList')
-    }
+  getIssue = () => {
+    getList(issueToHandle, this, 'issueList')
+  }
 
-    componentDidMount () {
-      this.getIssue()
-    }
+  componentDidMount () {
+    this.getIssue()
+  }
 
-    render () {
-      const issueList = this.state.issueList
-      const description = '作为负责人，在这里可以看到其他员工向你提交的待处理事项'
-      return (
-        <div className='app-container'>
-          <HelpCard title='待办事项' source={description} />
-          <br/>
-          <Card>
-            <Table
-              bordered rowKey="name"
-              dataSource={issueList}
-              expandIconColumnIndex={-1}
-              pagination={false}>
-              <Column title="发起人" dataIndex="initiator" key="initiator" align="center"/>
-              <Column title="涉及资产" dataIndex="asset" key="asset" align="center"/>
-              <Column title="事件类型" key="type_name" align="center" render={renderIssueType}/>
-              <Column title="接受人" key="initiator" align="center"
-                render={renderAssignee}
-              />
-              <Column title="操作" key="action" width={200} align="center" render={(row) => (
-                <span>
-                  <Button type="primary" shape="circle" icon="check" title="批准"
-                    onClick={this.handlePermit.bind(this, row)}/>
-                  <Divider type="vertical" />
-                  <Button type="primary" shape="circle" icon="close" title="拒绝"
-                    onClick={this.handleRefuse.bind(this, row)} />
-                </span>)}/>
-            </Table>
-          </Card>
-          <Modal
-            title={this.state.opType + '申请'}
-            visible={this.state.modalVis}
-            confirmLoading={this.state.modalLod}
-            onOk={this.handleOk}
-            onCancel={this.handleCancel}
-          >
-            <p>是否{this.state.opType}申请？</p>
-          </Modal>
-        </div>
-      )
-    }
+  render () {
+    const issueList = this.state.issueList
+    const description = '作为负责人，在这里可以看到其他员工向你提交的待处理事项'
+    return (
+      <div className='app-container'>
+        <HelpCard title='待办事项' source={description}/>
+        <br/>
+        <Card>
+          <Table
+            bordered rowKey="name"
+            dataSource={issueList}
+            expandIconColumnIndex={-1}
+            pagination={false}>
+            <Column title="发起人" dataIndex="initiator" key="initiator" align="center"/>
+            <Column title="涉及资产" dataIndex="asset" key="asset" align="center"/>
+            <Column title="事件类型" key="type_name" align="center" render={renderIssueType}/>
+            <Column title="接受人" key="initiator" align="center"
+              render={renderAssignee}
+            />
+            <Column title="操作" key="action" width={200} align="center" render={(row) => (
+              <span>
+                <Button type="primary" shape="circle" icon="check" title="批准"
+                  onClick={this.handlePermit.bind(this, row)}/>
+                <Divider type="vertical"/>
+                <Button type="primary" shape="circle" icon="close" title="拒绝"
+                  onClick={this.handleRefuse.bind(this, row)}/>
+              </span>)}/>
+          </Table>
+        </Card>
+        <Modal
+          title={this.state.opType + '申请'}
+          visible={this.state.modalVis}
+          confirmLoading={this.state.modalLod}
+          onOk={this.handleOk}
+          onCancel={this.handleCancel}
+        >
+          <p>是否{this.state.opType}申请？</p>
+        </Modal>
+        <RequireModal
+          visible={this.state.requireModalVis}
+          loading={this.state.requireModalLod}
+          confirmLoading={this.state.requireModalConfirmLoading}
+          assetList={this.state.assetList}
+          onCancel={() => {
+            this.setState({
+              requireModalVis: false
+            })
+          }}
+        />
+      </div>
+    )
+  }
 
   handlePermit = (row) => {
-    this.setState({
-      modalVis: true,
-      opType: '同意',
-      rowData: Object.assign({}, row)
-    })
+    if (row.type_name === 'REQUIRE') {
+      this.setState({
+        requireModalVis: true,
+        requireModalLod: true
+      })
+      assetList().then((data) => {
+        this.setState({
+          assetList: data.data.data,
+          requireModalLod: false
+        })
+      })
+    } else {
+      this.setState({
+        modalVis: true,
+        opType: '同意',
+        rowData: Object.assign({}, row)
+      })
+    }
   }
 
   handleRefuse = (row) => {
