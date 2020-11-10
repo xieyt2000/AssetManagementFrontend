@@ -8,6 +8,7 @@ import { handleResponse } from '@/utils/response'
 import { applyFix, applyTransfer, applyReturn } from '@/api/issue'
 import { renderChineseStatus } from '../../utils/asset'
 import { getList } from '../../utils/list'
+import { deleteColor, disableColor, editColor } from '../../utils/style'
 
 const Column = Table.Column
 
@@ -48,13 +49,13 @@ class PersonalAsset extends React.Component {
             <Column title="操作" key="action" width={200} align="center" render={(row) => (
               <span>
                 <Button type="primary" shape="circle" icon="tool" title="申请维保"
-                  onClick={this.handleFixClick.bind(this, row)}/>
+                  style={disableColor} onClick={this.handleFixClick.bind(this, row)}/>
                 <Divider type="vertical"/>
                 <Button type="primary" shape="circle" icon="swap" title="申请转移"
-                  onClick={this.handleTransferClick.bind(this, row)}/>
+                  style={editColor} onClick={this.handleTransferClick.bind(this, row)}/>
                 <Divider type="vertical"/>
                 <Button type="primary" shape="circle" icon="poweroff" title="申请退库"
-                  onClick={this.handleReturnClick.bind(this, row)}/>
+                  style={deleteColor} onClick={this.handleReturnClick.bind(this, row)}/>
               </span>)}/>
           </Table>
         </Card>
