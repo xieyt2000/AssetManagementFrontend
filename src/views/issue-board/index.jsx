@@ -42,7 +42,6 @@ class IssueBoard extends React.Component {
               dataSource={issueList}
               expandIconColumnIndex={-1}
               pagination={false}>
-              <Column title="事项id" dataIndex="nid" key="nid" align="center"/>
               <Column title="发起人" dataIndex="initiator" key="initiator" align="center"/>
               <Column title="涉及资产" dataIndex="asset" key="asset" align="center"/>
               <Column title="事件类型" key="type_name" align="center" render={renderIssueType}/>

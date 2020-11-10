@@ -2,7 +2,7 @@ import React from 'react'
 import { Table, Button, TreeSelect, message, Card, Divider } from 'antd'
 import { getDepartments } from '../../utils/department'
 import { assetAllocate, availableAssetList } from '../../api/asset'
-import { renderAssetType, renderChineseStatus } from '../../utils/asset'
+import { renderChineseStatus } from '../../utils/asset'
 import HelpCard from '../../components/HelpCard'
 
 const columns = [
@@ -22,8 +22,8 @@ const columns = [
     align: 'center'
   },
   {
-    title: '资产类型',
-    render: renderAssetType,
+    title: '资产分类',
+    dataIndex: 'category',
     align: 'center'
   },
   {

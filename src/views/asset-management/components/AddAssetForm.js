@@ -1,9 +1,7 @@
 import React, { Component } from 'react'
-import { Form, Input, Modal, TreeSelect, Radio } from 'antd'
+import { Form, Input, Modal, TreeSelect } from 'antd'
 import { PropTypes } from 'prop-types'
 import { formLayout, getCustomPropFormItem, parent } from './form-shared'
-
-const typeArr = [{ label: '数量型', value: 'AMOUNT' }, { label: '条目型', value: 'ITEM' }]
 
 class AddAssetForm extends Component {
   render () {
@@ -23,14 +21,6 @@ class AddAssetForm extends Component {
           </Form.Item>
           <Form.Item label={'资产描述'}>
             {form.getFieldDecorator('description')(<Input placeholder="资产描述"/>)}
-          </Form.Item>
-          <Form.Item label={'资产类型'}>
-            {form.getFieldDecorator('type_name', {
-              rules: [{ required: true, message: '资产名称不能为空' }]
-            })(<Radio.Group options={typeArr}/>)}
-          </Form.Item>
-          <Form.Item label={'资产数量'} help='默认为1，条目型资产无需填写此项'>
-            {form.getFieldDecorator('quantity', {})(<Input placeholder="资产数量"/>)}
           </Form.Item>
           <Form.Item label={'资产价值'}>
             {form.getFieldDecorator('value', {

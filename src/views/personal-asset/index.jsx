@@ -6,7 +6,7 @@ import { Button, Card, Divider, Modal, Table } from 'antd'
 import InputForm from './components/InputForm'
 import { handleResponse } from '@/utils/response'
 import { applyFix, applyTransfer, applyReturn } from '@/api/issue'
-import { renderAssetType, renderChineseStatus } from '../../utils/asset'
+import { renderChineseStatus } from '../../utils/asset'
 import { getList } from '../../utils/list'
 
 const Column = Table.Column
@@ -42,8 +42,6 @@ class PersonalAsset extends React.Component {
             pagination={false}>
             <Column title="资产id" dataIndex="nid" key="nid" align="center"/>
             <Column title="资产名称" dataIndex="name" key="name" align="center"/>
-            <Column title="资产类型" key="type_name" align="center"
-              render = {renderAssetType}/>
             <Column title="资产分类" dataIndex="category" key="category" align="center"/>
             <Column title="资产状态" dataIndex="status" key="status" align="center"
               render={renderChineseStatus}/>

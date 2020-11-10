@@ -11,15 +11,6 @@ export const CHINESE_KEY_TO_ENGLISH = {
   父资产: 'parent_id'
 }
 
-export const CHINESE_TYPE_TO_ENGLISH = {
-  数量型: 'AMOUNT',
-  条目型: 'ITEM'
-}
-
-export const ENGLISH_TYPE_TO_CHINESE = {
-  AMOUNT: '数量型',
-  ITEM: '条目型'
-}
 const STATUS = {
   IDLE: 'IDLE',
   IN_USE: 'IN_USE',
@@ -34,16 +25,7 @@ export const CHINESE_STATUS = {
   RETIRED: '已清退',
   DELETED: '已删除'
 }
-export const renderAssetType = (row) => {
-  if (row.type_name === 'AMOUNT') {
-    const str = '数量型'
-    const quantity = '数量：' + row.quantity
-    return (<span>{str}<br/>{quantity}</span>)
-  } else {
-    const str = '条目型'
-    return (<span>{str}</span>)
-  }
-}
+
 export const renderChineseStatus = (status) => {
   return (<span> {CHINESE_STATUS[status]} </span>)
 }

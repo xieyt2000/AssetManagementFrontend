@@ -4,7 +4,7 @@ import { availableAssetList } from '@/api/asset'
 import { applyRequire } from '@/api/issue'
 import HelpCard from '../../components/HelpCard'
 import { Button, Card, Modal, Table } from 'antd'
-import { renderChineseStatus, renderAssetType } from '../../utils/asset'
+import { renderChineseStatus } from '../../utils/asset'
 import { handleResponse } from '@/utils/response'
 import { getList } from '../../utils/list'
 
@@ -67,10 +67,9 @@ class AssetRequire extends React.Component {
             <Column title="资产名称" dataIndex="name" key="name" align="center"/>
             <Column title="挂账人" dataIndex="owner" key="owner" align="center"/>
             <Column title="所属部门" dataIndex="department" key="department" align="center"/>
-            <Column title="资产类型" key="type_name" align="center"
-              render={renderAssetType}/>
             <Column title="资产状态" dataIndex="status" key="status" align="center"
               render={renderChineseStatus}/>
+            <Column title="资产分类" dataIndex="category" key="category" align="center"/>
             <Column title="操作" key="action" width={200} align="center" render={(row) => (
               <span>
                 <Button type="primary" shape="circle" icon="check" title="领用资产"

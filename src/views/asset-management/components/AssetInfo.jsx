@@ -5,10 +5,6 @@ import html2canvas from 'html2canvas'
 
 import QRCode from 'qrcode.react'
 class AssetInfo extends React.Component {
-  toChinese (en) {
-    return en === 'AMOUNT' ? '数量型' : '条目型'
-  }
-
   saveLabel () {
     const element = document.getElementById('label')
 
@@ -65,7 +61,6 @@ class AssetInfo extends React.Component {
     addProp('id', row.nid)
     addProp('名称', row.name)
     addProp('分类', row.category)
-    addProp('类型', this.toChinese(row.type_name))
     addProp('描述', row.description)
     addProp('录入时间', row.start_time)
     return info
@@ -90,7 +85,7 @@ class AssetInfo extends React.Component {
   render () {
     const { visible, onExit, confirmLoading, rowData } = this.props
     const {
-      type_name: isQuantity, category, quantity, value, name, description, parent, children,
+      category, value, name, description, parent, children,
       owner, department, status, start_time: startTime, prop, service_life: serviceLife,
       now_value: nowValue, nid: id, custom
     } = rowData
@@ -116,10 +111,6 @@ class AssetInfo extends React.Component {
             <Descriptions.Item label='状态' span={1}>{status}</Descriptions.Item>
             <Descriptions.Item label='录入时间' span={2}>{startTime}</Descriptions.Item>
             <Descriptions.Item label='分类' span={1}>{category}</Descriptions.Item>
-            <Descriptions.Item label='类型' span={1}>
-              {this.toChinese(isQuantity)}
-            </Descriptions.Item>
-            <Descriptions.Item label='数量' span={1}>{quantity}</Descriptions.Item>
             <Descriptions.Item label='原价值'>{value}</Descriptions.Item>
             <Descriptions.Item label='当前价值'>{nowValue}</Descriptions.Item>
             <Descriptions.Item label='使用年限' >{serviceLife + '年'}</Descriptions.Item>
