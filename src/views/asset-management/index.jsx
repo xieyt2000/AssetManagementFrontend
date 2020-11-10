@@ -1,9 +1,10 @@
 import React, { Component } from 'react'
-import { Button, Card, Table, Divider, message, Modal } from 'antd'
+import { Button, Card, Table, Divider, message } from 'antd'
 import HelpCard from '../../components/HelpCard'
 import UploadAsset from './upload'
 import AssetInfo from './components/AssetInfo'
 import EditAssetForm from './components/EditAssetForm'
+import RetireAssetForm from './components/RetireAssetForm'
 import {
   addAsset,
   assetList,
@@ -143,16 +144,15 @@ class AssetManagement extends Component {
           assetCategories={this.state.assetCategoryList}
           customPropList={this.state.customPropList}
         />
-        <Modal
-          title='清退资产'
+        <RetireAssetForm
+          wrappedComponentRef={(formRef) => {
+            this.retireFormRef = formRef
+          }}
           visible={this.state.retireModalVis}
-          confirmLoading={this.state.retireModalLod}
-          onOk={this.handleOkRetire}
+          conirmLoading={this.state.retireModalLod}
           onCancel={this.handleCancel}
-        >
-          <p>是否清退资产</p>
-        </Modal>
-
+          onOk={this.handleOkRetire}
+        />
       </div>
     )
   }
@@ -230,14 +230,17 @@ class AssetManagement extends Component {
   }
 
   handleOkRetire = (ignore) => {
-    this.setState({
-      retireModalLod: false
+    const form = this.retireFormRef.props.form
+    form.validateFields((err, values) => {
+      if (err) {
+        return
+      }
+      values.nid = this.state.rowData.nid
+      this.setState({ addModalLod: true })
+      form.resetFields()
+      handleResponse(assetRetire(values), '清退资产', this, null,
+        { retireModalVis: false, retireModalLod: false }, null, this.getAsset())
     })
-    const data = {
-      nid: this.state.rowData.nid
-    }
-    handleResponse(assetRetire(data), '资产清退', this, null,
-      { retireModalVis: false, retireModalLod: false }, this.getAsset())
   }
 
   handleOkEdit = (ignore) => {
