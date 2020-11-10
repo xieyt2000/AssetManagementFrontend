@@ -1,4 +1,4 @@
-import { assetList, addAsset, assetRequire, assetCategoryList, addAssetCategory
+import { assetList, addAsset, assetCategoryList, addAssetCategory
   , deleteAssetCategory, editAsset, editAssetCategory, getAssetHistory,
   assetQuery, personalAssetList, availableAssetList, getCustomProp,
   editCustomProp, assetRetire, assetAllocate } from './asset'
@@ -11,10 +11,6 @@ describe('asset api test', function () {
   it('test addAsset', async function () {
     const res = await addAsset([])
     expect(res.data.data).toBe('addAsset')
-  })
-  it('test assetRequire', async function () {
-    const res = await assetRequire({})
-    expect(res.data.data).toBe('assetRequire')
   })
   it('test assetCategoryList', async function () {
     const res = await assetCategoryList()

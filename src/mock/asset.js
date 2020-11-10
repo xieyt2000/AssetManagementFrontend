@@ -8,7 +8,6 @@ export default {
     }
   },
   addAsset: getReturnFunc('addAsset'),
-  assetRequire: getReturnFunc('assetRequire'),
   assetCategoryList: getReturnFunc('assetCategoryList'),
   editAsset: getReturnFunc('editAsset'),
   addAssetCategory: getReturnFunc('addAssetCategory'),
