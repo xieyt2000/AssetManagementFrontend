@@ -2,12 +2,11 @@ import React from 'react'
 import { connect } from 'react-redux'
 import HelpCard from '../../components/HelpCard'
 import { Button, Card, Divider, Modal, Table } from 'antd'
-import { handleIssue, issueToHandle } from '../../api/issue'
+import { handleIssue, issueToHandle, handleRequire, getRequireAsset } from '../../api/issue'
 import { renderAssignee, renderIssueType } from '../../utils/issue'
 import { handleResponse } from '../../utils/response'
 import { getList } from '../../utils/list'
 import RequireModal from './require-modal'
-import { assetList } from '../../api/asset'
 
 const Column = Table.Column
 
@@ -23,7 +22,8 @@ class IssueBoard extends React.Component {
       assetList: [],
       requireModalVis: false,
       requireModalConfirmLoading: false,
-      requireModalLod: false
+      requireModalLod: false,
+      selectedRowKeys: []
     }
   }
 
@@ -83,18 +83,38 @@ class IssueBoard extends React.Component {
               requireModalVis: false
             })
           }}
+          onChange={(selectedRowsKeys) => {
+            this.setState({ selectedRowKeys: selectedRowsKeys })
+          }}
+          onOk={() => {
+            this.setState({ requireModalConfirmLoading: true })
+            handleResponse(handleRequire({
+              selectedRows: this.state.selectedRowKeys,
+              nid: this.state.rowData.nid
+            }), '审批', this, null, {
+              requireModalVis: false,
+              requireModalConfirmLoading: false,
+              selectedRowKeys: []
+            }, this.getIssue)
+          }}
+          selectedRowKeys={this.state.selectedRowKeys}
         />
       </div>
     )
   }
 
+  // handlePermitRequire = (selectedRows) => {
+  //   handleRes ponse()
+  // }
+
   handlePermit = (row) => {
     if (row.type_name === 'REQUIRE') {
       this.setState({
         requireModalVis: true,
-        requireModalLod: true
+        requireModalLod: true,
+        rowData: Object.assign({}, row)
       })
-      assetList().then((data) => {
+      getRequireAsset(row).then((data) => {
         this.setState({
           assetList: data.data.data,
           requireModalLod: false
@@ -123,7 +143,8 @@ class IssueBoard extends React.Component {
     })
     const data = {
       nid: this.state.rowData.nid,
-      success: (this.state.opType === '同意')
+      success: (this.state.opType === '同意'),
+      type_name: this.state.rowData.type_name
     }
     handleResponse(handleIssue(data), this.state.opType + '申请', this, null,
       { modalVis: false, modalLod: false }, this.getIssue)
