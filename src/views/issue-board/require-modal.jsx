@@ -25,12 +25,24 @@ class RequireModal extends Component {
   }
 
   render () {
-    const { assetList, visible, loading, onCancel, confirmLoading } = this.props
-
+    const {
+      assetList, visible, loading, onCancel,
+      confirmLoading, onOk, selectedRowKeys, onChange
+    } = this.props
+    const rowSelection = {
+      selectedRowKeys,
+      onChange: onChange
+    }
     return (
       <div>
-        <Modal title='领用审批' visible={visible} onCancel={onCancel} confirmLoading={confirmLoading}
-          width='70%'>
+        <Modal
+          title='领用审批'
+          visible={visible}
+          onCancel={onCancel}
+          confirmLoading={confirmLoading}
+          width='70%'
+          onOk={onOk}
+        >
           <Table
             bordered
             rowKey='nid'
@@ -38,6 +50,7 @@ class RequireModal extends Component {
             pagination={false}
             loading={loading}
             childrenColumnName='tableChild' // ignore
+            rowSelection={rowSelection}
           >
             <Column title="资产id" dataIndex="nid" key="nid" align="center"/>
             <Column title="资产名称" dataIndex="name" key="name" align="center"/>
@@ -61,9 +74,12 @@ class RequireModal extends Component {
 RequireModal.propTypes = {
   visible: PropTypes.bool,
   onCancel: PropTypes.func,
+  onOk: PropTypes.func,
   loading: PropTypes.bool,
   assetList: PropTypes.array,
-  confirmLoading: PropTypes.bool
+  confirmLoading: PropTypes.bool,
+  selectedRowKeys: PropTypes.array,
+  onChange: PropTypes.func
 }
 
 export default RequireModal
