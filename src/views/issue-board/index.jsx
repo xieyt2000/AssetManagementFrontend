@@ -47,6 +47,7 @@ class IssueBoard extends React.Component {
             bordered rowKey="name"
             dataSource={issueList}
             expandIconColumnIndex={-1}
+            childrenColumnName='tableChild' // ignore
             pagination={false}>
             <Column title="发起人" dataIndex="initiator" key="initiator" align="center"/>
             <Column title="涉及资产" dataIndex="asset" key="asset" align="center"/>

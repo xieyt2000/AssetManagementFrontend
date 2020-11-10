@@ -85,7 +85,7 @@ class AssetInfo extends React.Component {
   render () {
     const { visible, onExit, confirmLoading, rowData } = this.props
     const {
-      category, value, name, description, parent, children,
+      category, value, name, description, parent, children_,
       owner, department, status, start_time: startTime, prop, service_life: serviceLife,
       now_value: nowValue, nid: id, custom
     } = rowData
@@ -114,8 +114,8 @@ class AssetInfo extends React.Component {
             <Descriptions.Item label='原价值'>{value}</Descriptions.Item>
             <Descriptions.Item label='当前价值'>{nowValue}</Descriptions.Item>
             <Descriptions.Item label='使用年限' >{serviceLife + '年'}</Descriptions.Item>
-            <Descriptions.Item label='所属'>{parent}</Descriptions.Item>
-            <Descriptions.Item label='包含' span={2}>{children}</Descriptions.Item>
+            <Descriptions.Item label='所属' span={2}>{parent}</Descriptions.Item>
+            <Descriptions.Item label='包含' span={3}>{children_}</Descriptions.Item>
             <Descriptions.Item label='自定义属性' span={3}>{prop}</Descriptions.Item>
             {this.getCustomPropDescription(custom)}
           </Descriptions>

@@ -74,6 +74,7 @@ class AssetManagement extends Component {
             bordered rowKey="name"
             dataSource={assetList}
             expandIconColumnIndex={-1}
+            childrenColumnName='tableChild' // ignore
             pagination={false}>
             <Column title="资产id" dataIndex="nid" key="nid" align="center"/>
             <Column title="资产名称" dataIndex="name" key="name" align="center"/>
@@ -242,7 +243,7 @@ class AssetManagement extends Component {
       }
       this.setState({ editModalLod: true })
       values.nid = this.state.rowData.nid
-      editAsset(putCustom(values, this.state.customPropList)).then((res) => {
+      editAsset(putCustom(values, this.state.customPropList)).then(async (res) => {
         form.resetFields()
         this.setState({ editModalVis: false, editModalLod: false })
         if (res.data.code === 200) {
@@ -250,7 +251,7 @@ class AssetManagement extends Component {
         } else {
           message.error('编辑失败，' + res.data.message)
         }
-        this.getAsset()
+        await this.getAsset()
       }).catch((ignored) => {
         message.error('编辑失败，请检查网络连接后重试！')
       })
