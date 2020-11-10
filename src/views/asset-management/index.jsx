@@ -158,7 +158,7 @@ class AssetManagement extends Component {
         assetList: assets
       })
     } else {
-      message.err('查询失败')
+      message.error('查询失败')
     }
   }
 
