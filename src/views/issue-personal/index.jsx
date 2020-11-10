@@ -46,10 +46,7 @@ class IssuePersonal extends React.Component {
     this.setState({
       modalLod: true
     })
-    const data = {
-      nid: this.state.rowData.nid
-    }
-    handleResponse(deleteIssue(data), '删除事项', this, null,
+    handleResponse(deleteIssue(this.state.rowData), '删除事项', this, null,
       { modalVis: false, modalLod: false }, this.getIssue)
   }
 
