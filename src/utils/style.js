@@ -6,4 +6,4 @@ export const searchColor = { backgroundColor: '#1890ff', borderColor: '#1890ff' 
 
 export const disableColor = { backgroundColor: '#666666', borderColor: '#666666' }
 
-export const editColor = { backgroundColor: '#FFCC33', borderColor: '#FFCC33' }
+export const editColor = { backgroundColor: '#CCCC00', borderColor: '#CCCC00' }
