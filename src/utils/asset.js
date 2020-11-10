@@ -1,4 +1,5 @@
 import React from 'react'
+import { assetCategoryList } from '../api/asset'
 
 export const CHINESE_KEY_TO_ENGLISH = {
   资产名称: 'name',
@@ -47,4 +48,25 @@ export const renderAssetType = (row) => {
 export const renderChineseStatus = (status) => {
   return (<span> {CHINESE_STATUS[status]} </span>)
 }
+
+export const getAssetCategories = async (self) => {
+  const res = await assetCategoryList()
+  const { data: assetCategories, code } = res.data
+  const newAssetCategories = [assetCategories]
+  adaptAssetCategoryList(newAssetCategories)
+  if (code === 200) {
+    self.setState({
+      assetCategoryList: newAssetCategories
+    })
+  }
+}
+
+const adaptAssetCategoryList = (assetCategoryList) => {
+  assetCategoryList.forEach(item => {
+    item.value = item.name
+    item.label = item.name
+    adaptAssetCategoryList(item.children)
+  })
+}
+
 export default STATUS

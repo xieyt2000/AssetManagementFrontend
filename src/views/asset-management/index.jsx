@@ -8,7 +8,6 @@ import {
   addAsset,
   assetList,
   editAsset,
-  assetCategoryList,
   getAssetHistory,
   assetQuery,
   assetRetire,
@@ -20,19 +19,11 @@ import AddAssetForm from './components/AddAssetForm'
 import HistoryTable from './components/HistoryTable'
 import { handleResponse } from '../../utils/response'
 import QueryPanel from './components/QueryPanel'
-import { renderAssetType, renderChineseStatus } from '../../utils/asset'
+import { renderAssetType, renderChineseStatus, getAssetCategories } from '../../utils/asset'
 import { putCustom } from './components/form-shared'
 import { getList } from '../../utils/list'
 
 const Column = Table.Column
-
-const adaptAssetCategoryList = (assetCategoryList) => {
-  assetCategoryList.forEach(item => {
-    item.value = item.name
-    item.label = item.name
-    adaptAssetCategoryList(item.children)
-  })
-}
 
 class AssetManagement extends Component {
   constructor (props) {
@@ -296,18 +287,6 @@ class AssetManagement extends Component {
     getList(assetList, this, 'assetList')
   }
 
-  getAssetCategories = async () => {
-    const res = await assetCategoryList()
-    const { data: assetCategories, code } = res.data
-    const newAssetCategories = [assetCategories]
-    adaptAssetCategoryList(newAssetCategories)
-    if (code === 200) {
-      this.setState({
-        assetCategoryList: newAssetCategories
-      })
-    }
-  }
-
   localGetCustomProp = async () => {
     const res = await getCustomProp()
     if (res.data.code === 200) {
@@ -319,7 +298,7 @@ class AssetManagement extends Component {
 
   componentDidMount () {
     this.getAsset()
-    this.getAssetCategories()
+    getAssetCategories(this)
     this.localGetCustomProp()
   }
 }
