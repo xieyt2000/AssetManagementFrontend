@@ -4,6 +4,7 @@ import { PropTypes } from 'prop-types'
 import html2canvas from 'html2canvas'
 
 import QRCode from 'qrcode.react'
+import { CHINESE_STATUS } from '../../../utils/asset'
 class AssetInfo extends React.Component {
   saveLabel () {
     const element = document.getElementById('label')
@@ -108,7 +109,7 @@ class AssetInfo extends React.Component {
             <Descriptions.Item label='描述' span={3}>{description}</Descriptions.Item>
             <Descriptions.Item label='挂账人' span={1}>{owner}</Descriptions.Item>
             <Descriptions.Item label='部门' span={2}>{department}</Descriptions.Item>
-            <Descriptions.Item label='状态' span={1}>{status}</Descriptions.Item>
+            <Descriptions.Item label='状态' span={1}>{CHINESE_STATUS[status]}</Descriptions.Item>
             <Descriptions.Item label='录入时间' span={2}>{startTime}</Descriptions.Item>
             <Descriptions.Item label='分类' span={1}>{category}</Descriptions.Item>
             <Descriptions.Item label='原价值'>{value}</Descriptions.Item>

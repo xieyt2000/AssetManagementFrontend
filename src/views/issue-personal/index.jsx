@@ -2,7 +2,7 @@ import React from 'react'
 import { connect } from 'react-redux'
 import HelpCard from '../../components/HelpCard'
 import { Button, Card, Modal, Table } from 'antd'
-import { renderAssignee, renderIssueType, renderIssueStatus } from '../../utils/issue'
+import { renderIssueType } from '../../utils/issue'
 import { personalIssue, deleteIssue } from '../../api/issue'
 import { getList } from '../../utils/list'
 import { handleResponse } from '../../utils/response'
@@ -65,10 +65,10 @@ class IssuePersonal extends React.Component {
             dataSource={issueList}
             expandIconColumnIndex={-1}
             pagination={false}>
-            <Column title="涉及资产" dataIndex="asset" key="asset" align="center"/>
+            <Column title="发起人" dataIndex="initiator" key="initiator" align="center"/>
             <Column title="事件类型" key="type_name" align="center" render={renderIssueType}/>
-            <Column title="接受人" key="initiator" align="center" render={renderAssignee}/>
-            <Column title="状态" key="status" align="center" render={renderIssueStatus}/>
+            <Column title="涉及资产" dataIndex="asset" key="asset" align="center"/>
+            <Column title="信息" dataIndex="info" key="info" align="center"/>
             <Column title="操作" key="action" width={200} align="center" render={(row) => (
               <span>
                 <Button type="primary" shape="circle" icon="close" title="取消"

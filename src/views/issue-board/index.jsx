@@ -3,7 +3,7 @@ import { connect } from 'react-redux'
 import HelpCard from '../../components/HelpCard'
 import { Button, Card, Divider, Modal, Table } from 'antd'
 import { handleIssue, issueToHandle, handleRequire, getRequireAsset } from '../../api/issue'
-import { renderAssignee, renderIssueType } from '../../utils/issue'
+import { renderIssueType } from '../../utils/issue'
 import { handleResponse } from '../../utils/response'
 import { getList } from '../../utils/list'
 import RequireModal from './require-modal'
@@ -50,11 +50,9 @@ class IssueBoard extends React.Component {
             childrenColumnName='tableChild' // ignore
             pagination={false}>
             <Column title="发起人" dataIndex="initiator" key="initiator" align="center"/>
-            <Column title="涉及资产" dataIndex="asset" key="asset" align="center"/>
             <Column title="事件类型" key="type_name" align="center" render={renderIssueType}/>
-            <Column title="接受人" key="initiator" align="center"
-              render={renderAssignee}
-            />
+            <Column title="涉及资产" dataIndex="asset" key="asset" align="center"/>
+            <Column title="信息" dataIndex="info" key="info" align="center"/>
             <Column title="操作" key="action" width={200} align="center" render={(row) => (
               <span>
                 <Button type="primary" shape="circle" icon="check" title="批准"
