@@ -1,32 +1,23 @@
 import React from 'react'
 import { connect } from 'react-redux'
-import { availableAssetList } from '@/api/asset'
 import { applyRequire } from '@/api/issue'
 import HelpCard from '../../components/HelpCard'
-import { Button, Card, Modal, Table } from 'antd'
-import { renderChineseStatus, renderAssetType } from '../../utils/asset'
+import { Button, Card, Form, Input, TreeSelect } from 'antd'
+import { getAssetCategories } from '../../utils/asset'
 import { handleResponse } from '@/utils/response'
-import { getList } from '../../utils/list'
-
-const Column = Table.Column
+import { PropTypes } from 'prop-types'
 
 class AssetRequire extends React.Component {
   constructor (props) {
     super(props)
     this.state = {
-      assetList: [],
-      rowData: {},
-      collectModalVis: false,
-      collectModalLod: false
+      assetCategoryList: [],
+      chosenCategory: ''
     }
   }
 
-  getAsset = async () => {
-    getList(availableAssetList, this, 'assetList')
-  }
-
   componentDidMount () {
-    this.getAsset()
+    getAssetCategories(this)
   }
 
   handleClickCollect = (row) => {
@@ -52,44 +43,39 @@ class AssetRequire extends React.Component {
   }
 
   render () {
-    const assetList = this.state.assetList
     const description = '作为企业员工，你可以在这里提出领用资产申请'
+    const { getFieldDecorator } = this.props.form
+    const assetCategories = this.state.assetCategoryList
     return (
       <div className='app-container'>
         <HelpCard title='资产管理' source={description}/>
         <br/>
         <Card>
-          <Table
-            bordered rowKey="name"
-            dataSource={assetList}
-            expandIconColumnIndex={-1}
-            pagination={false}>
-            <Column title="资产名称" dataIndex="name" key="name" align="center"/>
-            <Column title="挂账人" dataIndex="owner" key="owner" align="center"/>
-            <Column title="所属部门" dataIndex="department" key="department" align="center"/>
-            <Column title="资产类型" key="type_name" align="center"
-              render={renderAssetType}/>
-            <Column title="资产状态" dataIndex="status" key="status" align="center"
-              render={renderChineseStatus}/>
-            <Column title="操作" key="action" width={200} align="center" render={(row) => (
-              <span>
-                <Button type="primary" shape="circle" icon="check" title="领用资产"
-                  onClick={this.handleClickCollect.bind(this, row)}/>
-              </span>)}/>
-          </Table>
+          <Form onSubmit={this.handleSubmit}>
+            <Form.Item label={'资产分类'}>
+              {getFieldDecorator('category', {
+                rules: [{ required: true, message: '分类不能为空' }]
+              })(<TreeSelect
+                treeData={assetCategories}
+              />)}
+            </Form.Item>
+            <Form.Item label={'申请理由'}>
+              {getFieldDecorator('reason')(<Input placeholder="申请理由"/>)}
+            </Form.Item>
+            <Form.Item>
+              <Button type="primary" htmlType='submit'>
+                提交
+              </Button>
+            </Form.Item>
+          </Form>
         </Card>
-        <Modal
-          title="资产领用"
-          visible={this.state.collectModalVis}
-          confirmLoading={this.state.collectModalLod}
-          onOk={this.handleOk}
-          onCancel={this.handleCancel}
-        >
-          <p>是否领用资产 {this.state.rowData.name} ?</p>
-        </Modal>
       </div>
     )
   }
 }
 
-export default connect(state => state.user)(AssetRequire)
+AssetRequire.propTypes = {
+  form: PropTypes.object
+}
+
+export default connect(state => state.user)(Form.create()(AssetRequire))
