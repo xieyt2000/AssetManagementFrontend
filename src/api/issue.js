@@ -47,6 +47,22 @@ export function handleIssue (data) {
   })
 }
 
+export function handleRequire (data) {
+  return request({
+    url: '/api/issue/permit-require',
+    method: 'post',
+    data: data
+  })
+}
+
+export function getRequireAsset (data) {
+  return request({
+    url: 'api/issue/require-asset-list',
+    method: 'post',
+    data: data
+  })
+}
+
 export function personalIssue () {
   return request({
     url: '/api/issue/waiting',
