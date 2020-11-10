@@ -22,10 +22,5 @@ describe('asset-require', function () {
   })
   it('test cancel', function () {
     app.find('button').simulate('click')
-    app.find('Modal').find('button').at(1).simulate('click')
-  })
-  it('test ok', function () {
-    app.find('button').simulate('click')
-    app.find('Modal').find('button').at(2).simulate('click')
   })
 })

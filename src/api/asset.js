@@ -82,14 +82,6 @@ export function getAssetHistory (asset) {
   })
 }
 
-export function assetRequire (data) {
-  return request({
-    url: '/api/issue/require',
-    method: 'post',
-    data: data
-  })
-}
-
 export function getCustomProp () {
   return request({
     url: '/api/asset/custom/list',
