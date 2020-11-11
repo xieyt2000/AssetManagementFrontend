@@ -8,5 +8,7 @@ export default {
   issueToHandle: getReturnFunc('issueToHandle'),
   handleIssue: getReturnFunc('handleIssue'),
   personalIssue: getReturnFunc('personalIssue'),
-  deleteIssue: getReturnFunc('deleteIssue')
+  deleteIssue: getReturnFunc('deleteIssue'),
+  handleRequire: getReturnFunc('handleRequire'),
+  getRequireAsset: getReturnFunc('getRequireAsset')
 }

@@ -33,4 +33,12 @@ describe('api/issue', function () {
     const res = await API.deleteIssue()
     expect(res.data.data).toBe('deleteIssue')
   })
+  it('test handleRequire', async function () {
+    const res = await API.handleRequire()
+    expect(res.data.data).toBe('handleRequire')
+  })
+  it('test getRequireAsset', async function () {
+    const res = await API.getRequireAsset()
+    expect(res.data.data).toBe('getRequireAsset')
+  })
 })

@@ -8,5 +8,6 @@ describe('routeMap test', function () {
     expect(routeMap[4].path).toBe('/asset/category')
     expect(routeMap[5].path).toBe('/department')
     expect(routeMap[6].path).toBe('/asset/require')
+    expect(routeMap[7].path).toBe('/asset/personal')
   })
 })

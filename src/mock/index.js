@@ -55,5 +55,7 @@ Mock.mock(/\/api\/issue\/handling/, 'get', IssueAPI.issueToHandle)
 Mock.mock(/\/api\/issue\/handle/, 'post', IssueAPI.handleIssue)
 Mock.mock(/\/api\/issue\/waiting/, 'get', IssueAPI.personalIssue)
 Mock.mock(/\/api\/issue\/delete/, 'post', IssueAPI.deleteIssue)
+Mock.mock(/\/api\/issue\/permit-require/, 'post', IssueAPI.handleRequire)
+Mock.mock(/api\/issue\/require-asset-list/, 'post', IssueAPI.getRequireAsset)
 
 export default Mock
