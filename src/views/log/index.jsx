@@ -25,11 +25,13 @@ class Log extends Component {
         <Table
           bordered rowKey="name"
           dataSource={logs}
-          pagination={false}>
+          // pagination={false}
+        >
           <Column title="时间" dataIndex="time" key="time" align="center"/>
           <Column title="返回信息" dataIndex="message" key="message" align="center"/>
           <Column title="使用API" dataIndex="path" key="path" align="center"/>
           <Column title="用户" dataIndex="username" key="username" align="center"/>
+          <Column title="类型" dataIndex="level" key="level" align="center"/>
         </Table>
         {/* <Pagination */}
         {/*  total={this.state.total} */}
@@ -55,7 +57,7 @@ class Log extends Component {
 
   // avoid naming conflict with api.getUsers
   localGetLog = async () => {
-    const res = await getLog({ size: 100 })
+    const res = await getLog({ size: 1000 })
     const { data: log, code } = res.data
     if (code === 200) {
       this.setState({
