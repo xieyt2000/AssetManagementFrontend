@@ -14,7 +14,7 @@ describe('asset api test', function () {
   })
   it('test assetCategoryList', async function () {
     const res = await assetCategoryList()
-    expect(res.data.data).toBe('assetCategoryList')
+    expect(res.data.code).toBe(200)
   })
   it('test deleteAssetCategory', async function () {
     const res = await deleteAssetCategory({})

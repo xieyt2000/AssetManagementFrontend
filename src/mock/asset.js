@@ -8,7 +8,20 @@ export default {
     }
   },
   addAsset: getReturnFunc('addAsset'),
-  assetCategoryList: getReturnFunc('assetCategoryList'),
+  assetCategoryList: () => {
+    return {
+      data: {
+        name: '1',
+        children: [
+          {
+            name: '2',
+            children: []
+          }
+        ]
+      },
+      code: 200
+    }
+  },
   editAsset: getReturnFunc('editAsset'),
   addAssetCategory: getReturnFunc('addAssetCategory'),
   editAssetCategory: getReturnFunc('editAssetCategory'),
