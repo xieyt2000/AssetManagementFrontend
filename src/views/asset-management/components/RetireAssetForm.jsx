@@ -6,8 +6,8 @@ class RetireAssetForm extends Component {
     const { visible, onCancel, onOk, form, confirmLoading } = this.props
     const typeArr = [{ label: '是', value: true }, { label: '否', value: false }]
     const formLayout = {
-      labelCol: { sm: { span: 8 } },
-      wrapperCol: { sm: { span: 16 } }
+      labelCol: { sm: { span: 12 } },
+      wrapperCol: { sm: { span: 6 } }
     }
     return (
       <Modal title="清退资产" visible={visible} onCancel={onCancel}
