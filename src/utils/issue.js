@@ -22,6 +22,6 @@ export const renderAssignee = (row) => {
   }
 }
 
-export const renderIssueStatus = (row) => {
-  return (<span> {CHINESE_ISSUE_STATUS[row.status]} </span>)
-}
+export const renderIssueStatus = (row) => (
+  <span> {CHINESE_ISSUE_STATUS[row.status]} </span>
+)
