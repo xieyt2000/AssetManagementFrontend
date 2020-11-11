@@ -33,13 +33,31 @@ const appState = {
   ]
 }
 
-describe('test UserManagement', function () {
+describe('test UserManagement add', function () {
+  const app = mount(<UserManagement/>)
+  app.setState(appState)
+  it('test add cancel', function () {
+    app.find('button').at(0).simulate('click')
+    app.find('button').at(5).simulate('click')
+  })
+  it('test add ok', function () {
+    app.find('button').at(0).simulate('click')
+    app.find('button').at(6).simulate('click')
+  })
+})
+
+describe('test UserManagement lock', function () {
   const app = mount(<UserManagement/>)
   app.setState(appState)
   it('test lock', function () {
     app.find('button').at(1).simulate('click')
     app.find('button').at(1).simulate('click')
   })
+})
+
+describe('test UserManagement edit', function () {
+  const app = mount(<UserManagement/>)
+  app.setState(appState)
   it('test edit cancel', function () {
     app.find('button').at(2).simulate('click')
     app.find('button').at(5).simulate('click')
@@ -52,20 +70,12 @@ describe('test UserManagement', function () {
       editModalLod: false
     })
   })
-  it('test delete cancel', function () {
+})
+
+describe('test UserManagement delete', function () {
+  const app = mount(<UserManagement/>)
+  app.setState(appState)
+  it('test delete ', function () {
     app.find('button').at(3).simulate('click')
-    app.find('button').at(5).simulate('click')
-  })
-  it('test delete ok', function () {
-    app.find('button').at(3).simulate('click')
-    app.find('button').at(6).simulate('click')
-  })
-  it('test add cancel', function () {
-    app.find('button').at(0).simulate('click')
-    app.find('button').at(5).simulate('click')
-  })
-  it('test add ok', function () {
-    app.find('button').at(0).simulate('click')
-    app.find('button').at(6).simulate('click')
   })
 })

@@ -13,7 +13,7 @@ class RetireAssetForm extends Component {
       <Modal title="清退资产" visible={visible} onCancel={onCancel}
         onOk={onOk} confirmLoading={confirmLoading}>
         <Form {...formLayout}>
-          <Form.Item label={'关联子资产'}>
+          <Form.Item label={'是否同时清退关联的父子资产'}>
             {form.getFieldDecorator('retire_family', {
               rules: [{ required: true, message: '请选择' }]
             })(<Radio.Group options={typeArr}/>)}
