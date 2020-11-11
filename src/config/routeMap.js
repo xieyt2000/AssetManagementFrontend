@@ -61,7 +61,7 @@ export default [
   {
     path: '/user',
     component: User,
-    roles: [PERMISSION.SYSTEM]
+    roles: [PERMISSION.SYSTEM, PERMISSION.ASSET]
   },
   {
     path: '/log',

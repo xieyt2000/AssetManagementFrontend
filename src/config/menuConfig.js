@@ -7,33 +7,33 @@ const menuList = [
     icon: 'home',
     roles: [PERMISSION.IT, PERMISSION.ASSET, PERMISSION.SYSTEM, PERMISSION.STAFF]
   },
-  {
-    title: '权限测试',
-    path: '/permission',
-    icon: 'lock',
-    children: [
-      {
-        title: '系统管理员页面',
-        path: '/permission/SystemPage',
-        roles: [PERMISSION.SYSTEM]
-      },
-      {
-        title: '资产管理员页面',
-        path: '/permission/AssetPage',
-        roles: [PERMISSION.ASSET]
-      },
-      {
-        title: 'IT管理员页面',
-        path: '/permission/ITPage',
-        roles: [PERMISSION.IT]
-      },
-      {
-        title: '员工页面',
-        path: '/permission/StaffPage',
-        roles: [PERMISSION.STAFF]
-      }
-    ]
-  },
+  // {
+  //   title: '权限测试',
+  //   path: '/permission',
+  //   icon: 'lock',
+  //   children: [
+  //     {
+  //       title: '系统管理员页面',
+  //       path: '/permission/SystemPage',
+  //       roles: [PERMISSION.SYSTEM]
+  //     },
+  //     {
+  //       title: '资产管理员页面',
+  //       path: '/permission/AssetPage',
+  //       roles: [PERMISSION.ASSET]
+  //     },
+  //     {
+  //       title: 'IT管理员页面',
+  //       path: '/permission/ITPage',
+  //       roles: [PERMISSION.IT]
+  //     },
+  //     {
+  //       title: '员工页面',
+  //       path: '/permission/StaffPage',
+  //       roles: [PERMISSION.STAFF]
+  //     }
+  //   ]
+  // },
   {
     title: '资产管理',
     path: '/asset',
@@ -93,7 +93,7 @@ const menuList = [
     title: '用户管理',
     path: '/user',
     icon: 'usergroup-add',
-    roles: [PERMISSION.SYSTEM]
+    roles: [PERMISSION.SYSTEM, PERMISSION.ASSET]
   },
   {
     title: '部门管理',

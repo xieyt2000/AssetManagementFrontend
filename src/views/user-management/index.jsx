@@ -32,7 +32,7 @@ class UserManagement extends Component {
         <Button type='primary' onClick={this.handleClickAdd}>添加用户</Button>
       </span>
     )
-    const description = '作为系统管理员，你可以进行用户管理。包括添加、删除用户，修改用户信息'
+    const description = '作为系统管理员和资产管理员，你可以进行用户管理。包括添加、删除用户，修改用户信息'
     return (
       <div className='app-container'>
         <HelpCard title='用户管理' source={description}/>

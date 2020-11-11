@@ -38,7 +38,7 @@ class IssueBoard extends React.Component {
 
   render () {
     const issueList = this.state.issueList
-    const description = '作为负责人，在这里可以看到其他员工向你提交的待处理事项'
+    const description = '作为企业员工，在这里可以看到其他员工向你提交的待处理事项'
     return (
       <div className='app-container'>
         <HelpCard title='待办事项' source={description}/>
