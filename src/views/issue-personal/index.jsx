@@ -2,7 +2,7 @@ import React from 'react'
 import { connect } from 'react-redux'
 import HelpCard from '../../components/HelpCard'
 import { Button, Card, Modal, Table } from 'antd'
-import { renderIssueType } from '../../utils/issue'
+import { renderIssueStatus, renderIssueType } from '../../utils/issue'
 import { personalIssue, deleteIssue } from '../../api/issue'
 import { getList } from '../../utils/list'
 import { handleResponse } from '../../utils/response'
@@ -46,10 +46,7 @@ class IssuePersonal extends React.Component {
     this.setState({
       modalLod: true
     })
-    const data = {
-      nid: this.state.rowData.nid
-    }
-    handleResponse(deleteIssue(data), '删除事项', this, null,
+    handleResponse(deleteIssue(this.state.rowData), '删除事项', this, null,
       { modalVis: false, modalLod: false }, this.getIssue)
   }
 
@@ -69,6 +66,7 @@ class IssuePersonal extends React.Component {
             <Column title="发起人" dataIndex="initiator" key="initiator" align="center"/>
             <Column title="事件类型" key="type_name" align="center" render={renderIssueType}/>
             <Column title="涉及资产" dataIndex="asset" key="asset" align="center"/>
+            <Column title="状态" key="status" align="center" render={renderIssueStatus}/>
             <Column title="信息" dataIndex="info" key="info" align="center"/>
             <Column title="操作" key="action" width={200} align="center" render={(row) => (
               <span>
