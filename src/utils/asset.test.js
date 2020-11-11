@@ -1,5 +1,5 @@
 import { CHINESE_KEY_TO_ENGLISH,
-  CHINESE_STATUS, renderChineseStatus, getAssetCategories, adaptAssetCategoryList } from './asset'
+  CHINESE_STATUS, renderChineseStatus, getAssetCategories } from './asset'
 import '@/mock'
 const testNode = {
   state: {
