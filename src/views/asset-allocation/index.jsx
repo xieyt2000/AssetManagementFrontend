@@ -68,7 +68,7 @@ class AssetAllocation extends React.Component {
           this.setState({
             dataSource: tmpData
           })
-          message.success('获取资产成功')
+          // message.success('获取资产成功')
         } else {
           message.error('获取资产失败' + res.data.message)
         }

@@ -172,7 +172,7 @@ class AssetManagement extends Component {
         message.error('添加失败，' + res.data.message)
       }
       this.getAsset()
-      this.getAssetCategories()
+      getAssetCategories(this)
     }).catch((ignored) => {
       message.error('添加失败，请检查网络连接后重试！')
     }).finally(() => {
