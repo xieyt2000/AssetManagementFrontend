@@ -1,10 +1,7 @@
 import * as types from '../action-types'
 import { getToken } from '@/utils/auth'
-const avatarUrl = 'https://timgsa.baidu.com/' +
-    'timg?image&quality=80&size=b9999_10000&' +
-    'sec=1603906435701&di=cdc5f0f9910240be985409164370eb79&imgtype=0&' +
-    'src=http%3A%2F%2Fc-ssl.duitang.com%2Fuploads%2Fitem%' +
-    '2F202001%2F24%2F20200124152835_hiLnr.thumb.400_0.jpeg'
+const avatarUrl = 'https://ss2.bdstatic.com/' +
+  '70cFvnSh_Q1YnxGkpoWK1HF6hhy/it/u=188149577,2949073731&fm=26&gp=0.jpg'
 const initUserInfo = {
   name: '',
   role: Array(0),
