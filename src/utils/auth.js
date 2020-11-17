@@ -15,6 +15,6 @@ export function removeToken () {
   exp.setTime(exp.getTime() - 1)
   const val = getToken()
   if (val != null) {
-    document.cookie = 'Token' + '=' + val + ';expires=' + exp.toGMTString()
+    Cookies.set(TokenKey, val, { expires: exp })
   }
 }
