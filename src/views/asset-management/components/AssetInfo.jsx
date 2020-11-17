@@ -28,7 +28,8 @@ class AssetInfo extends React.Component {
       const blob = base64ToBlob(imgUri)
       // window.location.href = imgUri; // 下载图片
       // 利用createObjectURL，模拟文件下载
-      const fileName = '资产标签.png'
+      const { rowData } = this.props
+      const fileName = rowData.name + '_资产标签.png'
       if (window.navigator.msSaveOrOpenBlob) {
         navigator.msSaveBlob(blob, fileName)
       } else {

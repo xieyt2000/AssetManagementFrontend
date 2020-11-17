@@ -66,6 +66,10 @@ class AssetManagement extends Component {
         <br/>
         <QueryPanel
           submitQuery={this.submitQuery}
+          clearQuery={this.clearQuery}
+          wrappedComponentRef={(formRef) => {
+            this.queryFormRef = formRef
+          }}
           assetCategories={this.state.assetCategoryList}
           customProps={this.state.customPropList}
         />
@@ -162,6 +166,11 @@ class AssetManagement extends Component {
     } else {
       message.error('查询失败')
     }
+  }
+
+  clearQuery = () => {
+    this.queryFormRef.props.form.resetFields()
+    this.getAsset()
   }
 
   localAddAsset (assetArr) {
