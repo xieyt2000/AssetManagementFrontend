@@ -1,11 +1,11 @@
 import React from 'react'
 import { withRouter } from 'react-router-dom'
 import { Breadcrumb } from 'antd'
-import menuList from '@/config/menuConfig'
+import menuList from '@/config/menuList'
 import './index.less'
 import { PropTypes } from 'prop-types'
 
-const getPath = (menuList, pathname) => {
+const getPath = (List, pathname) => {
   const temppath = []
   function getNodePath (node) {
     temppath.push(node)
@@ -25,8 +25,8 @@ const getPath = (menuList, pathname) => {
     }
   }
   try {
-    for (let i = 0; i < menuList.length; i++) {
-      getNodePath(menuList[i])
+    for (let i = 0; i < List.length; i++) {
+      getNodePath(List[i])
     }
   } catch (e) {
     return temppath

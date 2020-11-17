@@ -1,4 +1,4 @@
-import getReturnFunc from './utils'
+import { getReturnFunc } from './utils'
 
 export default {
   reqUserInfo: getReturnFunc('reqUserInfo'),

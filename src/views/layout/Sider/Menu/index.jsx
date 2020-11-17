@@ -6,7 +6,7 @@ import { connect } from 'react-redux'
 import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd'
 import { addTag } from '@/store/actions'
 import { getMenuItemInMenuListByProperty } from '@/utils'
-import menuList from '@/config/menuConfig'
+import menuList from '@/config/menuList'
 import './index.less'
 import PropTypes from 'prop-types'
 import { checkPermission } from '@/utils/permission'
@@ -44,10 +44,10 @@ class SideMenu extends Component {
   }
 
   // 菜单渲染
-  getMenuNodes = (menuList) => {
+  getMenuNodes = (List) => {
     // 得到当前请求的路由路径
     const path = this.props.location.pathname
-    return menuList.reduce((pre, item) => {
+    return List.reduce((pre, item) => {
       if (this.filterMenuItem(item)) {
         if (!item.children) {
           pre.push(
@@ -61,7 +61,7 @@ class SideMenu extends Component {
         } else {
           // 查找一个与当前请求路径匹配的子Item
           const cItem = item.children.find(
-            (cItem) => path.indexOf(cItem.path) === 0
+            (Item) => path.indexOf(Item.path) === 0
           )
           // 如果存在, 说明当前item的子列表需要打开
           if (cItem) {

@@ -31,8 +31,8 @@ class DepartmentManagement extends React.Component {
 
   onChange = e => {
     const { value } = e.target
-    const { departments, departmentList } = this.state
-    const expandedKeys = departmentList
+    const { departments, departmentList: List } = this.state
+    const expandedKeys = List
       .map(item => {
         if (item.name.indexOf(value) > -1) {
           return getParentKey(item.id, departments)

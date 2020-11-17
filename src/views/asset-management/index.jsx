@@ -50,8 +50,6 @@ class AssetManagement extends Component {
   }
 
   render () {
-    const assetList = this.state.assetList
-
     const cardTitle = (
       <span>
         <Button type='primary' onClick={this.handleClickAdd}>添加资产</Button>
@@ -77,7 +75,7 @@ class AssetManagement extends Component {
         <Card title={cardTitle}>
           <Table
             bordered rowKey="name"
-            dataSource={assetList}
+            dataSource={this.state.assetList}
             expandIconColumnIndex={-1}
             childrenColumnName='tableChild' // ignore
             pagination={false}>

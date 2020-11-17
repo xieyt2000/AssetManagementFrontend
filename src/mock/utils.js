@@ -1,4 +1,4 @@
-export default function getReturnFunc (message) {
+export function getReturnFunc (message) {
   return function () {
     return {
       data: message

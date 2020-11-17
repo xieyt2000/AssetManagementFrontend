@@ -9,7 +9,7 @@ import { removeToken } from '../utils/auth'
 
 class Router extends React.Component {
   render () {
-    const { token, role, getUserInfo } = this.props
+    const { token, role, getUserInfo: getInfo } = this.props
     return (
       <HashRouter>
         <Switch>
@@ -23,7 +23,7 @@ class Router extends React.Component {
                 if (role.length >= 1) {
                   return <Layout/>
                 } else {
-                  getUserInfo(token)
+                  getInfo(token)
                     .then(() => <Layout/>)
                     .catch(() => {
                       removeToken()
