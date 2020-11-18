@@ -7,6 +7,7 @@ import AddUserForm from './forms/add-user-form'
 import { CHINESE_PERMISSION } from '@/utils/permission'
 import { getDepartments } from '../../utils/department'
 import { deleteColor, disableColor, editColor } from '../../utils/style'
+import { getColumnSearchProps } from '../../utils/table'
 
 const Column = Table.Column
 
@@ -20,7 +21,9 @@ class UserManagement extends Component {
       rowData: {},
       addModalVis: false,
       addModalLod: false,
-      departmentList: []
+      departmentList: [],
+      searchText: '',
+      searchedColumn: ''
     }
   }
 
@@ -41,9 +44,12 @@ class UserManagement extends Component {
             bordered rowKey="name"
             dataSource={users}
             pagination={false}>
-            <Column title="用户名" dataIndex="name" key="name" align="center"/>
-            <Column title="用户角色" dataIndex="roleStr" key="roleStr" align="center"/>
-            <Column title="用户部门" dataIndex="department" key="department" align="center"/>
+            <Column title="用户名" dataIndex="name" key="name" align="center"
+              {...getColumnSearchProps('name', this, '用户名')}/>
+            <Column title="用户角色" dataIndex="roleStr" key="roleStr" align="center"
+              {...getColumnSearchProps('roleStr', this, '用户角色')}/>
+            <Column title="用户部门" dataIndex="department" key="department" align="center"
+              {...getColumnSearchProps('department', this, '用户部门')}/>
             <Column title="操作" key="action" width={200} align="center" render={(row) => (
               <span>
                 <Button type="primary" shape="circle" icon={row.is_active ? 'unlock' : 'lock'}
