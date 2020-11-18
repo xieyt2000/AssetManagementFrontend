@@ -76,7 +76,7 @@ class AssetManagement extends Component {
             dataSource={assetList}
             expandIconColumnIndex={-1}
             childrenColumnName='tableChild' // ignore
-            pagination={false}>
+          >
             <Column title="资产id" dataIndex="nid" key="nid" align="center"/>
             <Column title="资产名称" dataIndex="name" key="name" align="center"/>
             <Column title="挂账人" dataIndex="owner" key="owner" align="center"/>
