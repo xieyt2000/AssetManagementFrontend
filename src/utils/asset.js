@@ -42,8 +42,8 @@ export const getAssetCategories = async (self) => {
   }
 }
 
-const adaptAssetCategoryList = (assetCategoryList) => {
-  assetCategoryList.forEach(item => {
+const adaptAssetCategoryList = (CategoryList) => {
+  CategoryList.forEach(item => {
     item.value = item.name
     item.label = item.name
     adaptAssetCategoryList(item.children)

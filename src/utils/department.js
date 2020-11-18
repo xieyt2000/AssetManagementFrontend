@@ -1,7 +1,7 @@
 import { departmentList } from '../api/department'
 
-export const adaptDepartmentList = (departmentList) => {
-  departmentList.forEach(item => {
+export const adaptDepartmentList = (List) => {
+  List.forEach(item => {
     item.value = item.id
     item.label = item.name
     adaptDepartmentList(item.children)

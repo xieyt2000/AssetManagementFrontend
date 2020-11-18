@@ -6,15 +6,15 @@ import { connect } from 'react-redux'
 import { Layout } from 'antd'
 import { getMenuItemInMenuListByProperty } from '@/utils'
 import routeList from '@/config/routeMap'
-import menuList from '@/config/menuConfig'
+import menuList from '@/config/menuList'
 import PropTypes from 'prop-types'
 import { checkPermission } from '@/utils/permission'
 
 const { Content } = Layout
 
-const getPageTitle = (menuList, pathname) => {
-  let title = 'Ant Design Pro'
-  const item = getMenuItemInMenuListByProperty(menuList, 'path', pathname)
+const getPageTitle = (List, pathname) => {
+  let title = 'Asset Management'
+  const item = getMenuItemInMenuListByProperty(List, 'path', pathname)
   if (item) {
     title = `${item.title}`
   }

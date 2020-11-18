@@ -50,8 +50,6 @@ class AssetManagement extends Component {
   }
 
   render () {
-    const assetList = this.state.assetList
-
     const cardTitle = (
       <span>
         <Button type='primary' onClick={this.handleClickAdd}>添加资产</Button>
@@ -66,6 +64,10 @@ class AssetManagement extends Component {
         <br/>
         <QueryPanel
           submitQuery={this.submitQuery}
+          clearQuery={this.clearQuery}
+          wrappedComponentRef={(formRef) => {
+            this.queryFormRef = formRef
+          }}
           assetCategories={this.state.assetCategoryList}
           customProps={this.state.customPropList}
         />
@@ -73,7 +75,7 @@ class AssetManagement extends Component {
         <Card title={cardTitle}>
           <Table
             bordered rowKey="name"
-            dataSource={assetList}
+            dataSource={this.state.assetList}
             expandIconColumnIndex={-1}
             childrenColumnName='tableChild' // ignore
           >
@@ -162,6 +164,11 @@ class AssetManagement extends Component {
     } else {
       message.error('查询失败')
     }
+  }
+
+  clearQuery = () => {
+    this.queryFormRef.props.form.resetFields()
+    this.getAsset()
   }
 
   localAddAsset (assetArr) {
