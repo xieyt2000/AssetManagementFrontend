@@ -6,9 +6,10 @@ import { Button, Card, Divider, Modal, Table } from 'antd'
 import InputForm from './components/InputForm'
 import { handleResponse } from '@/utils/response'
 import { applyFix, applyTransfer, applyReturn } from '@/api/issue'
-import { renderChineseStatus } from '../../utils/asset'
+import { CHINESE_STATUS } from '../../utils/asset'
 import { getList } from '../../utils/list'
 import { deleteColor, disableColor, editColor } from '../../utils/style'
+import { getColumnSearchProps } from '../../utils/table'
 
 const Column = Table.Column
 
@@ -24,16 +25,19 @@ class PersonalAsset extends React.Component {
       formRef: null,
       rowData: {},
       returnModalVis: false,
-      returnModalLod: false
+      returnModalLod: false,
+      searchText: '',
+      searchedColumn: ''
     }
   }
 
   render () {
     const description = '作为企业员工，你可以查看你使用中的资产，并且可以向相关负责人申请维保、转移、退库'
     const assetList = this.state.assetList
+
     return (
       <div className='app-container'>
-        <HelpCard title='个人资产' source={description} />
+        <HelpCard title='个人资产' source={description}/>
         <br/>
         <Card>
           <Table
@@ -41,11 +45,14 @@ class PersonalAsset extends React.Component {
             dataSource={assetList}
             expandIconColumnIndex={-1}
             pagination={false}>
-            <Column title="资产id" dataIndex="nid" key="nid" align="center"/>
-            <Column title="资产名称" dataIndex="name" key="name" align="center"/>
-            <Column title="资产分类" dataIndex="category" key="category" align="center"/>
+            <Column title="资产id" dataIndex="nid" key="nid" align="center"
+              {...getColumnSearchProps('nid', this, '资产id')}/>
+            <Column title="资产名称" dataIndex="name" key="name" align="center"
+              {...getColumnSearchProps('name', this, '资产名称')}/>
+            <Column title="资产分类" dataIndex="category" key="category" align="center"
+              {...getColumnSearchProps('category', this, '资产分类')}/>
             <Column title="资产状态" dataIndex="status" key="status" align="center"
-              render={renderChineseStatus}/>
+              {...getColumnSearchProps('status', this, '资产状态')}/>
             <Column title="操作" key="action" width={200} align="center" render={(row) => (
               <span>
                 <Button type="primary" shape="circle" icon="tool" title="申请维保"
@@ -150,7 +157,12 @@ class PersonalAsset extends React.Component {
   }
 
   getAsset = async () => {
-    getList(personalAssetList, this, 'assetList')
+    await getList(personalAssetList, this, 'assetList')
+    const assetList = this.state.assetList
+    for (let idx = 0; idx < assetList.length; idx++) {
+      assetList[idx].status = CHINESE_STATUS[assetList[idx].status]
+    }
+    this.setState({ assetList: assetList })
   }
 
   componentDidMount () {
