@@ -2,11 +2,12 @@ import React from 'react'
 import { connect } from 'react-redux'
 import HelpCard from '../../components/HelpCard'
 import { Button, Card, Modal, Table } from 'antd'
-import { renderIssueStatus, renderIssueType } from '../../utils/issue'
+import { CHINESE_ISSUE_STATUS, CHINESE_ISSUE_TYPE } from '../../utils/issue'
 import { personalIssue, deleteIssue } from '../../api/issue'
 import { getList } from '../../utils/list'
 import { handleResponse } from '../../utils/response'
 import { deleteColor } from '../../utils/style'
+import { getColumnSearchProps } from '../../utils/table'
 
 const Column = Table.Column
 
@@ -17,12 +18,20 @@ class IssuePersonal extends React.Component {
       issueList: [],
       rowData: {},
       modalVis: false,
-      modalLod: false
+      modalLod: false,
+      searchText: '',
+      searchedColumn: ''
     }
   }
 
-  getIssue = () => {
-    getList(personalIssue, this, 'issueList')
+  getIssue = async () => {
+    await getList(personalIssue, this, 'issueList')
+    const issueList = this.state.issueList
+    for (let idx = 0; idx < issueList.length; idx++) {
+      issueList[idx].chiStatus = CHINESE_ISSUE_STATUS[issueList[idx].status]
+      issueList[idx].chiType = CHINESE_ISSUE_TYPE[issueList[idx].type_name]
+    }
+    this.setState({ issueList: issueList })
   }
 
   componentDidMount () {
@@ -63,11 +72,16 @@ class IssuePersonal extends React.Component {
             dataSource={issueList}
             expandIconColumnIndex={-1}
             pagination={false}>
-            <Column title="发起人" dataIndex="initiator" key="initiator" align="center"/>
-            <Column title="事件类型" key="type_name" align="center" render={renderIssueType}/>
-            <Column title="涉及资产" dataIndex="asset" key="asset" align="center"/>
-            <Column title="状态" key="status" align="center" render={renderIssueStatus}/>
-            <Column title="信息" dataIndex="info" key="info" align="center"/>
+            <Column title="发起人" dataIndex="initiator" key="initiator" align="center"
+              {...getColumnSearchProps('initiator', this, '发起人')}/>
+            <Column title="事件类型" dataIndex='chiType' key="chiType" align="center"
+              {...getColumnSearchProps('chiType', this, '事件类型')}/>
+            <Column title="涉及资产" dataIndex="asset" key="asset" align="center"
+              {...getColumnSearchProps('asset', this, '涉及资产')}/>
+            <Column title="状态" dataIndex='chiStatus' key="chiStatus" align="center"
+              {...getColumnSearchProps('chiStatus', this, '状态')}/>
+            <Column title="信息" dataIndex="info" key="info" align="center"
+              {...getColumnSearchProps('info', this, '信息')}/>
             <Column title="操作" key="action" width={200} align="center" render={(row) => (
               <span>
                 <Button type="primary" shape="circle" icon="delete" title="取消"

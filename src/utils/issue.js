@@ -1,13 +1,13 @@
 import React from 'react'
 
-const CHINESE_ISSUE_TYPE = {
+export const CHINESE_ISSUE_TYPE = {
   REQUIRE: '领用',
   MAINTAIN: '维修',
   TRANSFER: '转移',
   RETURN: '退库'
 }
 
-const CHINESE_ISSUE_STATUS = {
+export const CHINESE_ISSUE_STATUS = {
   DOING: '进行中',
   SUCCESS: '成功',
   FAIL: '失败'
