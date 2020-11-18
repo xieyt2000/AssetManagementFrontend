@@ -4,51 +4,59 @@ import { getDepartments } from '../../utils/department'
 import { assetAllocate, availableAssetList } from '../../api/asset'
 import { renderChineseStatus } from '../../utils/asset'
 import HelpCard from '../../components/HelpCard'
-
-const columns = [
-  {
-    title: '资产名称',
-    dataIndex: 'name',
-    align: 'center'
-  },
-  {
-    title: '挂账人',
-    dataIndex: 'owner',
-    align: 'center'
-  },
-  {
-    title: '所属部门',
-    dataIndex: 'department',
-    align: 'center'
-  },
-  {
-    title: '资产分类',
-    dataIndex: 'category',
-    align: 'center'
-  },
-  {
-    title: '资产状态',
-    dataIndex: 'status',
-    render: renderChineseStatus,
-    align: 'center'
-  }
-]
+import { getColumnSearchProps } from '../../utils/table'
 
 class AssetAllocation extends React.Component {
-  constructor (props) {
-    super(props)
-    this.state = {
-      selectedRowKeys: [], // Check here to configure the default column
-      loading: false,
-      departmentList: [],
-      dataSource: []
-    }
-  }
+    columns = [
+      {
+        title: '资产名称',
+        dataIndex: 'name',
+        align: 'center',
+        ...getColumnSearchProps('name', this, '名称')
+      },
+      {
+        title: '挂账人',
+        dataIndex: 'owner',
+        align: 'center',
+        ...getColumnSearchProps('owner', this, '挂账人')
+      },
+      {
+        title: '所属部门',
+        dataIndex: 'department',
+        align: 'center',
+        ...getColumnSearchProps('department', this, '部门')
+      },
+      {
+        title: '资产分类',
+        dataIndex: 'category',
+        align: 'center',
+        ...getColumnSearchProps('category', this, '分类')
+      },
+      {
+        title: '资产状态',
+        dataIndex: 'status',
+        render: renderChineseStatus,
+        align: 'center',
+        ...getColumnSearchProps('status', this, '状态')
+      }
+    ]
 
-  componentDidMount () {
-    getDepartments(this)
-    this.getAssetList()
-  }
+    constructor (props) {
+      super(props)
+      this.state = {
+        selectedRowKeys: [], // Check here to configure the default column
+        loading: false,
+        departmentList: [],
+        dataSource: [],
+        searchText: '',
+        searchedColumn: ''
+      }
+    }
+
+    componentDidMount () {
+      getDepartments(this)
+      this.getAssetList()
+    }
 
   onSelectChange = selectedRowKeys => {
     console.log('selectedRowKeys changed: ', selectedRowKeys)
@@ -133,7 +141,7 @@ class AssetAllocation extends React.Component {
           </Card>
         </div>
         <Card>
-          <Table rowSelection={rowSelection} columns={columns}
+          <Table rowSelection={rowSelection} columns={this.columns}
             dataSource={dataSource} pagination={false}
             bordered />
         </Card>
