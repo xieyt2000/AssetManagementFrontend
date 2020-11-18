@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import { getLog } from '@/api/log'
 import { Table, message } from 'antd'
 import HelpCard from '../../components/HelpCard'
+import { getColumnSearchProps } from '../../utils/table'
 
 const Column = Table.Column
 
@@ -9,9 +10,9 @@ class Log extends Component {
   constructor (props) {
     super(props)
     this.state = {
-      logs: []
-      // pageNumber: 1,
-      // pageSize: 20
+      logs: [],
+      searchText: '',
+      searchedColumn: ''
     }
   }
 
@@ -27,33 +28,20 @@ class Log extends Component {
           dataSource={logs}
           // pagination={false}
         >
-          <Column title="时间" dataIndex="time" key="time" align="center"/>
-          <Column title="返回信息" dataIndex="message" key="message" align="center"/>
-          <Column title="使用API" dataIndex="path" key="path" align="center"/>
-          <Column title="用户" dataIndex="username" key="username" align="center"/>
-          <Column title="类型" dataIndex="level" key="level" align="center"/>
+          <Column title="时间" dataIndex="time" key="time" align="center"
+            {...getColumnSearchProps('time', this, '时间')}/>
+          <Column title="返回信息" dataIndex="message" key="message" align="center"
+            {...getColumnSearchProps('message', this, '返回信息')}/>
+          <Column title="使用API" dataIndex="path" key="path" align="center"
+            {...getColumnSearchProps('path', this, '使用API')}/>
+          <Column title="用户" dataIndex="username" key="username" align="center"
+            {...getColumnSearchProps('username', this, '用户名')}/>
+          <Column title="类型" dataIndex="level" key="level" align="center"
+            {...getColumnSearchProps('level', this, '类型')}/>
         </Table>
-        {/* <Pagination */}
-        {/*  total={this.state.total} */}
-        {/*  pageSizeOptions={['10', '20', '40']} */}
-        {/*  showTotal={(total) => `共${total}条数据`} */}
-        {/*  onChange={this.changePage} */}
-        {/*  current={this.state.pageNumber} */}
-        {/*  showSizeChanger */}
-        {/*  showQuickJumper */}
-        {/*  hideOnSinglePage={true} */}
-        {/* /> */}
       </div>
     )
   }
-
-  // changePage = () => {
-  //
-  // }
-  //
-  // changePageSize = () => {
-  //
-  // }
 
   // avoid naming conflict with api.getUsers
   localGetLog = async () => {
