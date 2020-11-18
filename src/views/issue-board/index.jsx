@@ -3,11 +3,12 @@ import { connect } from 'react-redux'
 import HelpCard from '../../components/HelpCard'
 import { Button, Card, Divider, Modal, Table } from 'antd'
 import { handleIssue, issueToHandle, handleRequire, getRequireAsset } from '../../api/issue'
-import { renderIssueType } from '../../utils/issue'
+import { transIssueList } from '../../utils/issue'
 import { handleResponse } from '../../utils/response'
 import { getList } from '../../utils/list'
 import RequireModal from './require-modal'
 import { refuseColor } from '../../utils/style'
+import { getColumnSearchProps } from '../../utils/table'
 
 const Column = Table.Column
 
@@ -24,12 +25,15 @@ class IssueBoard extends React.Component {
       requireModalVis: false,
       requireModalConfirmLoading: false,
       requireModalLod: false,
-      selectedRowKeys: []
+      selectedRowKeys: [],
+      searchText: '',
+      searchedColumn: ''
     }
   }
 
-  getIssue = () => {
-    getList(issueToHandle, this, 'issueList')
+  getIssue = async () => {
+    await getList(issueToHandle, this, 'issueList')
+    transIssueList(this)
   }
 
   componentDidMount () {
@@ -57,10 +61,14 @@ class IssueBoard extends React.Component {
             expandIconColumnIndex={-1}
             childrenColumnName='tableChild' // ignore
             pagination={false}>
-            <Column title="发起人" dataIndex="initiator" key="initiator" align="center"/>
-            <Column title="事件类型" key="type_name" align="center" render={renderIssueType}/>
-            <Column title="涉及资产" dataIndex="asset" key="asset" align="center"/>
-            <Column title="信息" dataIndex="info" key="info" align="center"/>
+            <Column title="发起人" dataIndex="initiator" key="initiator" align="center"
+              {...getColumnSearchProps('initiator', this, '发起人')}/>
+            <Column title="事件类型" dataIndex='chiType' key="chiType" align="center"
+              {...getColumnSearchProps('chiType', this, '事件类型')}/>
+            <Column title="涉及资产" dataIndex="asset" key="asset" align="center"
+              {...getColumnSearchProps('asset', this, '涉及资产')}/>
+            <Column title="信息" dataIndex="info" key="info" align="center"
+              {...getColumnSearchProps('info', this, '信息')}/>
             <Column title="操作" key="action" width={200} align="center" render={(row) => (
               <span>
                 <Button type="primary" shape="circle" icon="check" title="批准"

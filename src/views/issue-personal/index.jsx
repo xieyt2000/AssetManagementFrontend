@@ -2,7 +2,7 @@ import React from 'react'
 import { connect } from 'react-redux'
 import HelpCard from '../../components/HelpCard'
 import { Button, Card, Modal, Table } from 'antd'
-import { CHINESE_ISSUE_STATUS, CHINESE_ISSUE_TYPE } from '../../utils/issue'
+import { transIssueList } from '../../utils/issue'
 import { personalIssue, deleteIssue } from '../../api/issue'
 import { getList } from '../../utils/list'
 import { handleResponse } from '../../utils/response'
@@ -26,12 +26,7 @@ class IssuePersonal extends React.Component {
 
   getIssue = async () => {
     await getList(personalIssue, this, 'issueList')
-    const issueList = this.state.issueList
-    for (let idx = 0; idx < issueList.length; idx++) {
-      issueList[idx].chiStatus = CHINESE_ISSUE_STATUS[issueList[idx].status]
-      issueList[idx].chiType = CHINESE_ISSUE_TYPE[issueList[idx].type_name]
-    }
-    this.setState({ issueList: issueList })
+    transIssueList(this)
   }
 
   componentDidMount () {
