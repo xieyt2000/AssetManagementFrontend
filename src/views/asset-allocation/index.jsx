@@ -2,7 +2,6 @@ import React from 'react'
 import { Table, Button, TreeSelect, message, Card, Divider } from 'antd'
 import { getDepartments } from '../../utils/department'
 import { assetAllocate, availableAssetList } from '../../api/asset'
-import { renderChineseStatus } from '../../utils/asset'
 import HelpCard from '../../components/HelpCard'
 import { getColumnSearchProps } from '../../utils/table'
 
@@ -31,13 +30,6 @@ class AssetAllocation extends React.Component {
         dataIndex: 'category',
         align: 'center',
         ...getColumnSearchProps('category', this, '分类')
-      },
-      {
-        title: '资产状态',
-        dataIndex: 'status',
-        render: renderChineseStatus,
-        align: 'center',
-        ...getColumnSearchProps('status', this, '状态')
       }
     ]
 
