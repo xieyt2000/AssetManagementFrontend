@@ -44,10 +44,13 @@ class IssueBoard extends React.Component {
     const issueList = this.state.issueList
     const description = '作为企业员工，在这里可以看到其他员工向你提交的待处理事项'
     let modalText = ''
+    let modalTitle = ''
     if ('type_name' in this.state.rowData) {
       modalText = '是否' + this.state.opType + '申请？'
+      modalTitle = this.state.opType + '申请'
       if (this.state.rowData.type_name === 'MAINTAIN') {
         modalText = '维保' + (this.state.opType === '同意' ? '成功' : '失败') + '?'
+        modalTitle = '维保' + (this.state.opType === '同意' ? '成功' : '失败')
       }
     }
     return (
@@ -80,7 +83,7 @@ class IssueBoard extends React.Component {
           </Table>
         </Card>
         <Modal
-          // title={this.state.opType + '申请'}
+          title={modalTitle}
           visible={this.state.modalVis}
           confirmLoading={this.state.modalLod}
           onOk={this.handleOk}
