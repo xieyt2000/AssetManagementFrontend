@@ -60,6 +60,7 @@ export const getColumnSearchProps = (dataIndex, self, name) => ({
   },
   // eslint-disable-next-line react/display-name
   render: text => {
+    if (text === undefined) return ''
     if (text instanceof Array) {
       text = text.join('\n')
     }
