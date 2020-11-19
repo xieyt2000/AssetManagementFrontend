@@ -21,19 +21,19 @@ describe('issue-board', function () {
     })
   })
   it('test refuse cancel', function () {
-    app.find('button').at(1).simulate('click')
+    app.find('button').at(9).simulate('click')
     app.find('Modal').find('button').at(1).simulate('click')
   })
   it('test refuse ok', function () {
-    app.find('button').at(1).simulate('click')
+    app.find('button').at(9).simulate('click')
     app.find('Modal').find('button').at(2).simulate('click')
   })
   it('test consent cancel', function () {
-    app.find('button').at(0).simulate('click')
+    app.find('button').at(8).simulate('click')
     app.find('Modal').find('button').at(1).simulate('click')
   })
   it('test consent ok', function () {
-    app.find('button').at(1).simulate('click')
+    app.find('button').at(8).simulate('click')
     app.find('Modal').find('button').at(2).simulate('click')
   })
 })

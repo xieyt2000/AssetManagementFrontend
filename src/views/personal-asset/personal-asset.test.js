@@ -13,41 +13,41 @@ describe('peronal-asset', () => {
   const personalAsset = app.find('PersonalAsset')
   personalAsset.setState({ assetList: [{}], rowData: { nid: 1 } })
   it('test fix cancel', () => {
-    app.find('button').at(0).simulate('click')
-    app.find('button').at(4).simulate('click')
+    app.find('button').at(8).simulate('click')
+    app.find('button').at(12).simulate('click')
   })
   it('test fix ok', () => {
-    app.find('button').at(0).simulate('click')
-    app.find('input').simulate('change', { target: {
+    app.find('button').at(8).simulate('click')
+    app.find('input').at(4).simulate('change', { target: {
       value: '123456'
     } })
-    app.find('button').at(5).simulate('click')
+    app.find('button').at(13).simulate('click')
   })
   it('test fix ok failed', () => {
-    app.find('button').at(0).simulate('click')
-    app.find('button').at(5).simulate('click')
+    app.find('button').at(8).simulate('click')
+    app.find('button').at(13).simulate('click')
   })
   it('test transfer cancel', () => {
-    app.find('button').at(1).simulate('click')
-    app.find('button').at(4).simulate('click')
+    app.find('button').at(9).simulate('click')
+    app.find('button').at(12).simulate('click')
   })
   it('test transfer ok', () => {
-    app.find('button').at(1).simulate('click')
-    app.find('input').simulate('change', { target: {
+    app.find('button').at(9).simulate('click')
+    app.find('input').at(4).simulate('change', { target: {
       value: '123456'
     } })
-    app.find('button').at(5).simulate('click')
+    app.find('button').at(13).simulate('click')
   })
   it('test transfer ok failed', () => {
-    app.find('button').at(1).simulate('click')
-    app.find('button').at(5).simulate('click')
+    app.find('button').at(9).simulate('click')
+    app.find('button').at(13).simulate('click')
   })
   it('test return cancel', () => {
-    app.find('button').at(2).simulate('click')
-    app.find('button').at(4).simulate('click')
+    app.find('button').at(10).simulate('click')
+    app.find('button').at(12).simulate('click')
   })
   it('test return ok', () => {
-    app.find('button').at(2).simulate('click')
-    app.find('button').at(5).simulate('click')
+    app.find('button').at(10).simulate('click')
+    app.find('button').at(13).simulate('click')
   })
 })
