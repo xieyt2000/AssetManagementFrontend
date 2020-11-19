@@ -36,8 +36,6 @@ class Log extends Component {
             {...getColumnSearchProps('path', this, '使用API')}/>
           <Column title="用户" dataIndex="username" key="username" align="center"
             {...getColumnSearchProps('username', this, '用户名')}/>
-          <Column title="类型" dataIndex="level" key="level" align="center"
-            {...getColumnSearchProps('level', this, '类型')}/>
         </Table>
       </div>
     )
