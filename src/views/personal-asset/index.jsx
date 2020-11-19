@@ -51,8 +51,6 @@ class PersonalAsset extends React.Component {
               {...getColumnSearchProps('name', this, '资产名称')}/>
             <Column title="资产分类" dataIndex="category" key="category" align="center"
               {...getColumnSearchProps('category', this, '资产分类')}/>
-            <Column title="资产状态" dataIndex="status" key="status" align="center"
-              {...getColumnSearchProps('status', this, '资产状态')}/>
             <Column title="操作" key="action" width={200} align="center" render={(row) => (
               <span>
                 <Button type="primary" shape="circle" icon="tool" title="申请维保"
