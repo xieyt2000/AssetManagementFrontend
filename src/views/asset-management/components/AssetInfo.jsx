@@ -6,7 +6,7 @@ import html2canvas from 'html2canvas'
 import QRCode from 'qrcode.react'
 import { CHINESE_STATUS } from '../../../utils/asset'
 class AssetInfo extends React.Component {
-  saveLabel () {
+  saveLabel = () => {
     const element = document.getElementById('label')
 
     html2canvas(element).then((canvas) => {
