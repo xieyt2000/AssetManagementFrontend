@@ -5,7 +5,8 @@ import { parent, getCustomPropFormItem } from './form-shared'
 
 class EditAssetForm extends Component {
   render () {
-    const { visible, onCancel, onOk, form, confirmLoading, rowData, customPropList, idleAssetList } = this.props
+    const { visible, onCancel, onOk, form, confirmLoading, rowData,
+      customPropList, idleAssetList } = this.props
     const { name, description, parent_id: parentID } = rowData
     const formLayout = {
       labelCol: { sm: { span: 4 } },

@@ -38,10 +38,12 @@ export function putCustom (form, customPropList) {
 
 export const parent = (form, idleAssetList, initial) => {
   initial = String(initial)
-  const options = idleAssetList.map(asset => <Select.Option key={String(asset.nid)} value={String(asset.nid)}>{asset.info}</Select.Option>)
+  const options = idleAssetList.map(asset =>
+    <Select.Option key={String(asset.nid)} value={String(asset.nid)}>{asset.info}</Select.Option>)
   return (
     <Form.Item label="父资产:" help='选择父资产，如果没有父资产则不填'>
-      {form.getFieldDecorator('parent_id', { initialValue: initial })(<Select allowClear={true}>{options}</Select>)}
+      {form.getFieldDecorator('parent_id',
+        { initialValue: initial })(<Select allowClear={true}>{options}</Select>)}
     </Form.Item>
   )
 }
