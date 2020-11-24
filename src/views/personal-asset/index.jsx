@@ -179,11 +179,6 @@ class PersonalAsset extends React.Component {
 
   getAsset = async () => {
     await getList(personalAssetList, this, 'assetList')
-    const assetList = this.state.assetList
-    for (let idx = 0; idx < assetList.length; idx++) {
-      assetList[idx].status = CHINESE_STATUS[assetList[idx].status]
-    }
-    this.setState({ assetList: assetList })
   }
 
   componentDidMount () {
