@@ -75,7 +75,7 @@ class AssetManagement extends Component {
         <br/>
         <Card title={cardTitle}>
           <Table
-            bordered rowKey="name"
+            bordered rowKey="nid"
             dataSource={this.state.assetList}
             expandIconColumnIndex={-1}
             childrenColumnName='tableChild' // ignore

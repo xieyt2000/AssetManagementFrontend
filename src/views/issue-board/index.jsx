@@ -59,7 +59,7 @@ class IssueBoard extends React.Component {
         <br/>
         <Card>
           <Table
-            bordered rowKey="name"
+            bordered rowKey="nid"
             dataSource={issueList}
             expandIconColumnIndex={-1}
             childrenColumnName='tableChild' // ignore
