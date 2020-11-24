@@ -8,8 +8,9 @@ import { handleResponse } from '@/utils/response'
 import { applyFix, applyTransfer, applyReturn } from '@/api/issue'
 import { CHINESE_STATUS } from '../../utils/asset'
 import { getList } from '../../utils/list'
-import { deleteColor, disableColor, editColor } from '../../utils/style'
+import { deleteColor, disableColor, editColor, searchColor } from '../../utils/style'
 import { getColumnSearchProps } from '../../utils/table'
+import AssetInfo from '../asset-management/components/AssetInfo'
 
 const Column = Table.Column
 
@@ -26,6 +27,7 @@ class PersonalAsset extends React.Component {
       rowData: {},
       returnModalVis: false,
       returnModalLod: false,
+      infoModalVis: false,
       searchText: '',
       searchedColumn: ''
     }
@@ -51,8 +53,11 @@ class PersonalAsset extends React.Component {
               {...getColumnSearchProps('name', this, '资产名称')}/>
             <Column title="资产分类" dataIndex="category" key="category" align="center"
               {...getColumnSearchProps('category', this, '资产分类')}/>
-            <Column title="操作" key="action" width={200} align="center" render={(row) => (
+            <Column title="操作" key="action" width={300} align="center" render={(row) => (
               <span>
+                <Button type="primary" shape="circle" icon="search" title="查看详情"
+                  style={searchColor} onClick={this.handleInfoClick.bind(this, row)}/>
+                <Divider type="vertical"/>
                 <Button type="primary" shape="circle" icon="tool" title="申请维保"
                   style={disableColor} onClick={this.handleFixClick.bind(this, row)}/>
                 <Divider type="vertical"/>
@@ -84,6 +89,11 @@ class PersonalAsset extends React.Component {
         >
           <p>是否申请退库资产 {this.state.rowData.name} ?</p>
         </Modal>
+        <AssetInfo
+          rowData={this.state.rowData}
+          visible={this.state.infoModalVis}
+          onExit={this.handleInfoExit}
+        />
       </div>
     )
   }
@@ -95,6 +105,19 @@ class PersonalAsset extends React.Component {
       modalTitle: '申请资产维保',
       modalLabel: '维修人 ',
       modalOk: this.handleOkFix
+    })
+  }
+
+  handleInfoClick =(row) => {
+    this.setState({
+      rowData: Object.assign({}, row),
+      infoModalVis: true
+    })
+  }
+
+  handleInfoExit = () => {
+    this.setState({
+      infoModalVis: false
     })
   }
 
