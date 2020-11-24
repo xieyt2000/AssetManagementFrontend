@@ -296,12 +296,10 @@ class AssetManagement extends Component {
     await getList(assetList, this, 'assetList')
     const temp = []
     this.state.assetList.forEach((item) => {
-      if (item.status === STATUS.IDLE) {
-        temp.push({
-          nid: item.nid,
-          info: item.name + '(id=' + item.nid + ')'
-        })
-      }
+      temp.push({
+        nid: item.nid,
+        info: item.name + '(id=' + item.nid + ')'
+      })
     })
     this.setState({ idleAssetList: temp })
   }

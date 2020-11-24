@@ -37,7 +37,9 @@ export function putCustom (form, customPropList) {
 }
 
 export const parent = (form, idleAssetList, initial) => {
-  initial = String(initial)
+  if (initial) {
+    initial = String(initial)
+  }
   const options = idleAssetList.map(asset =>
     <Select.Option key={String(asset.nid)} value={String(asset.nid)}>{asset.info}</Select.Option>)
   return (
