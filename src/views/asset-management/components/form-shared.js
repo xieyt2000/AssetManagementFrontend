@@ -1,5 +1,5 @@
 import STATUS from '../../../utils/asset'
-import { Form, Input } from 'antd'
+import { Form, Input, Select } from 'antd'
 import React from 'react'
 
 export function getStatusArr () {
@@ -36,8 +36,12 @@ export function putCustom (form, customPropList) {
   return newForm
 }
 
-export const parent = (form, initial) => {
-  return (<Form.Item label={'父资产id'} help='填入父资产的id，如果没有父资产则不填'>
-    {form.getFieldDecorator('parent_id', { initialValue: initial })(<Input placeholder="父资产"/>)}
-  </Form.Item>)
+export const parent = (form, idleAssetList, initial) => {
+  initial = String(initial)
+  const options = idleAssetList.map(asset => <Select.Option key={String(asset.nid)} value={String(asset.nid)}>{asset.info}</Select.Option>)
+  return (
+    <Form.Item label="父资产:" help='选择父资产，如果没有父资产则不填'>
+      {form.getFieldDecorator('parent_id', { initialValue: initial })(<Select allowClear={true}>{options}</Select>)}
+    </Form.Item>
+  )
 }

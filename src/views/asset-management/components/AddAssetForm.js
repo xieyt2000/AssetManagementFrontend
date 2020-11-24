@@ -7,7 +7,7 @@ class AddAssetForm extends Component {
   render () {
     const {
       visible, onCancel, onOk, form, confirmLoading,
-      assetCategories, customPropList
+      assetCategories, customPropList, idleAssetList
     } = this.props
     const customItem = getCustomPropFormItem(customPropList, form)
     return (
@@ -39,7 +39,7 @@ class AddAssetForm extends Component {
               rules: [{ required: true, message: '使用年限不能为空' }]
             })(<Input placeholder="使用年限"/>)}
           </Form.Item>
-          {parent(form)}
+          {parent(form, idleAssetList)}
           <br/>
           {customItem}
         </Form>
@@ -55,7 +55,8 @@ AddAssetForm.propTypes = {
   confirmLoading: PropTypes.bool,
   form: PropTypes.object,
   assetCategories: PropTypes.array,
-  customPropList: PropTypes.array
+  customPropList: PropTypes.array,
+  idleAssetList: PropTypes.array
 }
 
 export default Form.create()(AddAssetForm)

@@ -5,7 +5,7 @@ import { parent, getCustomPropFormItem } from './form-shared'
 
 class EditAssetForm extends Component {
   render () {
-    const { visible, onCancel, onOk, form, confirmLoading, rowData, customPropList } = this.props
+    const { visible, onCancel, onOk, form, confirmLoading, rowData, customPropList, idleAssetList } = this.props
     const { name, description, parent_id: parentID } = rowData
     const formLayout = {
       labelCol: { sm: { span: 4 } },
@@ -25,7 +25,7 @@ class EditAssetForm extends Component {
               initialValue: description
             })(<Input placeholder="资产描述"/>)}
           </Form.Item>
-          {parent(form, parentID)}
+          {parent(form, idleAssetList, parentID)}
           <br/>
           {getCustomPropFormItem(customPropList, form)}
         </Form>
@@ -41,7 +41,8 @@ EditAssetForm.propTypes = {
   confirmLoading: PropTypes.func,
   form: PropTypes.object,
   rowData: PropTypes.object, // refer to `rowData` in ../index.js
-  customPropList: PropTypes.array
+  customPropList: PropTypes.array,
+  idleAssetList: PropTypes.array
 }
 
 export default Form.create()(EditAssetForm)

@@ -40,7 +40,6 @@ class QueryPanel extends Component {
             <Form.Item label="自定义属性:">
               {form.getFieldDecorator('customKey')(<Select style={{ width: 120 }}
                 onChange={this.queryCustomPropSelectChange}>{options}</Select>)}
-
             </Form.Item>
             <Form.Item>
               {form.getFieldDecorator('customValue')(<Input onChange={this.queryCustomValChange}/>)}

@@ -20,7 +20,7 @@ import AddAssetForm from './components/AddAssetForm'
 import HistoryTable from './components/HistoryTable'
 import { handleResponse } from '../../utils/response'
 import QueryPanel from './components/QueryPanel'
-import { renderChineseStatus, getAssetCategories } from '../../utils/asset'
+import STATUS, { renderChineseStatus, getAssetCategories } from '../../utils/asset'
 import { putCustom } from './components/form-shared'
 import { getList } from '../../utils/list'
 import { deleteColor, disableColor, editColor, searchColor } from '../../utils/style'
@@ -45,7 +45,8 @@ class AssetManagement extends Component {
       curAssetHistoryList: [],
       retireModalVis: false,
       retireModalLod: false,
-      customPropList: []
+      customPropList: [],
+      idleAssetList: []
     }
   }
 
@@ -64,7 +65,7 @@ class AssetManagement extends Component {
         <br/>
         <QueryPanel
           submitQuery={this.submitQuery}
-          clearQuery={this.clearQuery}
+          clearQuery={this.getAsset}
           wrappedComponentRef={(formRef) => {
             this.queryFormRef = formRef
           }}
@@ -121,6 +122,7 @@ class AssetManagement extends Component {
           onCancel={this.handleCancel}
           onOk={this.handleOkEdit}
           customPropList={this.state.customPropList}
+          idleAssetList={this.state.idleAssetList}
         />
         <HistoryTable
           visible={this.state.historyModalVis}
@@ -138,6 +140,7 @@ class AssetManagement extends Component {
           onOk={this.handleOkAdd}
           assetCategories={this.state.assetCategoryList}
           customPropList={this.state.customPropList}
+          idleAssetList={this.state.idleAssetList}
         />
         <RetireAssetForm
           wrappedComponentRef={(formRef) => {
@@ -164,11 +167,6 @@ class AssetManagement extends Component {
     } else {
       message.error('查询失败')
     }
-  }
-
-  clearQuery = () => {
-    this.queryFormRef.props.form.resetFields()
-    this.getAsset()
   }
 
   localAddAsset (assetArr) {
@@ -293,8 +291,19 @@ class AssetManagement extends Component {
     })
   }
 
-  getAsset = () => {
-    getList(assetList, this, 'assetList')
+  getAsset = async () => {
+    this.queryFormRef.props.form.resetFields()
+    await getList(assetList, this, 'assetList')
+    const temp = []
+    this.state.assetList.forEach((item) => {
+      if (item.status === STATUS.IDLE) {
+        temp.push({
+          nid: item.nid,
+          info: item.name + '(id=' + item.nid + ')'
+        })
+      }
+    })
+    this.setState({ idleAssetList: temp })
   }
 
   localGetCustomProp = async () => {
