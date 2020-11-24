@@ -24,25 +24,25 @@ class QueryPanel extends Component {
         <Panel header="条件搜索" key="1">
           <Form layout="inline">
             <Form.Item label="名称:">
-              {form.getFieldDecorator('name')(<Input onChange={this.queryNameChange}/>)}
+              {form.getFieldDecorator('name')(<Input placeholder="名称"/>)}
             </Form.Item>
             <Form.Item label="类型:">
               {form.getFieldDecorator('category')(
                 <TreeSelect
                   style={{ width: 120 }}
-                  onChange={this.queryCategoryChange}
                   treeData={assetCategories}
+                  allowClear={true}
                 />)}
             </Form.Item>
             <Form.Item label="描述:">
-              {form.getFieldDecorator('description')(<Input onChange={this.queryDesChange}/>)}
+              {form.getFieldDecorator('description')(<Input placeholder="描述"/>)}
             </Form.Item>
             <Form.Item label="自定义属性:">
               {form.getFieldDecorator('customKey')(<Select style={{ width: 120 }}
-                onChange={this.queryCustomPropSelectChange}>{options}</Select>)}
+                allowClear={true}>{options}</Select>)}
             </Form.Item>
             <Form.Item>
-              {form.getFieldDecorator('customValue')(<Input onChange={this.queryCustomValChange}/>)}
+              {form.getFieldDecorator('customValue')(<Input placeholder="属性值"/>)}
             </Form.Item>
             <Form.Item>
               <Button type="primary" icon="search" onClick={this.submit}>搜索</Button>
@@ -56,56 +56,8 @@ class QueryPanel extends Component {
     )
   }
 
-  queryCustomPropSelectChange = (prop) => {
-    this.setState((state) => ({
-      query: {
-        ...state.query,
-        customKey: prop
-      }
-    }))
-  }
-
-  queryCustomValChange = (e) => {
-    const value = e.target.value
-    this.setState((state) => ({
-      query: {
-        ...state.query,
-        customValue: value
-      }
-    }))
-  }
-
-  queryNameChange = (e) => {
-    const value = e.target.value
-    this.setState((state) => ({
-      query: {
-        ...state.query,
-        name: value
-      }
-    }))
-  }
-
-  queryCategoryChange = (value) => {
-    this.setState((state) => ({
-      query: {
-        ...state.query,
-        category: value
-      }
-    }))
-  }
-
-  queryDesChange = (e) => {
-    const value = e.target.value
-    this.setState((state) => ({
-      query: {
-        ...state.query,
-        description: value
-      }
-    }))
-  }
-
   submit = () => {
-    this.props.submitQuery(this.state.query)
+    this.props.submitQuery()
   }
 }
 

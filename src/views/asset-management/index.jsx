@@ -155,18 +155,23 @@ class AssetManagement extends Component {
     )
   }
 
-  submitQuery = async (query) => {
-    // const info = query.name + '+' + query.category + '+' + query.description
-    const res = await assetQuery(query)
-    const { data: assets, code } = res.data
-    if (code === 200) {
-      message.success('查询成功')
-      this.setState({
-        assetList: assets
-      })
-    } else {
-      message.error('查询失败')
-    }
+  submitQuery = () => {
+    const form = this.queryFormRef.props.form
+    form.validateFields(async (err, values) => {
+      if (err) {
+        return
+      }
+      const res = await assetQuery(values)
+      const { data: assets, code } = res.data
+      if (code === 200) {
+        message.success('查询成功')
+        this.setState({
+          assetList: assets
+        })
+      } else {
+        message.error('查询失败')
+      }
+    })
   }
 
   localAddAsset (assetArr) {
