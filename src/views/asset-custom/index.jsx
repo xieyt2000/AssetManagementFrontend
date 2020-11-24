@@ -94,7 +94,7 @@ class AssetCustom extends Component {
       '增加、删除、修改字段。自定义属性适用于所有的资产'
     return (
       <div className='app-container'>
-        <HelpCard title='资产分类' source={description}/>
+        <HelpCard title='自定义属性' source={description}/>
         <br/>
         <Form onSubmit={this.handleSubmit}>
           {formItems}
