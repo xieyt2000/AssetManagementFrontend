@@ -30,7 +30,8 @@ class AssetRequire extends React.Component {
             reason = '无'
           }
           console.log(category, reason)
-          handleResponse(applyRequire({ category: category, reason: reason }), '领用', this, null, null,
+          handleResponse(applyRequire({ category: category, reason: reason }),
+            '领用', this, null, null,
             () => {
               this.props.form.resetFields()
             })
