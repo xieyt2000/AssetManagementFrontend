@@ -242,7 +242,7 @@ class AssetManagement extends Component {
       this.setState({ addModalLod: true })
       form.resetFields()
       handleResponse(assetRetire(values), '清退资产', this, null,
-        { retireModalVis: false, retireModalLod: false }, null, this.getAsset())
+        { retireModalVis: false, retireModalLod: false }, null, this.getAsset)
     })
   }
 
