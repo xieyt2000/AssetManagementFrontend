@@ -1,6 +1,8 @@
 # Asset Management
 
-Asset management frontend.
+Asset management frontend. Project of THU *Software Engineering* course
+
+[Backend Repo](https://github.com/zhanghx0905/AssetManagementBackend)
 
 The frontend was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
@@ -32,4 +34,6 @@ https://asset-management-frontend-goodnight.app.secoder.net/#/login
 
 ## Others
 
-This project is transfered from [gitlab](https://gitlab.secoder.net/GoodNight/asset-management-frontend)
+This project is transferred from [gitlab](https://gitlab.secoder.net/GoodNight/asset-management-frontend)
+
+
