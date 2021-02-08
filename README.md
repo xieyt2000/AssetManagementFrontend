@@ -1,4 +1,4 @@
-# Meeting Board
+# Asset Management
 
 Asset management frontend.
 
@@ -10,8 +10,6 @@ Reference: https://gitlab.secoder.net/example/reactjs-example
 
     docker build -t something .
 	docker run --rm something
-
-## Develop
 
 ### Structure
 
@@ -28,6 +26,6 @@ Reference: https://gitlab.secoder.net/example/reactjs-example
 * `npm test` Test frontend.
 * `npm run lint` Check code style.
 
-## License
+## Deployment
 
-MIT License
+https://asset-management-frontend-goodnight.app.secoder.net/#/login
