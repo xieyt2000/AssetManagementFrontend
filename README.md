@@ -29,3 +29,7 @@ Reference: https://gitlab.secoder.net/example/reactjs-example
 ## Deployment
 
 https://asset-management-frontend-goodnight.app.secoder.net/#/login
+
+## Others
+
+This project is transfered from [gitlab](https://gitlab.secoder.net/GoodNight/asset-management-frontend)
