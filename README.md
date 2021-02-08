@@ -1,6 +1,6 @@
 # Asset Management
 
-Asset management frontend. Project of THU *Software Engineering* course
+Asset management frontend. Project of THU *Software Engineering* course.
 
 [Backend Repo](https://github.com/zhanghx0905/AssetManagementBackend)
 
@@ -34,6 +34,6 @@ https://asset-management-frontend-goodnight.app.secoder.net/#/login
 
 ## Others
 
-This project is transferred from [gitlab](https://gitlab.secoder.net/GoodNight/asset-management-frontend)
+This project is transferred from THU [gitlab](https://gitlab.secoder.net/GoodNight/asset-management-frontend).
 
 
